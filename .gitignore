@@ -13,6 +13,7 @@ local.properties
 .project
 target/
 RemoteSystemsTempFiles/
+pom.properties
 
 # External tool builders
 .externalToolBuilders/

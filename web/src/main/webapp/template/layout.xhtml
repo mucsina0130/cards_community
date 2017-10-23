@@ -9,7 +9,7 @@
 <h:head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title>Product</title>
+	<title>CC</title>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
 	<link rel="stylesheet"
 		href="https://fonts.googleapis.com/css?family=Roboto" />
@@ -17,6 +17,7 @@
 		href="https://fonts.googleapis.com/css?family=Montserrat" />
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+		<h:outputStylesheet library="css" name="custom.css"/>
 	<f:verbatim>
 		<style>
 .w3-sidebar a {
@@ -41,15 +42,44 @@ body, h1, h2, h3, h4, h5, h6, .w3-wide {
 	</div>
 	<div class="w3-padding-64 w3-large w3-text-grey"
 		style="font-weight: bold">
-		<a href="menu1.jsf" class="#{view.viewId eq '/menu1.xhtml' ? 'w3-bar-item w3-button w3-light-grey' : 'w3-bar-item w3-button'}">Menu1</a> 
-		<a href="menu2.jsf" class="#{view.viewId eq '/menu2.xhtml' ? 'w3-bar-item w3-button w3-light-grey' : 'w3-bar-item w3-button'}">Menu2</a>
-		<a href="menu3.jsf" class="#{view.viewId eq '/menu3.xhtml' ? 'w3-bar-item w3-button w3-light-grey' : 'w3-bar-item w3-button'}">Menu3</a>
+		<a href="/cards/games.xhtml" class="w3-bar-item w3-button #{view.viewId eq '/games.xhtml' ? 'w3-light-grey' : ''}">Játékok</a> 
+		<a href="#" class="w3-bar-item w3-button #{view.viewId eq '/menu2.xhtml' ? 'w3-light-grey' : ''}">Menü</a>
+		    <div id="demoAcc" class="w3-bar-block w3-padding-large w3-medium"
+		    style=   "padding-top: 0px !important; padding-bottom: 0px !important;">
+      <a href="/cards/decks.xhtml" class="w3-bar-item w3-button #{view.viewId eq '/cards/decks.xhtml' ? 'w3-light-grey' : ''}">Paklik</a>
+      <a href="/cards/newdeck.xhtml" class="w3-bar-item w3-button #{view.viewId eq '/cards/newdeck.xhtml' ? 'w3-light-grey' : ''}">Új Pakli</a>
+
+    </div>
+		<a href="/menu3.xhtml" class="#{view.viewId eq '/menu3.xhtml' ? 'w3-bar-item w3-button w3-light-grey' : 'w3-bar-item w3-button'}">Menu3</a>
 
 
 </div>
 </nav>
+<!-- Top menu on small screens -->
+<header class="w3-bar w3-top w3-hide-large w3-black w3-xlarge">
+  <div class="w3-bar-item w3-padding-24 w3-wide">LOGO</div>
+  <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding-24 w3-right" onclick="w3_open()"><i class="fa fa-bars"></i></a>
+</header>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 	<div class="w3-main" style="margin-left: 250px">
+		<div class="w3-hide-large" style="margin-top:83px"></div>
 		<ui:insert name="content" />
 	</div>
+	<f:verbatim>
+	<script>
+// Script to open and close sidebar
+function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+}
+ 
+function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+}
+</script>
+	</f:verbatim>
 </body>
 </html>

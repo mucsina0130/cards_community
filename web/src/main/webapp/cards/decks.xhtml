@@ -12,7 +12,7 @@
 			<p class="w3-left">Paklik</p>
 			</header>
 			<p:dataTable var="deck" value="#{decksController.tableModel}"
-				paginator="true" rows="10"
+				paginator="true" rows="5" paginatorPosition="bottom" paginatorAlwaysVisible="false"
 				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
 				rowsPerPageTemplate="5,10,15" id="deckTable" lazy="true">
 				<p:column headerText="Név" sortBy="#{deck.name}">

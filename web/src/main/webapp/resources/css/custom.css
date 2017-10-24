@@ -2,3 +2,19 @@
 .ui-datatable .ui-widget-header {
 	background: white;
 }
+.ui-datatable .ui-paginator-bottom{
+	border: none;
+}
+
+.ui-icon-seek-prev {
+    background-position: -48px -157px;
+}
+.ui-icon-seek-next {
+    background-position: -32px -157px;
+}
+.ui-icon-seek-end {
+    background-position: -64px -157px;
+}
+.ui-icon-seek-first {
+    background-position: -80px -157px;
+}

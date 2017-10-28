@@ -27,10 +27,14 @@
 
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<class>hu.popcornmaci.dao.entity.Card</class>
-		<class>hu.popcornmaci.dao.entity.Person</class>
-		<class>hu.popcornmaci.dao.entity.Shopping</class>
-		<class>hu.popcornmaci.dao.entity.Item</class>
-		<class>hu.popcornmaci.dao.entity.PayInfo</class>
+		<class>hu.popcornmaci.dao.entity.CardMapper</class>
+		<class>hu.popcornmaci.dao.entity.Deck</class>
+		<class>hu.popcornmaci.dao.entity.DeckCardlist</class>
+		<class>hu.popcornmaci.dao.entity.GameOwner</class>
+		<class>hu.popcornmaci.dao.entity.GameType</class>
+		<class>hu.popcornmaci.dao.entity.RuleCard</class>
+		<class>hu.popcornmaci.dao.entity.RuleDeck</class>
+		<class>hu.popcornmaci.dao.entity.Useraccount</class>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
 			<property name="hibernate.connection.url"

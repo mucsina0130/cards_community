@@ -1,8 +1,17 @@
-package model;
+package hu.unideb.cardcommunity.model;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+
+@Entity
 public class DeckCardlist {
-	
+	@Id
 	int deckId;
+	@Id
 	int cardId;
 	int	amount;
 	

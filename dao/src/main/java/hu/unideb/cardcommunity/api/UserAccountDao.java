@@ -8,6 +8,6 @@ public interface UserAccountDao {
 	UserAccount save(UserAccount entity);
 	List<UserAccount> save(List<UserAccount> entities);
 	UserAccount findById(int id);
-	UserAccount findByName(String username);
+	List<UserAccount> findByName(String username);
 	List<UserAccount> findAll();
 }

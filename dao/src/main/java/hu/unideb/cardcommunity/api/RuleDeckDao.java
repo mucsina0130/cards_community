@@ -8,5 +8,5 @@ public interface RuleDeckDao {
 	RuleDeck save(RuleDeck entity);
 	List<RuleDeck> save(List<RuleDeck> entities);
 	RuleDeck findById(int id);
-	List<RuleDeck> findAll();
+	List<RuleDeck> findByDeckId(int id);
 }

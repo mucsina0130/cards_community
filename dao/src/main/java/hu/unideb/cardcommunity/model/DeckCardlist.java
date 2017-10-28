@@ -1,44 +1,41 @@
 package hu.unideb.cardcommunity.model;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class DeckCardlist {
-	@Id
-	int deckId;
-	@Id
-	int cardId;
-	int	amount;
+	@ManyToOne
+	Deck deckId;
+	@ManyToOne
+	Card cardId;
+	int amount;
 	
 	public DeckCardlist() {
 		super();
 	}
 
-	public DeckCardlist(int deckId, int cardId, int amount) {
+	public DeckCardlist(Deck deckId, Card cardId, int amount) {
 		super();
 		this.deckId = deckId;
 		this.cardId = cardId;
 		this.amount = amount;
 	}
 
-	public int getDeckId() {
+	public Deck getDeckId() {
 		return deckId;
 	}
 
-	public void setDeckId(int deckId) {
+	public void setDeckId(Deck deckId) {
 		this.deckId = deckId;
 	}
 
-	public int getCardId() {
+	public Card getCardId() {
 		return cardId;
 	}
 
-	public void setCardId(int cardId) {
+	public void setCardId(Card cardId) {
 		this.cardId = cardId;
 	}
 
@@ -55,8 +52,8 @@ public class DeckCardlist {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + amount;
-		result = prime * result + cardId;
-		result = prime * result + deckId;
+		result = prime * result + ((cardId == null) ? 0 : cardId.hashCode());
+		result = prime * result + ((deckId == null) ? 0 : deckId.hashCode());
 		return result;
 	}
 
@@ -71,9 +68,15 @@ public class DeckCardlist {
 		DeckCardlist other = (DeckCardlist) obj;
 		if (amount != other.amount)
 			return false;
-		if (cardId != other.cardId)
+		if (cardId == null) {
+			if (other.cardId != null)
+				return false;
+		} else if (!cardId.equals(other.cardId))
 			return false;
-		if (deckId != other.deckId)
+		if (deckId == null) {
+			if (other.deckId != null)
+				return false;
+		} else if (!deckId.equals(other.deckId))
 			return false;
 		return true;
 	}

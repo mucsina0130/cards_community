@@ -13,8 +13,8 @@ public class Card {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	int ID;
-	@Id
-	int GAME_TYPE_ID;
+	@ManyToOne
+	GameType GAME_TYPE_ID;
 	String NAME;
 	String COST;
 	String DESCRIPTION;
@@ -26,7 +26,7 @@ public class Card {
 	String FIELD_4;
 	String FIELD_5;
 
-	public Card(int gAME_TYPE_ID, String nAME, String cOST, String dESCRIPTION, String bATTLE_ATTRIBUTE_1,
+	public Card(GameType gAME_TYPE_ID, String nAME, String cOST, String dESCRIPTION, String bATTLE_ATTRIBUTE_1,
 			String bATTLE_ATTRIBUTE_2, String fIELD_1, String fIELD_2, String fIELD_3, String fIELD_4, String fIELD_5) {
 		super();
 		GAME_TYPE_ID = gAME_TYPE_ID;
@@ -46,7 +46,7 @@ public class Card {
 		super();
 	}
 
-	public Card(int iD, int gAME_TYPE_ID, String nAME, String cOST, String dESCRIPTION, String bATTLE_ATTRIBUTE_1,
+	public Card(int iD, GameType gAME_TYPE_ID, String nAME, String cOST, String dESCRIPTION, String bATTLE_ATTRIBUTE_1,
 			String bATTLE_ATTRIBUTE_2, String fIELD_1, String fIELD_2, String fIELD_3, String fIELD_4, String fIELD_5) {
 		super();
 		ID = iD;
@@ -71,11 +71,11 @@ public class Card {
 		ID = iD;
 	}
 
-	public int getGAME_TYPE_ID() {
+	public GameType getGAME_TYPE_ID() {
 		return GAME_TYPE_ID;
 	}
 
-	public void setGAME_TYPE_ID(int gAME_TYPE_ID) {
+	public void setGAME_TYPE_ID(GameType gAME_TYPE_ID) {
 		GAME_TYPE_ID = gAME_TYPE_ID;
 	}
 
@@ -172,7 +172,7 @@ public class Card {
 		result = prime * result + ((FIELD_3 == null) ? 0 : FIELD_3.hashCode());
 		result = prime * result + ((FIELD_4 == null) ? 0 : FIELD_4.hashCode());
 		result = prime * result + ((FIELD_5 == null) ? 0 : FIELD_5.hashCode());
-		result = prime * result + GAME_TYPE_ID;
+		result = prime * result + ((GAME_TYPE_ID == null) ? 0 : GAME_TYPE_ID.hashCode());
 		result = prime * result + ID;
 		result = prime * result + ((NAME == null) ? 0 : NAME.hashCode());
 		return result;
@@ -232,7 +232,10 @@ public class Card {
 				return false;
 		} else if (!FIELD_5.equals(other.FIELD_5))
 			return false;
-		if (GAME_TYPE_ID != other.GAME_TYPE_ID)
+		if (GAME_TYPE_ID == null) {
+			if (other.GAME_TYPE_ID != null)
+				return false;
+		} else if (!GAME_TYPE_ID.equals(other.GAME_TYPE_ID))
 			return false;
 		if (ID != other.ID)
 			return false;

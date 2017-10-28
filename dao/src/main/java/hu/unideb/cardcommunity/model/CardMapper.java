@@ -2,6 +2,7 @@ package hu.unideb.cardcommunity.model;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,8 +14,8 @@ public class CardMapper {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	int ID;	
-	@Id
-	int GAME_TYPE_ID;	
+	@ManyToOne
+	GameOwner GAME_TYPE_ID;	
 	String DESCRIPTION;	
 	String BATTLE_ATTRIBUTE_1;	
 	String BATTLE_ATTRIBUTE_2;	
@@ -27,7 +28,7 @@ public class CardMapper {
 	public CardMapper() {
 		super();
 	}
-	public CardMapper(int gAME_TYPE_ID, String dESCRIPTION, String bATTLE_ATTRIBUTE_1, String bATTLE_ATTRIBUTE_2,
+	public CardMapper(GameOwner gAME_TYPE_ID, String dESCRIPTION, String bATTLE_ATTRIBUTE_1, String bATTLE_ATTRIBUTE_2,
 			String fIELD_1, String fIELD_2, String fIELD_3, String fIELD_4, String fIELD_5) {
 		super();
 		GAME_TYPE_ID = gAME_TYPE_ID;
@@ -40,7 +41,7 @@ public class CardMapper {
 		FIELD_4 = fIELD_4;
 		FIELD_5 = fIELD_5;
 	}
-	public CardMapper(int iD, int gAME_TYPE_ID, String dESCRIPTION, String bATTLE_ATTRIBUTE_1,
+	public CardMapper(int iD, GameOwner gAME_TYPE_ID, String dESCRIPTION, String bATTLE_ATTRIBUTE_1,
 			String bATTLE_ATTRIBUTE_2, String fIELD_1, String fIELD_2, String fIELD_3, String fIELD_4, String fIELD_5) {
 		super();
 		ID = iD;
@@ -60,10 +61,10 @@ public class CardMapper {
 	public void setID(int iD) {
 		ID = iD;
 	}
-	public int getGAME_TYPE_ID() {
+	public GameOwner getGAME_TYPE_ID() {
 		return GAME_TYPE_ID;
 	}
-	public void setGAME_TYPE_ID(int gAME_TYPE_ID) {
+	public void setGAME_TYPE_ID(GameOwner gAME_TYPE_ID) {
 		GAME_TYPE_ID = gAME_TYPE_ID;
 	}
 	public String getDESCRIPTION() {
@@ -126,7 +127,7 @@ public class CardMapper {
 		result = prime * result + ((FIELD_3 == null) ? 0 : FIELD_3.hashCode());
 		result = prime * result + ((FIELD_4 == null) ? 0 : FIELD_4.hashCode());
 		result = prime * result + ((FIELD_5 == null) ? 0 : FIELD_5.hashCode());
-		result = prime * result + GAME_TYPE_ID;
+		result = prime * result + ((GAME_TYPE_ID == null) ? 0 : GAME_TYPE_ID.hashCode());
 		result = prime * result + ID;
 		return result;
 	}
@@ -179,7 +180,10 @@ public class CardMapper {
 				return false;
 		} else if (!FIELD_5.equals(other.FIELD_5))
 			return false;
-		if (GAME_TYPE_ID != other.GAME_TYPE_ID)
+		if (GAME_TYPE_ID == null) {
+			if (other.GAME_TYPE_ID != null)
+				return false;
+		} else if (!GAME_TYPE_ID.equals(other.GAME_TYPE_ID))
 			return false;
 		if (ID != other.ID)
 			return false;

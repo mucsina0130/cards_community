@@ -2,6 +2,7 @@ package hu.unideb.cardcommunity.model;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,24 +13,24 @@ public class RuleCard {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	int id;
-	@Id
-	int idCard;
+	@ManyToOne
+	Card card;
 	int maxAmount;
 	int ruleDeckId;
 	
 	public RuleCard() {
 		super();
 	}
-	public RuleCard(int idCard, int maxAmount, int ruleDeckId) {
+	public RuleCard(Card idCard, int maxAmount, int ruleDeckId) {
 		super();
-		this.idCard = idCard;
+		this.card = idCard;
 		this.maxAmount = maxAmount;
 		this.ruleDeckId = ruleDeckId;
 	}
-	public RuleCard(int id, int idCard, int maxAmount, int ruleDeckId) {
+	public RuleCard(int id, Card idCard, int maxAmount, int ruleDeckId) {
 		super();
 		this.id = id;
-		this.idCard = idCard;
+		this.card = idCard;
 		this.maxAmount = maxAmount;
 		this.ruleDeckId = ruleDeckId;
 	}
@@ -39,11 +40,11 @@ public class RuleCard {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getIdCard() {
-		return idCard;
+	public Card getIdCard() {
+		return card;
 	}
-	public void setIdCard(int idCard) {
-		this.idCard = idCard;
+	public void setIdCard(Card idCard) {
+		this.card = idCard;
 	}
 	public int getMaxAmount() {
 		return maxAmount;
@@ -61,8 +62,8 @@ public class RuleCard {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((card == null) ? 0 : card.hashCode());
 		result = prime * result + id;
-		result = prime * result + idCard;
 		result = prime * result + maxAmount;
 		result = prime * result + ruleDeckId;
 		return result;
@@ -76,9 +77,12 @@ public class RuleCard {
 		if (getClass() != obj.getClass())
 			return false;
 		RuleCard other = (RuleCard) obj;
-		if (id != other.id)
+		if (card == null) {
+			if (other.card != null)
+				return false;
+		} else if (!card.equals(other.card))
 			return false;
-		if (idCard != other.idCard)
+		if (id != other.id)
 			return false;
 		if (maxAmount != other.maxAmount)
 			return false;
@@ -86,6 +90,7 @@ public class RuleCard {
 			return false;
 		return true;
 	}
+	
 	
 	
 }

@@ -2,6 +2,7 @@ package hu.unideb.cardcommunity.model;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,8 +13,8 @@ public class GameType {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	int id;
-	@Id
-	int ruleDeckId;
+	@ManyToOne
+	RuleDeck ruleDeck;
 	String name;
 	String shortDesc;
 	String gameRule;
@@ -22,18 +23,18 @@ public class GameType {
 	public GameType() {
 		super();
 	}
-	public GameType(int id, int ruleDeckId, String name, String shortDesc, String gameRule, int isPublic) {
+	public GameType(int id, RuleDeck ruleDeckId, String name, String shortDesc, String gameRule, int isPublic) {
 		super();
 		this.id = id;
-		this.ruleDeckId = ruleDeckId;
+		this.ruleDeck = ruleDeckId;
 		this.name = name;
 		this.shortDesc = shortDesc;
 		this.gameRule = gameRule;
 		this.isPublic = isPublic;
 	}
-	public GameType(int ruleDeckId, String name, String shortDesc, String gameRule, int isPublic) {
+	public GameType(RuleDeck ruleDeckId, String name, String shortDesc, String gameRule, int isPublic) {
 		super();
-		this.ruleDeckId = ruleDeckId;
+		this.ruleDeck = ruleDeckId;
 		this.name = name;
 		this.shortDesc = shortDesc;
 		this.gameRule = gameRule;
@@ -45,11 +46,11 @@ public class GameType {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getRuleDeckId() {
-		return ruleDeckId;
+	public RuleDeck getRuleDeckId() {
+		return ruleDeck;
 	}
-	public void setRuleDeckId(int ruleDeckId) {
-		this.ruleDeckId = ruleDeckId;
+	public void setRuleDeckId(RuleDeck ruleDeckId) {
+		this.ruleDeck = ruleDeckId;
 	}
 	public String getName() {
 		return name;
@@ -83,7 +84,7 @@ public class GameType {
 		result = prime * result + id;
 		result = prime * result + isPublic;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ruleDeckId;
+		result = prime * result + ((ruleDeck == null) ? 0 : ruleDeck.hashCode());
 		result = prime * result + ((shortDesc == null) ? 0 : shortDesc.hashCode());
 		return result;
 	}
@@ -110,7 +111,10 @@ public class GameType {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (ruleDeckId != other.ruleDeckId)
+		if (ruleDeck == null) {
+			if (other.ruleDeck != null)
+				return false;
+		} else if (!ruleDeck.equals(other.ruleDeck))
 			return false;
 		if (shortDesc == null) {
 			if (other.shortDesc != null)

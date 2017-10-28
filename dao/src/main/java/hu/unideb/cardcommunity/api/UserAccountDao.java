@@ -1,4 +1,4 @@
-package api;
+package hu.unideb.cardcommunity.api;
 
 import java.util.List;
 
@@ -8,5 +8,6 @@ public interface UserAccountDao {
 	UserAccount save(UserAccount entity);
 	List<UserAccount> save(List<UserAccount> entities);
 	UserAccount findById(int id);
+	UserAccount findByName(String username);
 	List<UserAccount> findAll();
 }

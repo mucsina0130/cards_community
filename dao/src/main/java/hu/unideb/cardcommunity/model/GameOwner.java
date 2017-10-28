@@ -2,6 +2,7 @@ package hu.unideb.cardcommunity.model;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -10,37 +11,37 @@ import javax.persistence.MappedSuperclass;
 @Entity
 public class GameOwner {
 
-	@Id
-	int gameTypeId;
-	@Id
-	int userId;
+	@ManyToOne
+	GameType gameTypeId;
+	@ManyToOne
+	UserAccount userId;
 
 	public GameOwner() {
 		super();
 	}
-	public GameOwner(int gameTypeId, int userId) {
+	public GameOwner(GameType gameTypeId, UserAccount userId) {
 		super();
 		this.gameTypeId = gameTypeId;
 		this.userId = userId;
 	}
-	public int getGameTypeId() {
+	public GameType getGameTypeId() {
 		return gameTypeId;
 	}
-	public void setGameTypeId(int gameTypeId) {
+	public void setGameTypeId(GameType gameTypeId) {
 		this.gameTypeId = gameTypeId;
 	}
-	public int getUserId() {
+	public UserAccount getUserId() {
 		return userId;
 	}
-	public void setUserId(int userId) {
+	public void setUserId(UserAccount userId) {
 		this.userId = userId;
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + gameTypeId;
-		result = prime * result + userId;
+		result = prime * result + ((gameTypeId == null) ? 0 : gameTypeId.hashCode());
+		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
 		return result;
 	}
 	@Override
@@ -52,9 +53,15 @@ public class GameOwner {
 		if (getClass() != obj.getClass())
 			return false;
 		GameOwner other = (GameOwner) obj;
-		if (gameTypeId != other.gameTypeId)
+		if (gameTypeId == null) {
+			if (other.gameTypeId != null)
+				return false;
+		} else if (!gameTypeId.equals(other.gameTypeId))
 			return false;
-		if (userId != other.userId)
+		if (userId == null) {
+			if (other.userId != null)
+				return false;
+		} else if (!userId.equals(other.userId))
 			return false;
 		return true;
 	}

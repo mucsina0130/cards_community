@@ -25,7 +25,7 @@
 	</repositories>
 	<modules>
 		<module>../web</module>
-		<module>dao</module>
+		<module>../dao</module>
 	</modules>
 	<dependencyManagement>
 		<dependencies>

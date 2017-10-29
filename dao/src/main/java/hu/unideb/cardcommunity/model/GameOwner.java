@@ -1,5 +1,6 @@
 package hu.unideb.cardcommunity.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -10,10 +11,14 @@ import javax.persistence.MappedSuperclass;
 
 @Entity
 public class GameOwner {
-
+	@Id
+	@Column(name="ROWID")
+	String rowid;
 	@ManyToOne
+	@Column(name="GAME_TYPE_ID")
 	GameType gameTypeId;
 	@ManyToOne
+	@Column(name="USER_ID")
 	UserAccount userId;
 
 	public GameOwner() {

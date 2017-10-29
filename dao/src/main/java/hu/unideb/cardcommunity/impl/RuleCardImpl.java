@@ -27,14 +27,14 @@ public class RuleCardImpl implements RuleCardDao {
 
 	public RuleCard findById(int id) {
 		EntityManager manager = EFMManager.getManager();
-		TypedQuery<RuleCard> query = manager.createQuery("SELECT rc from RULE_CARD rc where rc.ID:=id", RuleCard.class);
+		TypedQuery<RuleCard> query = manager.createQuery("SELECT rc from RuleCard rc where rc.ID:=id", RuleCard.class);
 		query.setParameter("id", id);
 		return (RuleCard) query.getResultList();
 	}
 
 	public List<RuleCard> findAll() {
 		EntityManager manager = EFMManager.getManager();
-		TypedQuery<RuleCard> query = manager.createQuery("SELECT rc from RULE_CARD rc", RuleCard.class);
+		TypedQuery<RuleCard> query = manager.createQuery("SELECT rc from RuleCard rc", RuleCard.class);
 		return query.getResultList();
 	}
 

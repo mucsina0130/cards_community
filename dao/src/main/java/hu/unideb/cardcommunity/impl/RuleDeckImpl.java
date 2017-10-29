@@ -40,7 +40,7 @@ public class RuleDeckImpl implements RuleDeckDao{
 
 	public List<RuleDeck> findByDeckId(int id) {
 		EntityManager manager = EFMManager.getManager();
-		TypedQuery<RuleDeck> query = manager.createQuery("SELECT rd from RULE_DECK rd where rd.ID:=ruledeckid", RuleDeck.class);
+		TypedQuery<RuleDeck> query = manager.createQuery("SELECT rd from RuleDeck rd where rd.ID:=ruledeckid", RuleDeck.class);
 		query.setParameter("ruledeckid", id);
 		return query.getResultList();
 	}

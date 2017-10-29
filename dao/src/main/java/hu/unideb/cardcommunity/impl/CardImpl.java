@@ -40,7 +40,7 @@ public class CardImpl implements CardDao {
 
 	public Card findByName(String name) {
 		EntityManager manager = EFMManager.getManager();
-		TypedQuery<Card> query = manager.createQuery("SELECT ca from CARD ca where ca.USER_NAME:=name", Card.class);
+		TypedQuery<Card> query = manager.createQuery("SELECT ca from Card ca where ca.NAME=:name", Card.class);
 		query.setParameter("name", name);
 		return (Card) query.getResultList();
 
@@ -48,7 +48,7 @@ public class CardImpl implements CardDao {
 
 	public List<Card> findAll() {
 		EntityManager manager = EFMManager.getManager();
-		TypedQuery<Card> query = manager.createQuery("SELECT ca from CARD ca", Card.class);
+		TypedQuery<Card> query = manager.createQuery("SELECT ca from Card ca", Card.class);
 		return query.getResultList();
 	}
 

@@ -23,14 +23,14 @@ public class DeckCardListImpl implements DeckCardListDao {
 
 	public List<Card> findAll(int deckdId) {
 		EntityManager manager = EFMManager.getManager();
-		TypedQuery<Card> query = manager.createQuery("SELECT ca from CARD ca, DECK_CARDLIST dl where dl.CARD_ID =:ca.ID and dl.DECK_ID:=id", Card.class);
+		TypedQuery<Card> query = manager.createQuery("SELECT ca from Card ca, DeckCardlist dl where dl.CARD_ID =:ca.ID and dl.DECK_ID:=id", Card.class);
 		query.setParameter("id", deckdId);
 		return  query.getResultList();
 	}
 
 	public List<DeckCardlist> showCardNumber(int deckdId) {
 		EntityManager manager = EFMManager.getManager();
-		TypedQuery<DeckCardlist> query = manager.createQuery("SELECT dl from CARD ca, DECK_CARDLIST dl where dl.CARD_ID =:ca.ID and dl.DECK_ID:=id", DeckCardlist.class);
+		TypedQuery<DeckCardlist> query = manager.createQuery("SELECT dl from Card ca, DeckCardlist dl where dl.CARD_ID =:ca.ID and dl.DECK_ID:=id", DeckCardlist.class);
 		query.setParameter("id", deckdId);
 		return  query.getResultList();
 	}

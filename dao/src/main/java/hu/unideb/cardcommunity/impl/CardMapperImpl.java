@@ -35,14 +35,14 @@ public class CardMapperImpl implements CardMapperDao {
 
 	public CardMapper findById(int id) {
 		EntityManager manager = EFMManager.getManager();
-		TypedQuery<CardMapper> query = manager.createQuery("SELECT cm from CARD_MAPPER cm where cm.GAME_TYPE_ID:=id", CardMapper.class);
+		TypedQuery<CardMapper> query = manager.createQuery("SELECT cm from CardMapper cm where cm.GAME_TYPE_ID:=id", CardMapper.class);
 		query.setParameter("id", id);
 		return (CardMapper) query.getResultList();
 	}
 
 	public List<CardMapper> findAll() {
 		EntityManager manager = EFMManager.getManager();
-		TypedQuery<CardMapper> query = manager.createQuery("SELECT cm from CARD_MAPPER cm", CardMapper.class);
+		TypedQuery<CardMapper> query = manager.createQuery("SELECT cm from CardMapper cm", CardMapper.class);
 		return query.getResultList();
 	}
 

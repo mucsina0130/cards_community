@@ -38,7 +38,7 @@ public class UserAccountImpl implements UserAccountDao {
 
 	public List<UserAccount> findByName(String username) {
 		EntityManager manager = EFMManager.getManager();
-		TypedQuery<UserAccount> query = manager.createQuery("SELECT ua from USER_ACCOUNT ua where ua.USER_NAME:=uname", UserAccount.class);
+		TypedQuery<UserAccount> query = manager.createQuery("SELECT ua from UserAccount ua where ua.USER_NAME:=uname", UserAccount.class);
 		query.setParameter("uname", username);
 		return query.getResultList();
 
@@ -46,7 +46,7 @@ public class UserAccountImpl implements UserAccountDao {
 
 	public List<UserAccount> findAll() {
 		EntityManager manager = EFMManager.getManager();
-		TypedQuery<UserAccount> query = manager.createQuery("SELECT ua from USER_ACCOUNT ua", UserAccount.class);
+		TypedQuery<UserAccount> query = manager.createQuery("SELECT ua from UserAccount ua", UserAccount.class);
 		return query.getResultList();
 	}
 

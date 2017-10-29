@@ -34,7 +34,7 @@ public class DeckImpl implements DeckDao {
 
 	public Deck findByName(String name, int userId) {
 		EntityManager manager = EFMManager.getManager();
-		TypedQuery<Deck> query = manager.createQuery("SELECT de from DECK de where de.USER_ID:=id and de.NAME:=name", Deck.class);
+		TypedQuery<Deck> query = manager.createQuery("SELECT de from Deck de where de.USER_ID:=id and de.NAME:=name", Deck.class);
 		query.setParameter("id", userId);
 		query.setParameter("name", name);
 		return (Deck) query.getResultList();
@@ -42,7 +42,7 @@ public class DeckImpl implements DeckDao {
 
 	public List<Deck> findAll(int gameTypeId, int userId) {
 		EntityManager manager = EFMManager.getManager();
-		TypedQuery<Deck> query = manager.createQuery("SELECT de from DECK de where de.USER_ID:=id and de.AME_TYPE_ID:=gid", Deck.class);
+		TypedQuery<Deck> query = manager.createQuery("SELECT de from Deck de where de.USER_ID:=id and de.GAME_TYPE_ID:=gid", Deck.class);
 		query.setParameter("id", userId);
 		query.setParameter("gid", gameTypeId);
 		return  query.getResultList();

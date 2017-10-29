@@ -33,7 +33,7 @@ public class GameTypeImpl implements GameTypeDao{
 
 	public List<GameType> findAll() {
 		EntityManager manager = EFMManager.getManager();
-		TypedQuery<GameType> query = manager.createQuery("SELECT gt from GAME_TYPE gt", GameType.class);
+		TypedQuery<GameType> query = manager.createQuery("SELECT gt from GameType gt", GameType.class);
 		return query.getResultList();
 	}
 

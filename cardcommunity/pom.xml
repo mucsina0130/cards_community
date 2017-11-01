@@ -26,6 +26,8 @@
 	<modules>
 		<module>../web</module>
 		<module>../dao</module>
+		
+		<module>../service</module>
 	</modules>
 	<dependencyManagement>
 		<dependencies>

@@ -1,8 +1,8 @@
-package hu.unideb.cardcommunity.web.deck.model;
+package hu.unideb.cardcommunity.service.deck.model;
 
 import java.io.Serializable;
 
-public class Deck implements Serializable{
+public class DeckData implements Serializable{
 	public String name;
 	public String game ;
 	public Long id;

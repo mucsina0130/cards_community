@@ -3,51 +3,48 @@ package hu.unideb.cardcommunity.web.deck.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Random;
 
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
-public class DeckTableModel extends LazyDataModel<Deck> {
-	private List<Deck> decks = randomList();
+import hu.unideb.cardcommunity.service.deck.model.DeckData;
+import hu.unideb.corcommunity.service.deck.DeckListingService;
+import hu.unideb.corcommunity.service.deck.api.IDeckListingService;
+
+public class DeckTableModel extends LazyDataModel<DeckData> { 
+	private IDeckListingService decklist;
+	private List<DeckData> decks;
+
+	
+	public DeckTableModel() {
+		decklist = new DeckListingService();
+		decks = decklist.listByUserId(1);
+	}
 
 	@Override
-	public Deck getRowData(String rowKey) {
+	public DeckData getRowData(String rowKey) {
 		if (decks == null || decks.isEmpty()) {
 			return null;
 		}
-		Optional<Deck> findFirst = decks.stream().filter(d -> d.getId().toString().equals(rowKey)).findFirst();
+		Optional<DeckData> findFirst = decks.stream().filter(d -> d.getId().toString().equals(rowKey)).findFirst();
 		return findFirst.isPresent() ? findFirst.get() : null;
 	}
 
-	private List<Deck> randomList() {
-		List<Deck> result = new ArrayList<>();
-		for (int i = 1; i < 10; i++) {
-			Deck e = new Deck();
-			e.setId((long) i);
-			e.setName("pakli"+ i);
-			e.setGame("játék"+ new Random().nextInt(3));
-			result.add(e);
-		}
-		return result;
-	}
-
 	@Override
-	public Object getRowKey(Deck object) {
+	public Object getRowKey(DeckData object) {
 		return object.getId();
 	}
 
 	@Override
-	public List<Deck> load(int first, int pageSize, String sortField, SortOrder sortOrder,
+	public List<DeckData> load(int first, int pageSize, String sortField, SortOrder sortOrder,
 			Map<String, Object> filters) {
-		List<Deck> data = new ArrayList<>();
+		List<DeckData> data = new ArrayList<>();
 
 		// filter
-		for (Deck car : decks) {
+		for (DeckData car : decks) {
 			boolean match = true;
 
 //			if (filters != null) {
@@ -76,13 +73,13 @@ public class DeckTableModel extends LazyDataModel<Deck> {
 
 		// sort
 		if (sortField != null) {
-			Collections.sort(data, new Comparator<Deck>() {
+			Collections.sort(data, new Comparator<DeckData>() {
 
 				@Override
-				public int compare(Deck o1, Deck o2) {
+				public int compare(DeckData o1, DeckData o2) {
 					try {
-						Object value1 = Deck.class.getField(sortField).get(o1);
-						Object value2 = Deck.class.getField(sortField).get(o2);
+						Object value1 = DeckData.class.getField(sortField).get(o1);
+						Object value2 = DeckData.class.getField(sortField).get(o2);
 
 						int value = ((Comparable) value1).compareTo(value2);
 

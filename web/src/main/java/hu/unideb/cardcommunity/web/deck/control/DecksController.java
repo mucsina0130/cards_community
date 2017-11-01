@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import hu.unideb.cardcommunity.web.deck.model.DeckTableModel;
+import hu.unideb.corcommunity.service.deck.DeckListingService;
 
 @Component
 @Scope("session")
@@ -14,6 +15,7 @@ public class DecksController implements Serializable {
 
 	public DeckTableModel getTableModel() {
 		if (tableModel == null) {
+			
 			tableModel = new DeckTableModel();
 		}
 		return tableModel;
@@ -24,3 +26,4 @@ public class DecksController implements Serializable {
 	}
 
 }
+	

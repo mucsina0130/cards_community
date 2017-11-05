@@ -15,7 +15,7 @@ import org.springframework.web.context.ServletContextAware;
 
 @Configuration
 @EnableAutoConfiguration
-@ComponentScan({ "hu.unideb.cardcommunity" })
+@ComponentScan(value = { "hu.unideb.cardcommunity" })
 public class Application extends SpringBootServletInitializer implements ServletContextAware {
 
 	public static void main(String[] args) {
@@ -34,6 +34,7 @@ public class Application extends SpringBootServletInitializer implements Servlet
 		servletRegistrationBean.setLoadOnStartup(1);
 		return servletRegistrationBean;
 	}
+
 
 	@Override
 	public void setServletContext(ServletContext arg0) {

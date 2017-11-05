@@ -17,8 +17,18 @@ import hu.unideb.corcommunity.service.deck.api.IDeckListingService;
 public class DeckTableModel extends LazyDataModel<DeckData> { 
 	private IDeckListingService decklist;
 	private List<DeckData> decks;
+	private Integer game;
 
 	
+	
+	public Integer getGame() {
+		return game;
+	}
+
+	public void setGame(Integer game) {
+		this.game = game;
+	}
+
 	public DeckTableModel() {
 		decklist = new DeckListingService();
 		decks = decklist.listByUserId(1);
@@ -29,7 +39,7 @@ public class DeckTableModel extends LazyDataModel<DeckData> {
 		if (decks == null || decks.isEmpty()) {
 			return null;
 		}
-		Optional<DeckData> findFirst = decks.stream().filter(d -> d.getId().toString().equals(rowKey)).findFirst();
+		Optional<DeckData> findFirst = decks.stream().filter(d -> String.valueOf(d.getId()).equals(rowKey)).findFirst();
 		return findFirst.isPresent() ? findFirst.get() : null;
 	}
 
@@ -44,31 +54,11 @@ public class DeckTableModel extends LazyDataModel<DeckData> {
 		List<DeckData> data = new ArrayList<>();
 
 		// filter
-		for (DeckData car : decks) {
-			boolean match = true;
-
-//			if (filters != null) {
-//				for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
-//					try {
-//						String filterProperty = it.next();
-//						Object filterValue = filters.get(filterProperty);
-//						String fieldValue = String.valueOf(car.getClass().getField(filterProperty).get(car));
-//
-//						if (filterValue == null || fieldValue.startsWith(filterValue.toString())) {
-//							match = true;
-//						} else {
-//							match = false;
-//							break;
-//						}
-//					} catch (Exception e) {
-//						match = false;
-//					}
-//				}
-//			}
-
-			if (match) {
-				data.add(car);
+		for (DeckData deck : decks) {
+			if(game == null || game == deck.getGameId()) {
+				data.add(deck);
 			}
+
 		}
 
 		// sort

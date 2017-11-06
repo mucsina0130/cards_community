@@ -13,7 +13,7 @@ public class UserAccount {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="USER_ID")
-	int id;
+	int user_id;
 	String user_name;
 	String password;
 	String mail_address;
@@ -31,17 +31,17 @@ public class UserAccount {
 	
 	public UserAccount(int id, String user_name, String password, String mail_address) {
 		super();
-		this.id = id;
+		this.user_id = id;
 		this.user_name = user_name;
 		this.password = password;
 		this.mail_address = mail_address;
 	}
 
 	public int getId() {
-		return id;
+		return user_id;
 	}
 	public void setId(int id) {
-		this.id = id;
+		this.user_id = id;
 	}
 	public String getUser_name() {
 		return user_name;
@@ -67,7 +67,7 @@ public class UserAccount {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
+		result = prime * result + user_id;
 		result = prime * result + ((mail_address == null) ? 0 : mail_address.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((user_name == null) ? 0 : user_name.hashCode());
@@ -83,7 +83,7 @@ public class UserAccount {
 		if (getClass() != obj.getClass())
 			return false;
 		UserAccount other = (UserAccount) obj;
-		if (id != other.id)
+		if (user_id != other.user_id)
 			return false;
 		if (mail_address == null) {
 			if (other.mail_address != null)

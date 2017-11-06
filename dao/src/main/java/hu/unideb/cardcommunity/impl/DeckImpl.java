@@ -42,7 +42,7 @@ public class DeckImpl implements DeckDao {
 	
 	public List<Deck> findByUserId(int userId) {
 		EntityManager manager = EFMManager.getManager();
-		TypedQuery<Deck> query = manager.createQuery("SELECT de from Deck de where de.user_id=:id", Deck.class);
+		TypedQuery<Deck> query = manager.createQuery("SELECT de from Deck de join de.user_id u where u.user_id=:id", Deck.class);
 		query.setParameter("id", userId);
 		return  query.getResultList();
 	}

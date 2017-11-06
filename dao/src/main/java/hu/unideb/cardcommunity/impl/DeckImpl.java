@@ -6,7 +6,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import hu.unideb.cardcommunity.api.DeckDao;
-import hu.unideb.cardcommunity.model.CardMapper;
 import hu.unideb.cardcommunity.model.Deck;
 import hu.unideb.cardcommunity.model.EFMManager;
 
@@ -42,8 +41,8 @@ public class DeckImpl implements DeckDao {
 	
 	public List<Deck> findByUserId(int userId) {
 		EntityManager manager = EFMManager.getManager();
-		TypedQuery<Deck> query = manager.createQuery("SELECT de from Deck de join de.user_id u where u.user_id=:id", Deck.class);
-		query.setParameter("id", userId);
+		TypedQuery<Deck> query = manager.createQuery("SELECT de from Deck de join de.user_id u where u.user_id=:userId", Deck.class);
+		query.setParameter("userId", userId);
 		return  query.getResultList();
 	}
 

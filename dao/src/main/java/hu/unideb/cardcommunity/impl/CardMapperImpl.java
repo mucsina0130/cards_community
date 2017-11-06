@@ -6,10 +6,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import hu.unideb.cardcommunity.api.CardMapperDao;
-import hu.unideb.cardcommunity.model.Card;
 import hu.unideb.cardcommunity.model.CardMapper;
 import hu.unideb.cardcommunity.model.EFMManager;
-import hu.unideb.cardcommunity.model.RuleCard;
 
 public class CardMapperImpl implements CardMapperDao {
 

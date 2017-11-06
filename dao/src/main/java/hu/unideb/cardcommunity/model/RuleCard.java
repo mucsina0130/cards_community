@@ -1,19 +1,23 @@
 package hu.unideb.cardcommunity.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.MappedSuperclass;
 
 @Entity
 public class RuleCard {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="RULE_CARD_ID")
 	int id;
 	@ManyToOne
+	@JoinColumn(name="CARD_ID",referencedColumnName="CARD_ID" )
 	Card card;
 	int maxAmount;
 	int ruleDeckId;

@@ -1,10 +1,12 @@
 package hu.unideb.cardcommunity.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 
@@ -12,8 +14,10 @@ import javax.persistence.OneToOne;
 public class Card {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="CARD_ID")
 	int ID;
 	@ManyToOne
+	@JoinColumn(name="GAMTYPE_ID",referencedColumnName="GAME_TYPE_ID")
 	GameType GAME_TYPE_ID;
 	String NAME;
 	String COST;

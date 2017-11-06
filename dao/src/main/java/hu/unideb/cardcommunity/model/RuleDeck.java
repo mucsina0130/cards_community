@@ -1,5 +1,6 @@
 package hu.unideb.cardcommunity.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.GeneratedValue;
@@ -11,6 +12,7 @@ import javax.persistence.MappedSuperclass;
 public class RuleDeck {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="RULE_DECK_ID")
 	int id;
 	int minQuantity;
 	int maxQuantity;

@@ -34,8 +34,10 @@ public class CardImpl implements CardDao {
 	}
 
 	public Card findById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		EntityManager manager = EFMManager.getManager();
+		TypedQuery<Card> query = manager.createQuery("SELECT ca from Card ca where ca.ID=:id", Card.class);
+		query.setParameter("id", id);
+		return (Card) query.getResultList();
 	}
 
 	public Card findByName(String name) {

@@ -12,10 +12,10 @@ public class GameOwner {
 	@Column(name="ROWID")
 	String rowid;
 	@ManyToOne
-	@JoinColumn(name="ID")
+	@JoinColumn(name="GAME_TYPE_ID",referencedColumnName="GAME_TYPE_ID")
 	GameType gameTypeId;
 	@ManyToOne
-	@JoinColumn(name="ID")
+	@JoinColumn(name="USER_ID",referencedColumnName="USER_ID")
 	UserAccount userId;
 
 	public GameOwner() {

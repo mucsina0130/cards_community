@@ -12,10 +12,10 @@ public class DeckCardlist {
 	@Column(name="ROWID")
 	String rowid;
 	@ManyToOne
-	@JoinColumn(name="ID")
+	@JoinColumn(name="DECK_ID",referencedColumnName="DECK_ID" )
 	Deck deckId;
 	@ManyToOne
-	@JoinColumn(name="ID")
+	@JoinColumn(name="CARD_ID",referencedColumnName="CARD_ID" )
 	Card cardId;
 	int amount;
 	

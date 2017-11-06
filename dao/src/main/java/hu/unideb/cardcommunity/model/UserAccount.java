@@ -1,5 +1,6 @@
 package hu.unideb.cardcommunity.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.GeneratedValue;
@@ -11,6 +12,7 @@ import javax.persistence.MappedSuperclass;
 public class UserAccount {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="USER_ID")
 	int id;
 	String user_name;
 	String password;

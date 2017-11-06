@@ -6,6 +6,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.MappedSuperclass;
 
 @Entity
@@ -15,6 +16,7 @@ public class CardMapper {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	int ID;	
 	@ManyToOne
+	@JoinColumn(name="GAMTYPE_ID",referencedColumnName="GAME_TYPE_ID")
 	GameOwner GAME_TYPE_ID;	
 	String DESCRIPTION;	
 	String BATTLE_ATTRIBUTE_1;	

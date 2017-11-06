@@ -1,11 +1,13 @@
 package hu.unideb.cardcommunity.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.MappedSuperclass;
 
 @Entity
@@ -13,10 +15,13 @@ import javax.persistence.MappedSuperclass;
 public class Deck {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="DECK_ID")
 	int ID;
 	@ManyToOne
-	UserAccount user;
+	@JoinColumn(name="USER_ID",referencedColumnName="USER_ID")
+	UserAccount user_id;
 	@ManyToOne
+	@JoinColumn(name="GAMTYPE_ID",referencedColumnName="GAME_TYPE_ID")
 	GameType gametype;
 	String NAME;
 	int	NUMBER;
@@ -29,7 +34,7 @@ public class Deck {
 	public Deck(int iD, UserAccount user, GameType gametype, String nAME, int nUMBER, int iS_PUBLIC) {
 		super();
 		ID = iD;
-		this.user = user;
+		this.user_id = user;
 		this.gametype = gametype;
 		NAME = nAME;
 		NUMBER = nUMBER;
@@ -45,11 +50,11 @@ public class Deck {
 	}
 
 	public UserAccount getUser() {
-		return user;
+		return user_id;
 	}
 
 	public void setUser(UserAccount user) {
-		this.user = user;
+		this.user_id = user;
 	}
 
 	public GameType getGametype() {
@@ -93,7 +98,7 @@ public class Deck {
 		result = prime * result + ((NAME == null) ? 0 : NAME.hashCode());
 		result = prime * result + NUMBER;
 		result = prime * result + ((gametype == null) ? 0 : gametype.hashCode());
-		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		result = prime * result + ((user_id == null) ? 0 : user_id.hashCode());
 		return result;
 	}
 
@@ -122,10 +127,10 @@ public class Deck {
 				return false;
 		} else if (!gametype.equals(other.gametype))
 			return false;
-		if (user == null) {
-			if (other.user != null)
+		if (user_id == null) {
+			if (other.user_id != null)
 				return false;
-		} else if (!user.equals(other.user))
+		} else if (!user_id.equals(other.user_id))
 			return false;
 		return true;
 	}

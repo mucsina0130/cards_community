@@ -12,7 +12,7 @@ import javax.persistence.MappedSuperclass;
 public class GameType {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	int id;
+	int ID;
 	@ManyToOne
 	RuleDeck ruleDeck;
 	String name;
@@ -25,7 +25,7 @@ public class GameType {
 	}
 	public GameType(int id, RuleDeck ruleDeckId, String name, String shortDesc, String gameRule, int isPublic) {
 		super();
-		this.id = id;
+		this.ID = id;
 		this.ruleDeck = ruleDeckId;
 		this.name = name;
 		this.shortDesc = shortDesc;
@@ -41,10 +41,10 @@ public class GameType {
 		this.isPublic = isPublic;
 	}
 	public int getId() {
-		return id;
+		return ID;
 	}
 	public void setId(int id) {
-		this.id = id;
+		this.ID = id;
 	}
 	public RuleDeck getRuleDeckId() {
 		return ruleDeck;
@@ -81,7 +81,7 @@ public class GameType {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((gameRule == null) ? 0 : gameRule.hashCode());
-		result = prime * result + id;
+		result = prime * result + ID;
 		result = prime * result + isPublic;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((ruleDeck == null) ? 0 : ruleDeck.hashCode());
@@ -102,7 +102,7 @@ public class GameType {
 				return false;
 		} else if (!gameRule.equals(other.gameRule))
 			return false;
-		if (id != other.id)
+		if (ID != other.ID)
 			return false;
 		if (isPublic != other.isPublic)
 			return false;

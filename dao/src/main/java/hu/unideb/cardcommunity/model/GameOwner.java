@@ -2,12 +2,9 @@ package hu.unideb.cardcommunity.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.JoinColumn;
 
 @Entity
 public class GameOwner {
@@ -15,10 +12,10 @@ public class GameOwner {
 	@Column(name="ROWID")
 	String rowid;
 	@ManyToOne
-	@Column(name="GAME_TYPE_ID")
+	@JoinColumn(name="ID")
 	GameType gameTypeId;
 	@ManyToOne
-	@Column(name="USER_ID")
+	@JoinColumn(name="ID")
 	UserAccount userId;
 
 	public GameOwner() {

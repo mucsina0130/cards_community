@@ -15,14 +15,14 @@
 		<class>hu.unideb.cardcommunity.model.GameType</class>
 		<class>hu.unideb.cardcommunity.model.RuleCard</class>
 		<class>hu.unideb.cardcommunity.model.RuleDeck</class>
-		<class>hu.unideb.cardcommunity.model.Useraccount</class>
+		<class>hu.unideb.cardcommunity.model.UserAccount</class>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
 			<property name="hibernate.connection.url"
-				value="jdbc:oracle:thin:@db.inf.unideb.hu:1521:ora11g" />
+				value="jdbc:oracle:thin:@localhost:1521:orcl" />
 			<property name="hibernate.connection.driver_class" value="oracle.jdbc.driver.OracleDriver" />
-			<property name="hibernate.connection.username" value="xxx" />
-			<property name="hibernate.connection.password" value="xxx" />
+			<property name="hibernate.connection.username" value="hr" />
+			<property name="hibernate.connection.password" value="Nekomimimode12" />
 			<property name="hibernate.show_sql" value="false" />
 			<property name="hibernate.format_sql" value="true" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />

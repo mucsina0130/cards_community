@@ -3,6 +3,7 @@ package hu.unideb.cardcommunity.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -11,10 +12,10 @@ public class DeckCardlist {
 	@Column(name="ROWID")
 	String rowid;
 	@ManyToOne
-	@Column(name="DECK_ID")
+	@JoinColumn(name="ID")
 	Deck deckId;
 	@ManyToOne
-	@Column(name="CARD_ID")
+	@JoinColumn(name="ID")
 	Card cardId;
 	int amount;
 	

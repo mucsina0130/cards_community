@@ -13,16 +13,15 @@ import javax.persistence.JoinColumn;
 public class Deck {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="DECK_ID")
+	@Column(name="ID")
 	int ID;
 	@ManyToOne
 	@JoinColumn(name="USER_ID",referencedColumnName="USER_ID")
 	UserAccount user_id;
 	@ManyToOne
-	@JoinColumn(name="GAMTYPE_ID",referencedColumnName="GAME_TYPE_ID")
+	@JoinColumn(name="ID",referencedColumnName="ID")
 	GameType gametype;
 	String NAME;
-	int	NUMBER;
 	int IS_PUBLIC;
 	
 	public Deck() {
@@ -35,7 +34,6 @@ public class Deck {
 		this.user_id = user;
 		this.gametype = gametype;
 		NAME = nAME;
-		NUMBER = nUMBER;
 		IS_PUBLIC = iS_PUBLIC;
 	}
 
@@ -71,14 +69,6 @@ public class Deck {
 		NAME = nAME;
 	}
 
-	public int getNUMBER() {
-		return NUMBER;
-	}
-
-	public void setNUMBER(int nUMBER) {
-		NUMBER = nUMBER;
-	}
-
 	public int getIS_PUBLIC() {
 		return IS_PUBLIC;
 	}
@@ -94,7 +84,6 @@ public class Deck {
 		result = prime * result + ID;
 		result = prime * result + IS_PUBLIC;
 		result = prime * result + ((NAME == null) ? 0 : NAME.hashCode());
-		result = prime * result + NUMBER;
 		result = prime * result + ((gametype == null) ? 0 : gametype.hashCode());
 		result = prime * result + ((user_id == null) ? 0 : user_id.hashCode());
 		return result;
@@ -117,8 +106,6 @@ public class Deck {
 			if (other.NAME != null)
 				return false;
 		} else if (!NAME.equals(other.NAME))
-			return false;
-		if (NUMBER != other.NUMBER)
 			return false;
 		if (gametype == null) {
 			if (other.gametype != null)

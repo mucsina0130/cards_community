@@ -17,7 +17,7 @@ public class Card {
 	@Column(name="CARD_ID")
 	int ID;
 	@ManyToOne
-	@JoinColumn(name="GAMTYPE_ID",referencedColumnName="GAME_TYPE_ID")
+	@JoinColumn(name="ID",referencedColumnName="ID")
 	GameType GAME_TYPE_ID;
 	String NAME;
 	String COST;

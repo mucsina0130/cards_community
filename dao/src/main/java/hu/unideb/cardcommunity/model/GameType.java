@@ -14,7 +14,7 @@ import javax.persistence.MappedSuperclass;
 public class GameType {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="GAME_TYPE_ID")
+	@Column(name="ID")
 	int ID;
 	@ManyToOne
 	@JoinColumn(name="RULE_DECK_ID", referencedColumnName="RULE_DECK_ID")

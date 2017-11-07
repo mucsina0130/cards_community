@@ -16,7 +16,7 @@ public class CardMapper {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	int ID;	
 	@ManyToOne
-	@JoinColumn(name="GAMTYPE_ID",referencedColumnName="GAME_TYPE_ID")
+	@JoinColumn(name="ID",referencedColumnName="ID")
 	GameOwner GAME_TYPE_ID;	
 	String DESCRIPTION;	
 	String BATTLE_ATTRIBUTE_1;	

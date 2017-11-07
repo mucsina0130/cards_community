@@ -21,8 +21,8 @@
 			<property name="hibernate.connection.url"
 				value="jdbc:oracle:thin:@localhost:1521:orcl" />
 			<property name="hibernate.connection.driver_class" value="oracle.jdbc.driver.OracleDriver" />
-			<property name="hibernate.connection.username" value="hr" />
-			<property name="hibernate.connection.password" value="Nekomimimode12" />
+			<property name="hibernate.connection.username" value="xx" />
+			<property name="hibernate.connection.password" value="xx" />
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
 		</properties>

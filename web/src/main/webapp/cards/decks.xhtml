@@ -9,16 +9,17 @@
 <ui:composition template="/template/layout.xhtml">
 	<ui:define name="content">
 		<h:form id="form">
-			<header class="w3-container w3-xlarge">
+			<header class="w3-container w3-xlarge" style="padding-right: 0px">
 			<p class="w3-left">Paklik</p>
 			<p:selectOneMenu id="games" value="#{decksController.selectGame}"
 				style="width:150px">
-				<p:ajax listener="#{decksController.onGameChange()}" update="table" event="change"/>
+				<p:ajax listener="#{decksController.onGameChange()}" update="table"
+					event="change" />
 				<f:selectItems value="#{decksController.games}" />
 			</p:selectOneMenu> </header>
-			<p:dataTable id="table" var="deck" value="#{decksController.tableModel}"
-				paginator="true" rows="5" paginatorPosition="bottom"
-				paginatorAlwaysVisible="false"
+			<p:dataTable id="table" var="deck"
+				value="#{decksController.tableModel}" paginator="true" rows="5"
+				paginatorPosition="bottom" paginatorAlwaysVisible="false"
 				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
 				rowsPerPageTemplate="5,10,15" lazy="true">
 				<p:column headerText="Név" sortBy="#{deck.name}">
@@ -27,7 +28,27 @@
 				<p:column headerText="Játék" sortBy="#{deck.game}">
 					<h:outputText value="#{deck.game}" />
 				</p:column>
+				<p:column style="width:5%;text-align: center">
+					<p:commandButton icon="ui-icon-search" title="View" type="button"
+						onclick="PF('dialog').show();" />
+				</p:column>
+				<p:column style="width:5%;text-align: center">
+					<p:commandButton icon="ui-icon-pencil" title="Modify"
+						disabled="true">
+					</p:commandButton>
+				</p:column>
+				<p:column style="width:5%;text-align: center">
+					<p:commandButton icon="ui-icon-close" title="Delete"
+						disabled="true">
+					</p:commandButton>
+				</p:column>
+
 			</p:dataTable>
+
+				<p:dialog header="Card" widgetVar="dialog" modal="true" resizable="false"
+					minHeight="40">
+					<h:outputText value="kártya" />
+				</p:dialog>
 		</h:form>
 	</ui:define>
 </ui:composition>

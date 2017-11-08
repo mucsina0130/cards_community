@@ -1,4 +1,4 @@
-package hu.unideb.cardcommunity.impl;
+		package hu.unideb.cardcommunity.impl;
 
 import java.util.List;
 
@@ -34,6 +34,14 @@ public class GameTypeImpl implements GameTypeDao{
 	public List<GameType> findAll() {
 		EntityManager manager = EFMManager.getManager();
 		TypedQuery<GameType> query = manager.createQuery("SELECT gt from GameType gt", GameType.class);
+		return query.getResultList();
+	}
+
+	@Override
+	public List<GameType> findById(long gameTypeId) {
+		EntityManager manager = EFMManager.getManager();
+		TypedQuery<GameType> query = manager.createQuery("SELECT gt from GameType gt where gt.id:=gameTypeId", GameType.class);
+		query.setParameter("id", gameTypeId);
 		return query.getResultList();
 	}
 

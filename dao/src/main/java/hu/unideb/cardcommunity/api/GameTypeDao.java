@@ -9,4 +9,5 @@ public interface GameTypeDao {
 	List<GameType> save(List<GameType> entities);
 	GameType findByName(String name);
 	List<GameType> findAll();
+	List<GameType> findById(long gameTypeId);
 }

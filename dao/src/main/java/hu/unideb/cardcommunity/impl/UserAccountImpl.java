@@ -31,7 +31,7 @@ public class UserAccountImpl implements UserAccountDao {
 		return entities;
 	}
 
-	public UserAccount findById(int id) {
+	public UserAccount findById(long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

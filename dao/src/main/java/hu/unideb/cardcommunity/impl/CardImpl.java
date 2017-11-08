@@ -33,7 +33,7 @@ public class CardImpl implements CardDao {
 		return entities;
 	}
 
-	public Card findById(int id) {
+	public Card findById(long id) {
 		EntityManager manager = EFMManager.getManager();
 		TypedQuery<Card> query = manager.createQuery("SELECT ca from Card ca where ca.ID=:id", Card.class);
 		query.setParameter("id", id);

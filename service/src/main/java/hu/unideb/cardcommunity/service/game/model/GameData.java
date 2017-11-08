@@ -3,7 +3,7 @@ package hu.unideb.cardcommunity.service.game.model;
 public class GameData {
 	private String name;
 	private String desc;
-	private int id;
+	private long id;
 	
 	public String getName() {
 		return name;
@@ -17,7 +17,7 @@ public class GameData {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 	public void setId(int id) {

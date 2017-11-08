@@ -1,100 +1,68 @@
 package hu.unideb.cardcommunity.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.MappedSuperclass;
+import java.io.Serializable;
+import javax.persistence.*;
+import java.math.BigDecimal;
 
+
+/**
+ * The persistent class for the RULE_CARD database table.
+ * 
+ */
 @Entity
-public class RuleCard {
+@Table(name="RULE_CARD")
+public class RuleCard implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="RULE_CARD_ID")
-	int id;
+	private long id;
+
+	@Column(name="MAX_AMOUNT")
+	private BigDecimal maxAmount;
+
+	//bi-directional many-to-one association to Card
 	@ManyToOne
-	@JoinColumn(name="CARD_ID",referencedColumnName="CARD_ID" )
-	Card card;
-	int maxAmount;
-	int ruleDeckId;
-	
+	@JoinColumn(name="ID_CARD")
+	private Card card;
+
+	//bi-directional many-to-one association to RuleDeck
+	@ManyToOne
+	@JoinColumn(name="RULE_DECK_ID")
+	private RuleDeck ruleDeck;
+
 	public RuleCard() {
-		super();
 	}
-	public RuleCard(Card idCard, int maxAmount, int ruleDeckId) {
-		super();
-		this.card = idCard;
-		this.maxAmount = maxAmount;
-		this.ruleDeckId = ruleDeckId;
+
+	public long getId() {
+		return this.id;
 	}
-	public RuleCard(int id, Card idCard, int maxAmount, int ruleDeckId) {
-		super();
-		this.id = id;
-		this.card = idCard;
-		this.maxAmount = maxAmount;
-		this.ruleDeckId = ruleDeckId;
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
+
+	public void setId(long id) {
 		this.id = id;
 	}
-	public Card getIdCard() {
-		return card;
+
+	public BigDecimal getMaxAmount() {
+		return this.maxAmount;
 	}
-	public void setIdCard(Card idCard) {
-		this.card = idCard;
-	}
-	public int getMaxAmount() {
-		return maxAmount;
-	}
-	public void setMaxAmount(int maxAmount) {
+
+	public void setMaxAmount(BigDecimal maxAmount) {
 		this.maxAmount = maxAmount;
 	}
-	public int getRuleDeckId() {
-		return ruleDeckId;
+
+	public Card getCard() {
+		return this.card;
 	}
-	public void setRuleDeckId(int ruleDeckId) {
-		this.ruleDeckId = ruleDeckId;
+
+	public void setCard(Card card) {
+		this.card = card;
 	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((card == null) ? 0 : card.hashCode());
-		result = prime * result + id;
-		result = prime * result + maxAmount;
-		result = prime * result + ruleDeckId;
-		return result;
+
+	public RuleDeck getRuleDeck() {
+		return this.ruleDeck;
 	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		RuleCard other = (RuleCard) obj;
-		if (card == null) {
-			if (other.card != null)
-				return false;
-		} else if (!card.equals(other.card))
-			return false;
-		if (id != other.id)
-			return false;
-		if (maxAmount != other.maxAmount)
-			return false;
-		if (ruleDeckId != other.ruleDeckId)
-			return false;
-		return true;
+
+	public void setRuleDeck(RuleDeck ruleDeck) {
+		this.ruleDeck = ruleDeck;
 	}
-	
-	
-	
+
 }

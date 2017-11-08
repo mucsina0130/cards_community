@@ -14,13 +14,13 @@ public class DeckListingService implements IDeckListingService {
 	private DeckDao deckimpl = new DeckImpl();
 	
 	@Override
-	public List<DeckData> listByUserId(int userId) {
+	public List<DeckData> listByUserId(long userId) {
 		List<Deck> deck = deckimpl.findByUserId(userId);
 		List<DeckData> result = new ArrayList<>();
 		for (Deck d : deck) {
 			DeckData ds = new DeckData();
-			ds.setName(d.getNAME());
-			ds.setGame(d.getGametype().getName());
+			ds.setName(d.getName());
+			ds.setGame(d.getGameType().getName());
 			result.add(ds);
 		}
 		return result;

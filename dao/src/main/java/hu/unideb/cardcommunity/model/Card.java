@@ -1,254 +1,203 @@
 package hu.unideb.cardcommunity.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToOne;
+import java.io.Serializable;
+import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.List;
 
+
+/**
+ * The persistent class for the CARD database table.
+ * 
+ */
 @Entity
-public class Card {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="CARD_ID")
-	int ID;
-	@ManyToOne
-	@JoinColumn(name="ID",referencedColumnName="ID")
-	GameType GAME_TYPE_ID;
-	String NAME;
-	String COST;
-	String DESCRIPTION;
-	String BATTLE_ATTRIBUTE_1;
-	String BATTLE_ATTRIBUTE_2;
-	String FIELD_1;
-	String FIELD_2;
-	String FIELD_3;
-	String FIELD_4;
-	String FIELD_5;
+public class Card implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-	public Card(GameType gAME_TYPE_ID, String nAME, String cOST, String dESCRIPTION, String bATTLE_ATTRIBUTE_1,
-			String bATTLE_ATTRIBUTE_2, String fIELD_1, String fIELD_2, String fIELD_3, String fIELD_4, String fIELD_5) {
-		super();
-		GAME_TYPE_ID = gAME_TYPE_ID;
-		NAME = nAME;
-		COST = cOST;
-		DESCRIPTION = dESCRIPTION;
-		BATTLE_ATTRIBUTE_1 = bATTLE_ATTRIBUTE_1;
-		BATTLE_ATTRIBUTE_2 = bATTLE_ATTRIBUTE_2;
-		FIELD_1 = fIELD_1;
-		FIELD_2 = fIELD_2;
-		FIELD_3 = fIELD_3;
-		FIELD_4 = fIELD_4;
-		FIELD_5 = fIELD_5;
-	}
+	@Id
+	private long id;
+
+	@Column(name="BATTLE_ATTRIBUTE_1")
+	private String battleAttribute1;
+
+	@Column(name="BATTLE_ATTRIBUTE_2")
+	private String battleAttribute2;
+
+	private String cost;
+
+	private String description;
+
+	@Column(name="FIELD_1")
+	private String field1;
+
+	@Column(name="FIELD_2")
+	private String field2;
+
+	@Column(name="FIELD_3")
+	private String field3;
+
+	@Column(name="FIELD_4")
+	private String field4;
+
+	@Column(name="FIELD_5")
+	private String field5;
+
+
+
+	@Column(name="GAME_TYPE_ID_GAME_TYPE_ID")
+	private BigDecimal gameTypeIdGameTypeId;
+
+	private String name;
+
+	//bi-directional many-to-one association to GameType
+	@ManyToOne
+	@JoinColumn(name="GAME_TYPE_ID")
+	private GameType gameType;
+
+	//bi-directional many-to-many association to Deck
+	@ManyToMany(mappedBy="cards")
+	private List<Deck> decks;
+
+	//bi-directional many-to-one association to RuleCard
+	@OneToMany(mappedBy="card")
+	private List<RuleCard> ruleCards;
 
 	public Card() {
-		super();
 	}
 
-	public Card(int iD, GameType gAME_TYPE_ID, String nAME, String cOST, String dESCRIPTION, String bATTLE_ATTRIBUTE_1,
-			String bATTLE_ATTRIBUTE_2, String fIELD_1, String fIELD_2, String fIELD_3, String fIELD_4, String fIELD_5) {
-		super();
-		ID = iD;
-		GAME_TYPE_ID = gAME_TYPE_ID;
-		NAME = nAME;
-		COST = cOST;
-		DESCRIPTION = dESCRIPTION;
-		BATTLE_ATTRIBUTE_1 = bATTLE_ATTRIBUTE_1;
-		BATTLE_ATTRIBUTE_2 = bATTLE_ATTRIBUTE_2;
-		FIELD_1 = fIELD_1;
-		FIELD_2 = fIELD_2;
-		FIELD_3 = fIELD_3;
-		FIELD_4 = fIELD_4;
-		FIELD_5 = fIELD_5;
+	public long getId() {
+		return this.id;
 	}
 
-	public int getID() {
-		return ID;
+	public void setId(long id) {
+		this.id = id;
 	}
 
-	public void setID(int iD) {
-		ID = iD;
+	public String getBattleAttribute1() {
+		return this.battleAttribute1;
 	}
 
-	public GameType getGAME_TYPE_ID() {
-		return GAME_TYPE_ID;
+	public void setBattleAttribute1(String battleAttribute1) {
+		this.battleAttribute1 = battleAttribute1;
 	}
 
-	public void setGAME_TYPE_ID(GameType gAME_TYPE_ID) {
-		GAME_TYPE_ID = gAME_TYPE_ID;
+	public String getBattleAttribute2() {
+		return this.battleAttribute2;
 	}
 
-	public String getNAME() {
-		return NAME;
+	public void setBattleAttribute2(String battleAttribute2) {
+		this.battleAttribute2 = battleAttribute2;
 	}
 
-	public void setNAME(String nAME) {
-		NAME = nAME;
+	public String getCost() {
+		return this.cost;
 	}
 
-	public String getCOST() {
-		return COST;
+	public void setCost(String cost) {
+		this.cost = cost;
 	}
 
-	public void setCOST(String cOST) {
-		COST = cOST;
+	public String getDescription() {
+		return this.description;
 	}
 
-	public String getDESCRIPTION() {
-		return DESCRIPTION;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public void setDESCRIPTION(String dESCRIPTION) {
-		DESCRIPTION = dESCRIPTION;
+
+	public String getField1() {
+		return this.field1;
 	}
 
-	public String getBATTLE_ATTRIBUTE_1() {
-		return BATTLE_ATTRIBUTE_1;
+	public void setField1(String field1) {
+		this.field1 = field1;
 	}
 
-	public void setBATTLE_ATTRIBUTE_1(String bATTLE_ATTRIBUTE_1) {
-		BATTLE_ATTRIBUTE_1 = bATTLE_ATTRIBUTE_1;
+	public String getField2() {
+		return this.field2;
 	}
 
-	public String getBATTLE_ATTRIBUTE_2() {
-		return BATTLE_ATTRIBUTE_2;
+	public void setField2(String field2) {
+		this.field2 = field2;
 	}
 
-	public void setBATTLE_ATTRIBUTE_2(String bATTLE_ATTRIBUTE_2) {
-		BATTLE_ATTRIBUTE_2 = bATTLE_ATTRIBUTE_2;
+	public String getField3() {
+		return this.field3;
 	}
 
-	public String getFIELD_1() {
-		return FIELD_1;
+	public void setField3(String field3) {
+		this.field3 = field3;
 	}
 
-	public void setFIELD_1(String fIELD_1) {
-		FIELD_1 = fIELD_1;
+	public String getField4() {
+		return this.field4;
 	}
 
-	public String getFIELD_2() {
-		return FIELD_2;
+	public void setField4(String field4) {
+		this.field4 = field4;
 	}
 
-	public void setFIELD_2(String fIELD_2) {
-		FIELD_2 = fIELD_2;
+	public String getField5() {
+		return this.field5;
 	}
 
-	public String getFIELD_3() {
-		return FIELD_3;
+	public void setField5(String field5) {
+		this.field5 = field5;
 	}
 
-	public void setFIELD_3(String fIELD_3) {
-		FIELD_3 = fIELD_3;
+	public BigDecimal getGameTypeIdGameTypeId() {
+		return this.gameTypeIdGameTypeId;
 	}
 
-	public String getFIELD_4() {
-		return FIELD_4;
+	public void setGameTypeIdGameTypeId(BigDecimal gameTypeIdGameTypeId) {
+		this.gameTypeIdGameTypeId = gameTypeIdGameTypeId;
 	}
 
-	public void setFIELD_4(String fIELD_4) {
-		FIELD_4 = fIELD_4;
+	public String getName() {
+		return this.name;
 	}
 
-	public String getFIELD_5() {
-		return FIELD_5;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public void setFIELD_5(String fIELD_5) {
-		FIELD_5 = fIELD_5;
+	public GameType getGameType() {
+		return this.gameType;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((BATTLE_ATTRIBUTE_1 == null) ? 0 : BATTLE_ATTRIBUTE_1.hashCode());
-		result = prime * result + ((BATTLE_ATTRIBUTE_2 == null) ? 0 : BATTLE_ATTRIBUTE_2.hashCode());
-		result = prime * result + ((COST == null) ? 0 : COST.hashCode());
-		result = prime * result + ((DESCRIPTION == null) ? 0 : DESCRIPTION.hashCode());
-		result = prime * result + ((FIELD_1 == null) ? 0 : FIELD_1.hashCode());
-		result = prime * result + ((FIELD_2 == null) ? 0 : FIELD_2.hashCode());
-		result = prime * result + ((FIELD_3 == null) ? 0 : FIELD_3.hashCode());
-		result = prime * result + ((FIELD_4 == null) ? 0 : FIELD_4.hashCode());
-		result = prime * result + ((FIELD_5 == null) ? 0 : FIELD_5.hashCode());
-		result = prime * result + ((GAME_TYPE_ID == null) ? 0 : GAME_TYPE_ID.hashCode());
-		result = prime * result + ID;
-		result = prime * result + ((NAME == null) ? 0 : NAME.hashCode());
-		return result;
+	public void setGameType(GameType gameType) {
+		this.gameType = gameType;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Card other = (Card) obj;
-		if (BATTLE_ATTRIBUTE_1 == null) {
-			if (other.BATTLE_ATTRIBUTE_1 != null)
-				return false;
-		} else if (!BATTLE_ATTRIBUTE_1.equals(other.BATTLE_ATTRIBUTE_1))
-			return false;
-		if (BATTLE_ATTRIBUTE_2 == null) {
-			if (other.BATTLE_ATTRIBUTE_2 != null)
-				return false;
-		} else if (!BATTLE_ATTRIBUTE_2.equals(other.BATTLE_ATTRIBUTE_2))
-			return false;
-		if (COST == null) {
-			if (other.COST != null)
-				return false;
-		} else if (!COST.equals(other.COST))
-			return false;
-		if (DESCRIPTION == null) {
-			if (other.DESCRIPTION != null)
-				return false;
-		} else if (!DESCRIPTION.equals(other.DESCRIPTION))
-			return false;
-		if (FIELD_1 == null) {
-			if (other.FIELD_1 != null)
-				return false;
-		} else if (!FIELD_1.equals(other.FIELD_1))
-			return false;
-		if (FIELD_2 == null) {
-			if (other.FIELD_2 != null)
-				return false;
-		} else if (!FIELD_2.equals(other.FIELD_2))
-			return false;
-		if (FIELD_3 == null) {
-			if (other.FIELD_3 != null)
-				return false;
-		} else if (!FIELD_3.equals(other.FIELD_3))
-			return false;
-		if (FIELD_4 == null) {
-			if (other.FIELD_4 != null)
-				return false;
-		} else if (!FIELD_4.equals(other.FIELD_4))
-			return false;
-		if (FIELD_5 == null) {
-			if (other.FIELD_5 != null)
-				return false;
-		} else if (!FIELD_5.equals(other.FIELD_5))
-			return false;
-		if (GAME_TYPE_ID == null) {
-			if (other.GAME_TYPE_ID != null)
-				return false;
-		} else if (!GAME_TYPE_ID.equals(other.GAME_TYPE_ID))
-			return false;
-		if (ID != other.ID)
-			return false;
-		if (NAME == null) {
-			if (other.NAME != null)
-				return false;
-		} else if (!NAME.equals(other.NAME))
-			return false;
-		return true;
+	public List<Deck> getDecks() {
+		return this.decks;
+	}
+
+	public void setDecks(List<Deck> decks) {
+		this.decks = decks;
+	}
+
+	public List<RuleCard> getRuleCards() {
+		return this.ruleCards;
+	}
+
+	public void setRuleCards(List<RuleCard> ruleCards) {
+		this.ruleCards = ruleCards;
+	}
+
+	public RuleCard addRuleCard(RuleCard ruleCard) {
+		getRuleCards().add(ruleCard);
+		ruleCard.setCard(this);
+
+		return ruleCard;
+	}
+
+	public RuleCard removeRuleCard(RuleCard ruleCard) {
+		getRuleCards().remove(ruleCard);
+		ruleCard.setCard(null);
+
+		return ruleCard;
 	}
 
 }

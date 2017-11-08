@@ -33,12 +33,12 @@ public class RuleDeckImpl implements RuleDeckDao{
 		return entities;
 	}
 
-	public RuleDeck findById(int id) {
+	public RuleDeck findById(long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public List<RuleDeck> findByDeckId(int id) {
+	public List<RuleDeck> findByDeckId(long id) {
 		EntityManager manager = EFMManager.getManager();
 		TypedQuery<RuleDeck> query = manager.createQuery("SELECT rd from RuleDeck rd where rd.ID:=ruledeckid", RuleDeck.class);
 		query.setParameter("ruledeckid", id);

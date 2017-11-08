@@ -1,125 +1,99 @@
 package hu.unideb.cardcommunity.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+import java.io.Serializable;
+import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.List;
 
+
+/**
+ * The persistent class for the DECK database table.
+ * 
+ */
 @Entity
+public class Deck implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-public class Deck {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="ID")
-	int ID;
+	private long id;
+
+	@Column(name="IS_PUBLIC")
+	private BigDecimal isPublic;
+
+	private String name;
+
+	//bi-directional many-to-one association to GameType
 	@ManyToOne
-	@JoinColumn(name="USER_ID",referencedColumnName="USER_ID")
-	UserAccount user_id;
+	@JoinColumn(name="GAME_TYPE_ID")
+	private GameType gameType;
+
+	//bi-directional many-to-one association to UserAccount
 	@ManyToOne
-	@JoinColumn(name="ID",referencedColumnName="ID")
-	GameType gametype;
-	String NAME;
-	int IS_PUBLIC;
-	
+	@JoinColumn(name="USER_ID")
+	private UserAccount userAccount;
+
+	//bi-directional many-to-many association to Card
+	@ManyToMany
+	@JoinTable(
+		name="DECK_CARDLIST"
+		, joinColumns={
+			@JoinColumn(name="DECK_ID")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="CARD_ID")
+			}
+		)
+	private List<Card> cards;
+
 	public Deck() {
-		super();
 	}
 
-	public Deck(int iD, UserAccount user, GameType gametype, String nAME, int nUMBER, int iS_PUBLIC) {
-		super();
-		ID = iD;
-		this.user_id = user;
-		this.gametype = gametype;
-		NAME = nAME;
-		IS_PUBLIC = iS_PUBLIC;
+	public long getId() {
+		return this.id;
 	}
 
-	public int getID() {
-		return ID;
+	public void setId(long id) {
+		this.id = id;
 	}
 
-	public void setID(int iD) {
-		ID = iD;
+	public BigDecimal getIsPublic() {
+		return this.isPublic;
 	}
 
-	public UserAccount getUser() {
-		return user_id;
+	public void setIsPublic(BigDecimal isPublic) {
+		this.isPublic = isPublic;
 	}
 
-	public void setUser(UserAccount user) {
-		this.user_id = user;
+	public String getName() {
+		return this.name;
 	}
 
-	public GameType getGametype() {
-		return gametype;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public void setGametype(GameType gametype) {
-		this.gametype = gametype;
+	public GameType getGameType() {
+		return this.gameType;
 	}
 
-	public String getNAME() {
-		return NAME;
+	public void setGameType(GameType gameType) {
+		this.gameType = gameType;
 	}
 
-	public void setNAME(String nAME) {
-		NAME = nAME;
+	public UserAccount getUserAccount() {
+		return this.userAccount;
 	}
 
-	public int getIS_PUBLIC() {
-		return IS_PUBLIC;
+	public void setUserAccount(UserAccount userAccount) {
+		this.userAccount = userAccount;
 	}
 
-	public void setIS_PUBLIC(int iS_PUBLIC) {
-		IS_PUBLIC = iS_PUBLIC;
+	public List<Card> getCards() {
+		return this.cards;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ID;
-		result = prime * result + IS_PUBLIC;
-		result = prime * result + ((NAME == null) ? 0 : NAME.hashCode());
-		result = prime * result + ((gametype == null) ? 0 : gametype.hashCode());
-		result = prime * result + ((user_id == null) ? 0 : user_id.hashCode());
-		return result;
+	public void setCards(List<Card> cards) {
+		this.cards = cards;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Deck other = (Deck) obj;
-		if (ID != other.ID)
-			return false;
-		if (IS_PUBLIC != other.IS_PUBLIC)
-			return false;
-		if (NAME == null) {
-			if (other.NAME != null)
-				return false;
-		} else if (!NAME.equals(other.NAME))
-			return false;
-		if (gametype == null) {
-			if (other.gametype != null)
-				return false;
-		} else if (!gametype.equals(other.gametype))
-			return false;
-		if (user_id == null) {
-			if (other.user_id != null)
-				return false;
-		} else if (!user_id.equals(other.user_id))
-			return false;
-		return true;
-	}
-
-	
-	
 }

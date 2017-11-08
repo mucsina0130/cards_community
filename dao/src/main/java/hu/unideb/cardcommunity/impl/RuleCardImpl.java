@@ -25,7 +25,7 @@ public class RuleCardImpl implements RuleCardDao {
 		return null;
 	}
 
-	public RuleCard findById(int id) {
+	public RuleCard findById(long id) {
 		EntityManager manager = EFMManager.getManager();
 		TypedQuery<RuleCard> query = manager.createQuery("SELECT rc from RuleCard rc where rc.ID:=id", RuleCard.class);
 		query.setParameter("id", id);

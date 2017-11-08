@@ -1,105 +1,110 @@
 package hu.unideb.cardcommunity.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
 
+
+/**
+ * The persistent class for the USER_ACCOUNT database table.
+ * 
+ */
 @Entity
-public class UserAccount {
+@Table(name="USER_ACCOUNT")
+public class UserAccount implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="USER_ID")
-	int user_id;
-	String user_name;
-	String password;
-	String mail_address;
-	
+	private long id;
+
+	@Column(name="MAIL_ADDRESS")
+	private String mailAddress;
+
+	private String password;
+
+	@Column(name="USER_NAME")
+	private String userName;
+
+	//bi-directional many-to-one association to Deck
+	@OneToMany(mappedBy="userAccount")
+	private List<Deck> decks;
+
+	//bi-directional many-to-many association to GameType
+	@ManyToMany
+	@JoinTable(
+		name="GAME_OWNER"
+		, joinColumns={
+			@JoinColumn(name="USER_ID")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="GAME_TYPE_ID")
+			}
+		)
+	private List<GameType> gameTypes;
+
 	public UserAccount() {
-		super();
 	}
 
-	public UserAccount(String user_name, String password, String mail_address) {
-		super();
-		this.user_name = user_name;
-		this.password = password;
-		this.mail_address = mail_address;
-	}
-	
-	public UserAccount(int id, String user_name, String password, String mail_address) {
-		super();
-		this.user_id = id;
-		this.user_name = user_name;
-		this.password = password;
-		this.mail_address = mail_address;
+	public long getId() {
+		return this.id;
 	}
 
-	public int getId() {
-		return user_id;
+	public void setId(long id) {
+		this.id = id;
 	}
-	public void setId(int id) {
-		this.user_id = id;
+
+	public String getMailAddress() {
+		return this.mailAddress;
 	}
-	public String getUser_name() {
-		return user_name;
-	}
-	public void setUser_name(String user_name) {
-		this.user_name = user_name;
+
+	public void setMailAddress(String mailAddress) {
+		this.mailAddress = mailAddress;
 	}
 
 	public String getPassword() {
-		return password;
+		return this.password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getMail_address() {
-		return mail_address;
-	}
-	public void setMail_address(String mail_address) {
-		this.mail_address = mail_address;
+
+	public String getUserName() {
+		return this.userName;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + user_id;
-		result = prime * result + ((mail_address == null) ? 0 : mail_address.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((user_name == null) ? 0 : user_name.hashCode());
-		return result;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		UserAccount other = (UserAccount) obj;
-		if (user_id != other.user_id)
-			return false;
-		if (mail_address == null) {
-			if (other.mail_address != null)
-				return false;
-		} else if (!mail_address.equals(other.mail_address))
-			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		if (user_name == null) {
-			if (other.user_name != null)
-				return false;
-		} else if (!user_name.equals(other.user_name))
-			return false;
-		return true;
+	public List<Deck> getDecks() {
+		return this.decks;
 	}
-	
-	
+
+	public void setDecks(List<Deck> decks) {
+		this.decks = decks;
+	}
+
+	public Deck addDeck(Deck deck) {
+		getDecks().add(deck);
+		deck.setUserAccount(this);
+
+		return deck;
+	}
+
+	public Deck removeDeck(Deck deck) {
+		getDecks().remove(deck);
+		deck.setUserAccount(null);
+
+		return deck;
+	}
+
+	public List<GameType> getGameTypes() {
+		return this.gameTypes;
+	}
+
+	public void setGameTypes(List<GameType> gameTypes) {
+		this.gameTypes = gameTypes;
+	}
+
 }

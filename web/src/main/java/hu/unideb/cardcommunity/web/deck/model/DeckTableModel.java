@@ -31,7 +31,8 @@ public class DeckTableModel extends LazyDataModel<DeckData> {
 
 	public DeckTableModel() {
 		decklist = new DeckListingService();
-		decks = decklist.listByUserId(1);
+		long id=1;
+		decks = decklist.listByUserId(id);
 	}
 
 	@Override

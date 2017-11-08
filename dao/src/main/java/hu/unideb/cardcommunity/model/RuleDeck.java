@@ -1,92 +1,117 @@
 package hu.unideb.cardcommunity.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import java.io.Serializable;
+import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.List;
 
+
+/**
+ * The persistent class for the RULE_DECK database table.
+ * 
+ */
 @Entity
-public class RuleDeck {
+@Table(name="RULE_DECK")
+public class RuleDeck implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="RULE_DECK_ID")
-	int id;
-	int minQuantity;
-	int maxQuantity;
-	int standardCardQuantity;
-	
+	private long id;
+
+	@Column(name="MAX_QUANTITY")
+	private BigDecimal maxQuantity;
+
+	@Column(name="MIN_QUANTITY")
+	private BigDecimal minQuantity;
+
+	@Column(name="STANDARD_CARD_QUANTITY")
+	private BigDecimal standardCardQuantity;
+
+	//bi-directional many-to-one association to GameType
+	@OneToMany(mappedBy="ruleDeck")
+	private List<GameType> gameTypes;
+
+	//bi-directional many-to-one association to RuleCard
+	@OneToMany(mappedBy="ruleDeck")
+	private List<RuleCard> ruleCards;
+
 	public RuleDeck() {
-		super();
 	}
-	public RuleDeck(int id, int minQuantity, int maxQuantity, int standardCardQuantity) {
-		super();
-		this.id = id;
-		this.minQuantity = minQuantity;
-		this.maxQuantity = maxQuantity;
-		this.standardCardQuantity = standardCardQuantity;
+
+	public long getId() {
+		return this.id;
 	}
-	public RuleDeck(int minQuantity, int maxQuantity, int standardCardQuantity) {
-		super();
-		this.minQuantity = minQuantity;
-		this.maxQuantity = maxQuantity;
-		this.standardCardQuantity = standardCardQuantity;
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
+
+	public void setId(long id) {
 		this.id = id;
 	}
-	public int getMinQuantity() {
-		return minQuantity;
+
+	public BigDecimal getMaxQuantity() {
+		return this.maxQuantity;
 	}
-	public void setMinQuantity(int minQuantity) {
-		this.minQuantity = minQuantity;
-	}
-	public int getMaxQuantity() {
-		return maxQuantity;
-	}
-	public void setMaxQuantity(int maxQuantity) {
+
+	public void setMaxQuantity(BigDecimal maxQuantity) {
 		this.maxQuantity = maxQuantity;
 	}
-	public int getStandardCardQuantity() {
-		return standardCardQuantity;
+
+	public BigDecimal getMinQuantity() {
+		return this.minQuantity;
 	}
-	public void setStandardCardQuantity(int standardCardQuantity) {
+
+	public void setMinQuantity(BigDecimal minQuantity) {
+		this.minQuantity = minQuantity;
+	}
+
+	public BigDecimal getStandardCardQuantity() {
+		return this.standardCardQuantity;
+	}
+
+	public void setStandardCardQuantity(BigDecimal standardCardQuantity) {
 		this.standardCardQuantity = standardCardQuantity;
 	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + id;
-		result = prime * result + maxQuantity;
-		result = prime * result + minQuantity;
-		result = prime * result + standardCardQuantity;
-		return result;
+
+	public List<GameType> getGameTypes() {
+		return this.gameTypes;
 	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		RuleDeck other = (RuleDeck) obj;
-		if (id != other.id)
-			return false;
-		if (maxQuantity != other.maxQuantity)
-			return false;
-		if (minQuantity != other.minQuantity)
-			return false;
-		if (standardCardQuantity != other.standardCardQuantity)
-			return false;
-		return true;
+
+	public void setGameTypes(List<GameType> gameTypes) {
+		this.gameTypes = gameTypes;
 	}
-	
-	
+
+	public GameType addGameType(GameType gameType) {
+		getGameTypes().add(gameType);
+		gameType.setRuleDeck(this);
+
+		return gameType;
+	}
+
+	public GameType removeGameType(GameType gameType) {
+		getGameTypes().remove(gameType);
+		gameType.setRuleDeck(null);
+
+		return gameType;
+	}
+
+	public List<RuleCard> getRuleCards() {
+		return this.ruleCards;
+	}
+
+	public void setRuleCards(List<RuleCard> ruleCards) {
+		this.ruleCards = ruleCards;
+	}
+
+	public RuleCard addRuleCard(RuleCard ruleCard) {
+		getRuleCards().add(ruleCard);
+		ruleCard.setRuleDeck(this);
+
+		return ruleCard;
+	}
+
+	public RuleCard removeRuleCard(RuleCard ruleCard) {
+		getRuleCards().remove(ruleCard);
+		ruleCard.setRuleDeck(null);
+
+		return ruleCard;
+	}
+
 }

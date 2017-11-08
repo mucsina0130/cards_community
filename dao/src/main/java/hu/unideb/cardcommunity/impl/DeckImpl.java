@@ -31,22 +31,22 @@ public class DeckImpl implements DeckDao {
 		return entities;
 	}
 
-	public List<Deck> findByName(String name, int userId) {
+	public List<Deck> findByName(String name, long userId) {
 		EntityManager manager = EFMManager.getManager();
-		TypedQuery<Deck> query = manager.createQuery("SELECT de from Deck de where de.USER_ID:=id and de.NAME:=name", Deck.class);
+		TypedQuery<Deck> query = manager.createQuery("SELECT de from Deck de join de.userAccount u where u.id=:user and de.NAME:=name", Deck.class);
 		query.setParameter("id", userId);
 		query.setParameter("name", name);
 		return  query.getResultList();
 	}
 	
-	public List<Deck> findByUserId(int userId) {
+	public List<Deck> findByUserId(long userId) {
 		EntityManager manager = EFMManager.getManager();
-		TypedQuery<Deck> query = manager.createQuery("SELECT de from Deck de join de.user_id u where u.user_id=:user", Deck.class);
+		TypedQuery<Deck> query = manager.createQuery("SELECT de from Deck de join de.userAccount u where u.id=:user", Deck.class);
 		query.setParameter("user", userId);
 		return  query.getResultList();
 	}
 
-	public List<Deck> findAll(int gameTypeId, int userId) {
+	public List<Deck> findAll(long gameTypeId, long userId) {
 		EntityManager manager = EFMManager.getManager();
 		TypedQuery<Deck> query = manager.createQuery("SELECT de from Deck de where de.USER_ID:=id and de.GAME_TYPE_ID:=gid", Deck.class);
 		query.setParameter("id", userId);

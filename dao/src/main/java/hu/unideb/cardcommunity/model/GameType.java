@@ -1,132 +1,178 @@
 package hu.unideb.cardcommunity.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.MappedSuperclass;
+import java.io.Serializable;
+import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.List;
 
+
+/**
+ * The persistent class for the GAME_TYPE database table.
+ * 
+ */
 @Entity
-public class GameType {
+@Table(name="GAME_TYPE")
+public class GameType implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="ID")
-	int ID;
+	private long id;
+
+	@Column(name="IS_PUBLIC")
+	private BigDecimal isPublic;
+
+	private String name;
+
+	@Column(name="RULE_OF_THE_GAME")
+	private String ruleOfTheGame;
+
+	@Column(name="SHOR_DESCRIPTION")
+	private String shorDescription;
+
+	//bi-directional many-to-one association to Card
+	@OneToMany(mappedBy="gameType")
+	private List<Card> cards;
+
+	//bi-directional many-to-one association to CardMapper
+	@OneToMany(mappedBy="gameType")
+	private List<CardMapper> cardMappers;
+
+	//bi-directional many-to-one association to Deck
+	@OneToMany(mappedBy="gameType")
+	private List<Deck> decks;
+
+	//bi-directional many-to-many association to UserAccount
+	@ManyToMany(mappedBy="gameTypes")
+	private List<UserAccount> userAccounts;
+
+	//bi-directional many-to-one association to RuleDeck
 	@ManyToOne
-	@JoinColumn(name="RULE_DECK_ID", referencedColumnName="RULE_DECK_ID")
-	RuleDeck ruleDeck;
-	String name;
-	String shortDesc;
-	String gameRule;
-	int isPublic;
-	
+	@JoinColumn(name="RULE_DECK_ID")
+	private RuleDeck ruleDeck;
+
 	public GameType() {
-		super();
 	}
-	public GameType(int id, RuleDeck ruleDeckId, String name, String shortDesc, String gameRule, int isPublic) {
-		super();
-		this.ID = id;
-		this.ruleDeck = ruleDeckId;
-		this.name = name;
-		this.shortDesc = shortDesc;
-		this.gameRule = gameRule;
+
+	public long getId() {
+		return this.id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public BigDecimal getIsPublic() {
+		return this.isPublic;
+	}
+
+	public void setIsPublic(BigDecimal isPublic) {
 		this.isPublic = isPublic;
 	}
-	public GameType(RuleDeck ruleDeckId, String name, String shortDesc, String gameRule, int isPublic) {
-		super();
-		this.ruleDeck = ruleDeckId;
-		this.name = name;
-		this.shortDesc = shortDesc;
-		this.gameRule = gameRule;
-		this.isPublic = isPublic;
-	}
-	public int getId() {
-		return ID;
-	}
-	public void setId(int id) {
-		this.ID = id;
-	}
-	public RuleDeck getRuleDeckId() {
-		return ruleDeck;
-	}
-	public void setRuleDeckId(RuleDeck ruleDeckId) {
-		this.ruleDeck = ruleDeckId;
-	}
+
 	public String getName() {
-		return name;
+		return this.name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getShortDesc() {
-		return shortDesc;
+
+	public String getRuleOfTheGame() {
+		return this.ruleOfTheGame;
 	}
-	public void setShortDesc(String shortDesc) {
-		this.shortDesc = shortDesc;
+
+	public void setRuleOfTheGame(String ruleOfTheGame) {
+		this.ruleOfTheGame = ruleOfTheGame;
 	}
-	public String getGameRule() {
-		return gameRule;
+
+	public String getShorDescription() {
+		return this.shorDescription;
 	}
-	public void setGameRule(String gameRule) {
-		this.gameRule = gameRule;
+
+	public void setShorDescription(String shorDescription) {
+		this.shorDescription = shorDescription;
 	}
-	public int getIsPublic() {
-		return isPublic;
+
+	public List<Card> getCards() {
+		return this.cards;
 	}
-	public void setIsPublic(int isPublic) {
-		this.isPublic = isPublic;
+
+	public void setCards(List<Card> cards) {
+		this.cards = cards;
 	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((gameRule == null) ? 0 : gameRule.hashCode());
-		result = prime * result + ID;
-		result = prime * result + isPublic;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((ruleDeck == null) ? 0 : ruleDeck.hashCode());
-		result = prime * result + ((shortDesc == null) ? 0 : shortDesc.hashCode());
-		return result;
+
+	public Card addCard(Card card) {
+		getCards().add(card);
+		card.setGameType(this);
+
+		return card;
 	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		GameType other = (GameType) obj;
-		if (gameRule == null) {
-			if (other.gameRule != null)
-				return false;
-		} else if (!gameRule.equals(other.gameRule))
-			return false;
-		if (ID != other.ID)
-			return false;
-		if (isPublic != other.isPublic)
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (ruleDeck == null) {
-			if (other.ruleDeck != null)
-				return false;
-		} else if (!ruleDeck.equals(other.ruleDeck))
-			return false;
-		if (shortDesc == null) {
-			if (other.shortDesc != null)
-				return false;
-		} else if (!shortDesc.equals(other.shortDesc))
-			return false;
-		return true;
+
+	public Card removeCard(Card card) {
+		getCards().remove(card);
+		card.setGameType(null);
+
+		return card;
 	}
-	
-	
+
+	public List<CardMapper> getCardMappers() {
+		return this.cardMappers;
+	}
+
+	public void setCardMappers(List<CardMapper> cardMappers) {
+		this.cardMappers = cardMappers;
+	}
+
+	public CardMapper addCardMapper(CardMapper cardMapper) {
+		getCardMappers().add(cardMapper);
+		cardMapper.setGameType(this);
+
+		return cardMapper;
+	}
+
+	public CardMapper removeCardMapper(CardMapper cardMapper) {
+		getCardMappers().remove(cardMapper);
+		cardMapper.setGameType(null);
+
+		return cardMapper;
+	}
+
+	public List<Deck> getDecks() {
+		return this.decks;
+	}
+
+	public void setDecks(List<Deck> decks) {
+		this.decks = decks;
+	}
+
+	public Deck addDeck(Deck deck) {
+		getDecks().add(deck);
+		deck.setGameType(this);
+
+		return deck;
+	}
+
+	public Deck removeDeck(Deck deck) {
+		getDecks().remove(deck);
+		deck.setGameType(null);
+
+		return deck;
+	}
+
+	public List<UserAccount> getUserAccounts() {
+		return this.userAccounts;
+	}
+
+	public void setUserAccounts(List<UserAccount> userAccounts) {
+		this.userAccounts = userAccounts;
+	}
+
+	public RuleDeck getRuleDeck() {
+		return this.ruleDeck;
+	}
+
+	public void setRuleDeck(RuleDeck ruleDeck) {
+		this.ruleDeck = ruleDeck;
+	}
+
 }

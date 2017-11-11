@@ -42,8 +42,8 @@ public class CardImpl implements CardDao {
 
 	public Card findByName(String name) {
 		EntityManager manager = EFMManager.getManager();
-		TypedQuery<Card> query = manager.createQuery("SELECT ca from Card ca where ca.NAME=:name", Card.class);
-		query.setParameter("name", name);
+		TypedQuery<Card> query = manager.createQuery("SELECT ca from Card ca where ca.NAME=:cardName", Card.class);
+		query.setParameter("cardName", name);
 		return (Card) query.getResultList();
 
 	}

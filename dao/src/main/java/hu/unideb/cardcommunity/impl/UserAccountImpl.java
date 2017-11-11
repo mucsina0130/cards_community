@@ -32,8 +32,10 @@ public class UserAccountImpl implements UserAccountDao {
 	}
 
 	public UserAccount findById(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		EntityManager manager = EFMManager.getManager();
+		TypedQuery<UserAccount> query = manager.createQuery("SELECT ua from UserAccount ua where ua.id:=uid", UserAccount.class);
+		query.setParameter("uid", id);
+		return (UserAccount) query.getResultList();
 	}
 
 	public List<UserAccount> findByName(String username) {

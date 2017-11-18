@@ -5,7 +5,8 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
 <h:head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -43,18 +44,23 @@ body, h1, h2, h3, h4, h5, h6, .w3-wide {
 	</div>
 	<div class="w3-padding-64 w3-large w3-text-grey"
 		style="font-weight: bold">
+		<sec:authorize ifAnyGranted="ROLE_USER">
 		<a href="/cards/games.xhtml" class="w3-bar-item w3-button #{view.viewId eq '/games.xhtml' ? 'w3-light-grey' : ''}">Játékok</a> 
 		<a href="#" class="w3-bar-item w3-button #{view.viewId eq '/menu2.xhtml' ? 'w3-light-grey' : ''}">Menü</a>
 		    <div id="demoAcc" class="w3-bar-block w3-padding-large w3-medium"
 		    style=   "padding-top: 0px !important; padding-bottom: 0px !important;">
-      <a href="/cards/decks.xhtml" class="w3-bar-item w3-button #{view.viewId eq '/cards/decks.xhtml' ? 'w3-light-grey' : ''}">Paklik</a>
-      <a href="/cards/newdeck.xhtml" class="w3-bar-item w3-button #{view.viewId eq '/cards/newdeck.xhtml' ? 'w3-light-grey' : ''}">Új Pakli</a>
-
-    </div>
-		<a href="/menu3.xhtml" class="#{view.viewId eq '/menu3.xhtml' ? 'w3-bar-item w3-button w3-light-grey' : 'w3-bar-item w3-button'}">Menu3</a>
-
-
-</div>
+      			<a href="/cards/decks.xhtml" class="w3-bar-item w3-button #{view.viewId eq '/cards/decks.xhtml' ? 'w3-light-grey' : ''}">Paklik</a>
+      			<a href="/cards/newdeck.xhtml" class="w3-bar-item w3-button #{view.viewId eq '/cards/newdeck.xhtml' ? 'w3-light-grey' : ''}">Új Pakli</a>
+  			</div>
+		</sec:authorize>
+		<sec:authorize ifNotGranted="ROLE_USER">
+		<a href="/index.xhtml" class="#{view.viewId eq '/index.xhtml' ? 'w3-bar-item w3-button w3-light-grey' : 'w3-bar-item w3-button'}">Bejelentkezés</a>
+		</sec:authorize>
+		<a href="/menu3.xhtml" class="#{view.viewId eq '/menu3.xhtml' ? 'w3-bar-item w3-button w3-light-grey' : 'w3-bar-item w3-button'}">Publikus Paklik</a>
+		<sec:authorize ifAnyGranted="ROLE_USER">
+		<a href="/logout" class="w3-bar-item w3-button">Kijelentkezés</a>
+		</sec:authorize>
+	</div>
 </nav>
 <!-- Top menu on small screens -->
 <header class="w3-bar w3-top w3-hide-large w3-black w3-xlarge">

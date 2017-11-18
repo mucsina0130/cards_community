@@ -6,9 +6,21 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 <ui:composition template="template/layout.xhtml">
     <ui:define name="content">
-        <h:form id="productForm">
-			<p:outputLabel value="szia"/>
-        </h:form>
+        <form name="f" action="/login" method="post">
+      <table>
+         <tr>
+            <td>User:</td>
+            <td><input type="text" name="username" value=""/></td>
+         </tr>
+         <tr>
+            <td>Password:</td>
+            <td><input type="password" name="password" /></td>
+         </tr>
+         <tr>
+            <td><input name="submit" type="submit" value="submit" /></td>
+         </tr>
+      </table>
+  </form>
     </ui:define>
 </ui:composition>
 </html>

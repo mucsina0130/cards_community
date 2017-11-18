@@ -13,14 +13,25 @@ import org.primefaces.model.SortOrder;
 import hu.unideb.cardcommunity.service.deck.DeckListingService;
 import hu.unideb.cardcommunity.service.deck.api.IDeckListingService;
 import hu.unideb.cardcommunity.service.deck.model.DeckData;
+import hu.unideb.cardcommunity.web.security.MyUserDetailsService;
+import hu.unideb.cardcommunity.web.session.MySessionInfo;
 
 public class DeckTableModel extends LazyDataModel<DeckData> { 
 	private IDeckListingService decklist;
 	private List<DeckData> decks;
 	private Integer game;
 
+	private MySessionInfo mySessionInfo;
 	
 	
+	public MySessionInfo getMySessionInfo() {
+		return mySessionInfo;
+	}
+
+	public void setMySessionInfo(MySessionInfo mySessionInfo) {
+		this.mySessionInfo = mySessionInfo;
+	}
+
 	public Integer getGame() {
 		return game;
 	}
@@ -29,10 +40,9 @@ public class DeckTableModel extends LazyDataModel<DeckData> {
 		this.game = game;
 	}
 
-	public DeckTableModel() {
+	public DeckTableModel(MySessionInfo msi) {
 		decklist = new DeckListingService();
-		long id=1;
-		decks = decklist.listByUserId(id);
+		decks = decklist.listByUserId(msi.getCurrentUser().getId());
 	}
 
 	@Override

@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,7 @@ import hu.unideb.cardcommunity.service.game.GameListingService;
 import hu.unideb.cardcommunity.service.game.api.IGameListingService;
 import hu.unideb.cardcommunity.service.game.model.GameData;
 import hu.unideb.cardcommunity.web.deck.model.DeckTableModel;
+import hu.unideb.cardcommunity.web.session.MySessionInfo;
 
 @Component
 @Scope("view")
@@ -24,7 +26,10 @@ public class DecksController implements Serializable {
 	private List<SelectItem> games;
 	private IGameListingService gls = new GameListingService();
 	private Integer selectGame;
-
+	
+	@Autowired
+	private MySessionInfo mySessionInfo;
+	
 	@PostConstruct
 	public void init() {
 		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
@@ -63,7 +68,7 @@ public class DecksController implements Serializable {
 	public DeckTableModel getTableModel() {
 		if (tableModel == null) {
 
-			tableModel = new DeckTableModel();
+			tableModel = new DeckTableModel(mySessionInfo);
 		}
 		return tableModel;
 	}

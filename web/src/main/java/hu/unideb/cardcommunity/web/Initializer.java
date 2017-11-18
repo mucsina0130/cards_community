@@ -14,6 +14,7 @@ public class Initializer implements ServletContextInitializer {
 		sc.setInitParameter("primefaces.CLIENT_SIDE_VALIDATION", "true");
 		sc.setInitParameter("primefaces.THEME", "bootstrap");
 		sc.setInitParameter("javax.faces.PROJECT_STAGE", "Development");
+		sc.setInitParameter("javax.faces.FACELETS_LIBRARIES", "/WEB-INF/springsecurity.taglib.xml");
 		
 	}
 

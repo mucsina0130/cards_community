@@ -1,4 +1,4 @@
-package hu.unideb.corcommunity.service.deck.api;
+package hu.unideb.cardcommunity.service.deck.api;
 
 import java.util.List;
 

@@ -10,9 +10,9 @@ import java.util.Optional;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
+import hu.unideb.cardcommunity.service.deck.DeckListingService;
+import hu.unideb.cardcommunity.service.deck.api.IDeckListingService;
 import hu.unideb.cardcommunity.service.deck.model.DeckData;
-import hu.unideb.corcommunity.service.deck.DeckListingService;
-import hu.unideb.corcommunity.service.deck.api.IDeckListingService;
 
 public class DeckTableModel extends LazyDataModel<DeckData> { 
 	private IDeckListingService decklist;

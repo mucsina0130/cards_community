@@ -1,4 +1,4 @@
-package hu.unideb.corcommunity.service.deck;
+package hu.unideb.cardcommunity.service.deck;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,8 +6,8 @@ import java.util.List;
 import hu.unideb.cardcommunity.api.DeckDao;
 import hu.unideb.cardcommunity.impl.DeckImpl;
 import hu.unideb.cardcommunity.model.Deck;
+import hu.unideb.cardcommunity.service.deck.api.IDeckListingService;
 import hu.unideb.cardcommunity.service.deck.model.DeckData;
-import hu.unideb.corcommunity.service.deck.api.IDeckListingService;
 
 
 public class DeckListingService implements IDeckListingService {

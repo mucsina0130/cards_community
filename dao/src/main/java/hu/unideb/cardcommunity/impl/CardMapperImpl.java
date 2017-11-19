@@ -33,7 +33,7 @@ public class CardMapperImpl implements CardMapperDao {
 
 	public CardMapper findByGameTypeId(long id) {
 		EntityManager manager = EFMManager.getManager();
-		TypedQuery<CardMapper> query = manager.createQuery("SELECT cm from CardMapper cm join cm.gameType gt where gt.gameType:=id", CardMapper.class);
+		TypedQuery<CardMapper> query = manager.createQuery("SELECT cm from CardMapper cm join cm.gameType gt where gt.gameType=:id", CardMapper.class);
 		query.setParameter("id", id);
 		return (CardMapper) query.getResultList();
 	}
@@ -47,7 +47,7 @@ public class CardMapperImpl implements CardMapperDao {
 	@Override
 	public CardMapper findById(long id) {
 		EntityManager manager = EFMManager.getManager();
-		TypedQuery<CardMapper> query = manager.createQuery("SELECT cm from CardMapper cm where cm.id:=id", CardMapper.class);
+		TypedQuery<CardMapper> query = manager.createQuery("SELECT cm from CardMapper cm where cm.id=:id", CardMapper.class);
 		query.setParameter("id", id);
 		return (CardMapper) query.getResultList();
 	}

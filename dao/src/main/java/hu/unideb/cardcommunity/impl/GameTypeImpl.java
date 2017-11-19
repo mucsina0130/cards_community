@@ -40,7 +40,7 @@ public class GameTypeImpl implements GameTypeDao{
 	@Override
 	public List<GameType> findById(long gameTypeId) {
 		EntityManager manager = EFMManager.getManager();
-		TypedQuery<GameType> query = manager.createQuery("SELECT gt from GameType gt where gt.id:=gameTypeId", GameType.class);
+		TypedQuery<GameType> query = manager.createQuery("SELECT gt from GameType gt where gt.id=:gameTypeId", GameType.class);
 		query.setParameter("gameTypeId", gameTypeId);
 		return query.getResultList();
 	}

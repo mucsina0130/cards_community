@@ -33,14 +33,15 @@ public class UserAccountImpl implements UserAccountDao {
 
 	public UserAccount findById(long id) {
 		EntityManager manager = EFMManager.getManager();
-		TypedQuery<UserAccount> query = manager.createQuery("SELECT ua from UserAccount ua where ua.id:=uid", UserAccount.class);
+		TypedQuery<UserAccount> query = manager.createQuery("SELECT ua from UserAccount ua where ua.id=:uid", UserAccount.class);
 		query.setParameter("uid", id);
 		return (UserAccount) query.getResultList();
 	}
 
 	public List<UserAccount> findByName(String username) {
+		System.out.println("Trying to load data:" + username);
 		EntityManager manager = EFMManager.getManager();
-		TypedQuery<UserAccount> query = manager.createQuery("SELECT ua from UserAccount ua where UPPER(ua.userName):=UPPER(uname)", UserAccount.class);
+		TypedQuery<UserAccount> query = manager.createQuery("SELECT ua from UserAccount ua where ua.userName=:uname ", UserAccount.class);
 		query.setParameter("uname", username);
 		
 		return query.getResultList();

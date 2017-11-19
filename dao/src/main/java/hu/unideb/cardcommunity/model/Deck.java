@@ -32,6 +32,7 @@ public class Deck implements Serializable {
 	@JoinColumn(name="USER_ID")
 	private UserAccount userAccount;
 
+	@Column(name="IS_DELETED")
 	private long isDeleted;
 	
 	//bi-directional many-to-many association to Card

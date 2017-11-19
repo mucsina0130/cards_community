@@ -32,6 +32,8 @@ public class Deck implements Serializable {
 	@JoinColumn(name="USER_ID")
 	private UserAccount userAccount;
 
+	private long isDeleted;
+	
 	//bi-directional many-to-many association to Card
 	@ManyToMany
 	@JoinTable(
@@ -96,4 +98,14 @@ public class Deck implements Serializable {
 		this.cards = cards;
 	}
 
+	public long getIsDeleted() {
+		return isDeleted;
+	}
+
+	public void setIsDeleted(long isDeleted) {
+		this.isDeleted = isDeleted;
+	}
+
+	
+	
 }

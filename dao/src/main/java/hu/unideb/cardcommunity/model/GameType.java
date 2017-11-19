@@ -16,6 +16,8 @@ public class GameType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(generator="seqGameTypeGen")
+	@SequenceGenerator(name="seqGameTypeGen",sequenceName="gameType_seq", allocationSize=1)
 	private long id;
 
 	@Column(name="IS_PUBLIC")

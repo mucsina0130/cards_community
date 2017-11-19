@@ -15,6 +15,8 @@ public class Card implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(generator="seqCardGen")
+	@SequenceGenerator(name="seqCardGen",sequenceName="card_seq", allocationSize=1)
 	private long id;
 
 	@Column(name="BATTLE_ATTRIBUTE_1")

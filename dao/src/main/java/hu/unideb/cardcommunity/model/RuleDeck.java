@@ -16,6 +16,8 @@ public class RuleDeck implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(generator="seqRuleDeckGen")
+	@SequenceGenerator(name="seqRuleDeckGen",sequenceName="ruleDeck_seq", allocationSize=1)
 	private long id;
 
 	@Column(name="MAX_QUANTITY")

@@ -33,24 +33,30 @@ public class DeckImpl implements DeckDao {
 
 	public List<Deck> findByName(String name, long userId) {
 		EntityManager manager = EFMManager.getManager();
-		TypedQuery<Deck> query = manager.createQuery("SELECT de from Deck de join de.userAccount u where u.id=:user and de.NAME:=name", Deck.class);
+		long nonDeleted =0;
+		TypedQuery<Deck> query = manager.createQuery("SELECT de from Deck de join de.userAccount u where u.id=:user and de.NAME:=name and de.isDeleted=:nondeleted", Deck.class);
 		query.setParameter("user", userId);
 		query.setParameter("name", name);
+		query.setParameter("nondeleted", nonDeleted);
 		return  query.getResultList();
 	}
 	
 	public List<Deck> findByUserId(long userId) {
 		EntityManager manager = EFMManager.getManager();
-		TypedQuery<Deck> query = manager.createQuery("SELECT de from Deck de join de.userAccount u where u.id=:user", Deck.class);
+		long nonDeleted =0;
+		TypedQuery<Deck> query = manager.createQuery("SELECT de from Deck de join de.userAccount u where u.id=:user and de.isDeleted=:nondeleted", Deck.class);
 		query.setParameter("user", userId);
+		query.setParameter("nondeleted", nonDeleted);
 		return  query.getResultList();
 	}
 
 	public List<Deck> findAll(long gameTypeId, long userId) {
 		EntityManager manager = EFMManager.getManager();
-		TypedQuery<Deck> query = manager.createQuery("SELECT de from Deck de join de.userAccount u join de.gameType gt  where u.USER_ID:=id and gt.GAME_TYPE_ID:=gid", Deck.class);
+		long nonDeleted =0;
+		TypedQuery<Deck> query = manager.createQuery("SELECT de from Deck de join de.userAccount u join de.gameType gt  where u.USER_ID:=id and gt.GAME_TYPE_ID:=gid and de.isDeleted=:nondeleted", Deck.class);
 		query.setParameter("id", userId);
 		query.setParameter("gid", gameTypeId);
+		query.setParameter("nondeleted", nonDeleted);
 		return  query.getResultList();
 	}
 

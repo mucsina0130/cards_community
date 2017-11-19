@@ -14,6 +14,8 @@ public class CardMapper implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(generator="seqMapperGen")
+	@SequenceGenerator(name="seqMapperGen",sequenceName="cardMapper_seq", allocationSize=1)
 	private long id;
 
 	@Column(name="BATTLE_ATTRIBUTE_1")

@@ -15,6 +15,9 @@ public class RuleCard implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(generator="seqRuleCardGen")
+	@SequenceGenerator(name="seqRuleCardGen",sequenceName="ruleCard_seq", allocationSize=1)
+
 	private long id;
 
 	@Column(name="MAX_AMOUNT")

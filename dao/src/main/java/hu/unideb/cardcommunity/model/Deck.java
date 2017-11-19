@@ -15,6 +15,8 @@ public class Deck implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(generator="seqDeckGen")
+	@SequenceGenerator(name="seqDeckGen",sequenceName="deck_seq", allocationSize=1)
 	private long id;
 
 	@Column(name="IS_PUBLIC")

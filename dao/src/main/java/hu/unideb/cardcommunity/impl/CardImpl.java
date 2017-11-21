@@ -8,8 +8,6 @@ import javax.persistence.TypedQuery;
 import hu.unideb.cardcommunity.api.CardDao;
 import hu.unideb.cardcommunity.model.Card;
 import hu.unideb.cardcommunity.model.EFMManager;
-import hu.unideb.cardcommunity.model.RuleDeck;
-import hu.unideb.cardcommunity.model.UserAccount;
 
 public class CardImpl implements CardDao {
 
@@ -51,6 +49,14 @@ public class CardImpl implements CardDao {
 	public List<Card> findAll() {
 		EntityManager manager = EFMManager.getManager();
 		TypedQuery<Card> query = manager.createQuery("SELECT ca from Card ca", Card.class);
+		return query.getResultList();
+	}
+
+	@Override
+	public List<Card> findByGameId(long id) {
+		EntityManager manager = EFMManager.getManager();
+		TypedQuery<Card> query = manager.createQuery("SELECT ca from Card ca join ca.gameType gt where gt.id=:id", Card.class);
+		query.setParameter("id", id);
 		return query.getResultList();
 	}
 

@@ -11,7 +11,6 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.access.SecurityConfig;
 import org.springframework.web.context.ServletContextAware;
 
 @Configuration

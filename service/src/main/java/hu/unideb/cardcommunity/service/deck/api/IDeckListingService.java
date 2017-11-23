@@ -7,5 +7,6 @@ import hu.unideb.cardcommunity.service.deck.model.DeckData;
 public interface IDeckListingService {
 
 	List<DeckData> listByUserId(long userId);
-
+	List<DeckData> listByUserAndGame(long userId, long gameTypeId);
+	
 }

@@ -4,6 +4,7 @@ public class UserData {
 		private Long id;
 		private String userName;
 		private String password;
+		private String mailAddress;
 		
 		public Long getId() {
 			return id;
@@ -22,6 +23,12 @@ public class UserData {
 		}
 		public void setPassword(String password) {
 			this.password = password;
+		}
+		public String getMailAddress() {
+			return mailAddress;
+		}
+		public void setMailAddress(String mailAddress) {
+			this.mailAddress = mailAddress;
 		}
 		
 }

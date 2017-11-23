@@ -25,5 +25,18 @@ public class DeckListingService implements IDeckListingService {
 		}
 		return result;
 	}
+
+	@Override
+	public List<DeckData> listByUserAndGame(long userId, long gameTypeId) {
+		List<Deck> deck = deckimpl.findAll(gameTypeId, userId);
+		List<DeckData> result = new ArrayList<>();
+		for (Deck d : deck) {
+			DeckData ds = new DeckData();
+			ds.setName(d.getName());
+			ds.setGame(d.getGameType().getName());
+			result.add(ds);
+		}
+		return result;
+	}
 	
 }

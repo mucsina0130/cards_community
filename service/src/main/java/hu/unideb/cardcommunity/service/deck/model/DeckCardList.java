@@ -1,4 +1,4 @@
-package hu.unideb.cardcommunity.service.deck;
+package hu.unideb.cardcommunity.service.deck.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.hibernate.mapping.Array;
 
-import hu.unideb.cardcommunity.service.deck.model.CardData;
 import hu.unideb.cardcommunity.service.game.model.GameData;
 import hu.unideb.cardcommunity.service.user.model.UserData;
 

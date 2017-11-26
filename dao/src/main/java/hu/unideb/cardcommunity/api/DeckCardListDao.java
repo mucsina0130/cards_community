@@ -6,7 +6,7 @@ import hu.unideb.cardcommunity.model.Card;
 
 
 
-public interface DeckCardList {
+public interface DeckCardListDao {
 	
-	List<Card> cardListByDeck(Long deckid,long userid);
+	List<Card> cardListByDeck(Long deckid);
 }

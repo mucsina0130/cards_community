@@ -8,6 +8,7 @@ public interface UserAccountDao {
 	UserAccount save(UserAccount entity);
 	List<UserAccount> save(List<UserAccount> entities);
 	UserAccount findById(long id);
-	List<UserAccount> findByName(String username);
+	UserAccount findByName(String username);
+	UserAccount findByMail(String mail);
 	List<UserAccount> findAll();
 }

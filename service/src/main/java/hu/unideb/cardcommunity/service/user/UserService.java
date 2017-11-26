@@ -1,7 +1,5 @@
 package hu.unideb.cardcommunity.service.user;
 
-import java.util.List;
-
 import hu.unideb.cardcommunity.api.UserAccountDao;
 import hu.unideb.cardcommunity.impl.UserAccountImpl;
 import hu.unideb.cardcommunity.model.UserAccount;
@@ -14,14 +12,35 @@ public class UserService implements IUserService {
 	
 	@Override
 	public UserData findByUserName(String name) {
-		List<UserAccount> user = useraccountimpl.findByName(name);
 		UserData result = new UserData();
+		try {
+			UserAccount user = useraccountimpl.findByName(name);
+			
+			result.setId(user.getId());
+			result.setMailAddress(user.getMailAddress());
+			result.setUserName(user.getUserName());
+			result.setPassword(user.getPassword());
+			
+			return result;
+			
+		} catch (Exception e) {
+			result.setId(null);
+			result.setMailAddress(null);
+			result.setUserName(null);
+			result.setPassword(null);
+			
+			return result;
+		}		
 		
-		result.setId(user.get(0).getId());
-		result.setUserName(user.get(0).getUserName());
-		result.setPassword(user.get(0).getPassword());
+	}
 
-		return (UserData) result;
+	@Override
+	public void saveUser(UserData user) {
+		UserAccount userAccount = new UserAccount();
+		userAccount.setUserName(user.getUserName());
+		userAccount.setPassword(user.getPassword());
+		userAccount.setMailAddress(user.getMailAddress());
+		useraccountimpl.save(userAccount);
 	}
 
 }

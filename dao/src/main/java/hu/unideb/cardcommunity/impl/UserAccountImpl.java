@@ -3,6 +3,7 @@ package hu.unideb.cardcommunity.impl;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 
 import hu.unideb.cardcommunity.api.UserAccountDao;
 import hu.unideb.cardcommunity.model.EFMManager;
@@ -31,20 +32,19 @@ public class UserAccountImpl implements UserAccountDao {
 		return entities;
 	}
 
-	public UserAccount findById(long id) {
+	public UserAccount findById(long id)throws NoResultException {
 		EntityManager manager = EFMManager.getManager();
 		TypedQuery<UserAccount> query = manager.createQuery("SELECT ua from UserAccount ua where ua.id=:uid", UserAccount.class);
 		query.setParameter("uid", id);
-		return (UserAccount) query.getResultList();
+		return query.getSingleResult();
 	}
 
-	public List<UserAccount> findByName(String username) {
-		System.out.println("Trying to load data:" + username);
+	public UserAccount findByName(String username)throws NoResultException {
 		EntityManager manager = EFMManager.getManager();
 		TypedQuery<UserAccount> query = manager.createQuery("SELECT ua from UserAccount ua where ua.userName=:uname ", UserAccount.class);
 		query.setParameter("uname", username);
 		
-		return query.getResultList();
+		return query.getSingleResult();
 		
 	}
 
@@ -54,4 +54,13 @@ public class UserAccountImpl implements UserAccountDao {
 		return query.getResultList();
 	}
 
+	@Override
+	public UserAccount findByMail(String mail)throws NoResultException {
+		EntityManager manager = EFMManager.getManager();
+		TypedQuery<UserAccount> query = manager.createQuery("SELECT ua from UserAccount ua where ua.mailAddress=:mail ", UserAccount.class);
+		query.setParameter("mail", mail);
+		
+		return query.getSingleResult();
+		
+	}
 }

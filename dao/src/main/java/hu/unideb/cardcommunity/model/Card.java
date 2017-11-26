@@ -29,25 +29,20 @@ public class Card implements Serializable {
 
 	private String description;
 
-	@Column(name="FIELD_1")
+	@Column(name="FIELD1")
 	private String field1;
 
-	@Column(name="FIELD_2")
+	@Column(name="FIELD2")
 	private String field2;
 
-	@Column(name="FIELD_3")
+	@Column(name="FIELD3")
 	private String field3;
 
-	@Column(name="FIELD_4")
+	@Column(name="FIELD4")
 	private String field4;
 
-	@Column(name="FIELD_5")
+	@Column(name="FIELD5")
 	private String field5;
-
-
-
-	@Column(name="GAME_TYPE_ID_GAME_TYPE_ID")
-	private BigDecimal gameTypeIdGameTypeId;
 
 	private String name;
 
@@ -146,14 +141,6 @@ public class Card implements Serializable {
 
 	public void setField5(String field5) {
 		this.field5 = field5;
-	}
-
-	public BigDecimal getGameTypeIdGameTypeId() {
-		return this.gameTypeIdGameTypeId;
-	}
-
-	public void setGameTypeIdGameTypeId(BigDecimal gameTypeIdGameTypeId) {
-		this.gameTypeIdGameTypeId = gameTypeIdGameTypeId;
 	}
 
 	public String getName() {

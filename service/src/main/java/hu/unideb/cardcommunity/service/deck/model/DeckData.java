@@ -5,13 +5,13 @@ import java.io.Serializable;
 public class DeckData implements Serializable{
 	public String name;
 	public String game ;
-	public long id;
-	public long gameId;
+	public Long id;
+	public Long gameId;
 	
-	public long getGameId() {
+	public Long getGameId() {
 		return gameId;
 	}
-	public void setGameId(int gameId) {
+	public void setGameId(Long gameId) {
 		this.gameId = gameId;
 	}
 	public String getName() {
@@ -26,11 +26,10 @@ public class DeckData implements Serializable{
 	public void setGame(String game) {
 		this.game = game;
 	}
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	} 
 }

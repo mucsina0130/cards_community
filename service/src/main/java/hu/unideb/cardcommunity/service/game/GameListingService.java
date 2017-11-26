@@ -23,6 +23,7 @@ public class GameListingService implements IGameListingService {
 			GameData gt = new GameData();
 			gt.setName(d.getName());
 			gt.setDesc(d.getShorDescription());
+			gt.setId(d.getId());
 			result.add(gt);
 		}
 		return result;

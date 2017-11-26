@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 public class GameData {
 	private String name;
 	private String desc;
-	private long id;
+	private Long id;
 	private BigDecimal isPublic;
 	private String ruleOfTheGame;
 	
@@ -21,10 +21,10 @@ public class GameData {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public BigDecimal getIsPublic() {

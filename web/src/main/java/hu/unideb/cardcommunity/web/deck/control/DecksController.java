@@ -25,7 +25,7 @@ public class DecksController implements Serializable {
 	private DeckTableModel tableModel;
 	private List<SelectItem> games;
 	private IGameListingService gls = new GameListingService();
-	private Integer selectGame;
+	private Long selectGame;
 	
 	@Autowired
 	private MySessionInfo mySessionInfo;
@@ -35,7 +35,7 @@ public class DecksController implements Serializable {
 		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 		String parameterOne = params.get("game");
 		if (parameterOne != null) {
-			selectGame = Integer.valueOf(parameterOne);
+			selectGame = Long.valueOf(parameterOne);
 			onGameChange();
 		}
 	}
@@ -44,11 +44,11 @@ public class DecksController implements Serializable {
 		getTableModel().setGame(selectGame);
 	}
 
-	public Integer getSelectGame() {
+	public Long getSelectGame() {
 		return selectGame;
 	}
 
-	public void setSelectGame(Integer selectGame) {
+	public void setSelectGame(Long selectGame) {
 		this.selectGame = selectGame;
 	}
 

@@ -16,7 +16,8 @@
 				<p:ajax listener="#{decksController.onGameChange()}" update="table"
 					event="change" />
 				<f:selectItems value="#{decksController.games}" />
-			</p:selectOneMenu> </header>
+			</p:selectOneMenu>
+			</header>
 			<p:dataTable id="table" var="deck"
 				value="#{decksController.tableModel}" paginator="true" rows="5"
 				paginatorPosition="bottom" paginatorAlwaysVisible="false"

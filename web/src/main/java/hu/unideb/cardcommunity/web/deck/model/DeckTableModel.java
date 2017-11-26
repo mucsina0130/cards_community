@@ -19,7 +19,7 @@ import hu.unideb.cardcommunity.web.session.MySessionInfo;
 public class DeckTableModel extends LazyDataModel<DeckData> { 
 	private IDeckListingService decklist;
 	private List<DeckData> decks;
-	private Integer game;
+	private Long game;
 
 	private MySessionInfo mySessionInfo;
 	
@@ -32,11 +32,11 @@ public class DeckTableModel extends LazyDataModel<DeckData> {
 		this.mySessionInfo = mySessionInfo;
 	}
 
-	public Integer getGame() {
+	public Long getGame() {
 		return game;
 	}
 
-	public void setGame(Integer game) {
+	public void setGame(Long game) {
 		this.game = game;
 	}
 

@@ -16,8 +16,7 @@
 				<p:ajax listener="#{decksController.onGameChange()}" update="table"
 					event="change" />
 				<f:selectItems value="#{decksController.games}" />
-			</p:selectOneMenu>
-			</header>
+			</p:selectOneMenu> </header>
 			<p:dataTable id="table" var="deck"
 				value="#{decksController.tableModel}" paginator="true" rows="5"
 				paginatorPosition="bottom" paginatorAlwaysVisible="false"
@@ -30,26 +29,41 @@
 					<h:outputText value="#{deck.game}" />
 				</p:column>
 				<p:column style="width:5%;text-align: center">
-					<p:commandButton icon="ui-icon-search" title="View" type="button"
-						onclick="PF('dialog').show();" />
-				</p:column>
-				<p:column style="width:5%;text-align: center">
-					<p:commandButton icon="ui-icon-pencil" title="Modify"
-						disabled="true">
+					<p:commandButton icon="ui-icon-search" title="View"
+						oncomplete="PF('dialog').show();" update=":form:cardDialog">
+						<f:setPropertyActionListener value="#{deck}"
+							target="#{decksController.deck}" />
 					</p:commandButton>
 				</p:column>
 				<p:column style="width:5%;text-align: center">
-					<p:commandButton icon="ui-icon-close" title="Delete"
-						disabled="true">
+					<p:commandButton action="#{decksController.modify(deck)}"
+						icon="ui-icon-pencil" title="Modify">
 					</p:commandButton>
 				</p:column>
-
+				<p:column style="width:5%;text-align: center">
+					<p:commandButton icon="ui-icon-close" title="Delete">
+						<p:confirm header="Törlés" message="Biztos vagy benne?"
+							icon="ui-icon-alert" />
+					</p:commandButton>
+				</p:column>
 			</p:dataTable>
-
-				<p:dialog header="Card" widgetVar="dialog" modal="true" resizable="false"
-					minHeight="40">
-					<h:outputText value="kártya" />
-				</p:dialog>
+			<p:dialog id="cardDialog" header="#{decksController.deck.name}" widgetVar="dialog"
+				modal="true" resizable="false" minHeight="40">
+				<p:dataList id="list" var="card"
+					value="#{decksController.cardlist()}" columns="1" type="unordered"
+					itemType="none">
+					<p:panel id="pnl2" style="text-align:left">
+						<p id="text"
+							style="display: inline-block; white-space: nowrap">#{card.name}</p>
+					</p:panel>
+				</p:dataList>
+			</p:dialog>
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Yes" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="No" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
 		</h:form>
 	</ui:define>
 </ui:composition>

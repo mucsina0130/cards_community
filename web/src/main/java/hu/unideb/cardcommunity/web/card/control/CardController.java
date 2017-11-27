@@ -14,7 +14,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import hu.unideb.cardcommunity.service.deck.CardListingService;
+import hu.unideb.cardcommunity.service.deck.DeckCardListingService;
 import hu.unideb.cardcommunity.service.deck.api.ICardListingService;
+import hu.unideb.cardcommunity.service.deck.api.IDeckCardListingService;
 import hu.unideb.cardcommunity.service.deck.model.CardData;
 import hu.unideb.cardcommunity.service.game.GameListingService;
 import hu.unideb.cardcommunity.service.game.api.IGameListingService;
@@ -25,6 +27,7 @@ import hu.unideb.cardcommunity.service.game.model.GameData;
 public class CardController {
 	private ICardListingService cls = new CardListingService();
 	private IGameListingService gls = new GameListingService();
+	private IDeckCardListingService dcls = new DeckCardListingService();
 	private List<CardData> cards;
 	private List<CardData> selectedCards;
 	private List<SelectItem> games;
@@ -38,6 +41,10 @@ public class CardController {
 		if (parameterOne != null) {
 			selectGame = Long.valueOf(parameterOne);
 			onGameChange();
+		}
+		String parameterTwo = params.get("deck");
+		if (parameterTwo != null) {
+			selectedCards = dcls.cardListByDeck(Long.valueOf(parameterTwo));
 		}
 	}
 

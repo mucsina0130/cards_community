@@ -2,6 +2,7 @@ package hu.unideb.cardcommunity.web.deck.control;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import hu.unideb.cardcommunity.service.deck.DeckCardListingService;
+import hu.unideb.cardcommunity.service.deck.api.IDeckCardListingService;
+import hu.unideb.cardcommunity.service.deck.model.CardData;
+import hu.unideb.cardcommunity.service.deck.model.DeckData;
 import hu.unideb.cardcommunity.service.game.GameListingService;
 import hu.unideb.cardcommunity.service.game.api.IGameListingService;
 import hu.unideb.cardcommunity.service.game.model.GameData;
@@ -26,10 +31,12 @@ public class DecksController implements Serializable {
 	private List<SelectItem> games;
 	private IGameListingService gls = new GameListingService();
 	private Long selectGame;
-	
+	private DeckData deck;
+	private IDeckCardListingService dcls = new DeckCardListingService();
+
 	@Autowired
 	private MySessionInfo mySessionInfo;
-	
+
 	@PostConstruct
 	public void init() {
 		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
@@ -65,6 +72,14 @@ public class DecksController implements Serializable {
 		return games;
 	}
 
+	public DeckData getDeck() {
+		return deck;
+	}
+
+	public void setDeck(DeckData deck) {
+		this.deck = deck;
+	}
+
 	public DeckTableModel getTableModel() {
 		if (tableModel == null) {
 
@@ -75,6 +90,17 @@ public class DecksController implements Serializable {
 
 	public void setTableModel(DeckTableModel tableModel) {
 		this.tableModel = tableModel;
+	}
+
+	public List<CardData> cardlist() {
+		if (deck == null) {
+			return Collections.emptyList();
+		}
+		return dcls.cardListByDeck(deck.getId());
+	}
+
+	public String modify(DeckData deck) {
+		return "/cards/newdeck.xhtml?game=" + deck.getGameId() + "&deck=" + deck.getId() + "&faces-redirect=true";
 	}
 
 }

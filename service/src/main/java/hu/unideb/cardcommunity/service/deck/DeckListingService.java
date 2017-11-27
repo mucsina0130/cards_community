@@ -22,6 +22,7 @@ public class DeckListingService implements IDeckListingService {
 			ds.setName(d.getName());
 			ds.setGame(d.getGameType().getName());
 			ds.setGameId(d.getGameType().getId());
+			ds.setId(d.getId());
 			result.add(ds);
 		}
 		return result;

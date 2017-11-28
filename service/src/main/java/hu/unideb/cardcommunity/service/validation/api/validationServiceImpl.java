@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 import hu.unideb.cardcommunity.api.UserAccountDao;
 import hu.unideb.cardcommunity.impl.UserAccountImpl;
 import hu.unideb.cardcommunity.model.UserAccount;
+import hu.unideb.cardcommunity.service.deck.model.DeckData;
 import hu.unideb.cardcommunity.service.user.UserService;
 import hu.unideb.cardcommunity.service.user.model.UserData;
 import hu.unideb.cardcommunity.service.validation.validationService;
@@ -50,6 +51,18 @@ public class validationServiceImpl implements validationService{
 			return false;
 		else 
 			return true;
+	}
+
+	@Override
+	public boolean deckQuantity(DeckData deck) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean cardQuantity(DeckData deck) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

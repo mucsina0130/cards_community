@@ -3,6 +3,7 @@ package hu.unideb.cardcommunity.impl;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import hu.unideb.cardcommunity.api.RuleCardDao;
@@ -25,16 +26,17 @@ public class RuleCardImpl implements RuleCardDao {
 		return null;
 	}
 
-	public RuleCard findById(long id) {
+	public RuleCard findById(Long ruleCardId) {
 		EntityManager manager = EFMManager.getManager();
 		TypedQuery<RuleCard> query = manager.createQuery("SELECT rc from RuleCard rc where rc.id=:id", RuleCard.class);
-		query.setParameter("id", id);
+		query.setParameter("id", ruleCardId);
 		return (RuleCard) query.getResultList();
 	}
 
-	public List<RuleCard> findAll() {
+	public List<RuleCard> findByRuleDeckId(Long ruleDeckId)throws NoResultException {
 		EntityManager manager = EFMManager.getManager();
-		TypedQuery<RuleCard> query = manager.createQuery("SELECT rc from RuleCard rc", RuleCard.class);
+		TypedQuery<RuleCard> query = manager.createQuery("SELECT rc from RuleCard rc join RuleDeck rd where rd.id=:ruleDeckId", RuleCard.class);
+		query.setParameter("ruleDeckId", ruleDeckId);
 		return query.getResultList();
 	}
 

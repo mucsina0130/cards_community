@@ -33,16 +33,20 @@ public class RuleDeckImpl implements RuleDeckDao{
 		return entities;
 	}
 
-	public RuleDeck findById(long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public RuleDeck findById(Long id) {
+		EntityManager manager = EFMManager.getManager();
+		TypedQuery<RuleDeck> query = manager.createQuery("SELECT rd from RuleDeck rd where rd.id=:ruledeckId", RuleDeck.class);
+		query.setParameter("ruledeckId", id);
+		return query.getSingleResult();
 	}
 
-	public List<RuleDeck> findByDeckId(long id) {
+
+	@Override
+	public RuleDeck findByGameTypeId(Long gametypeId) {
 		EntityManager manager = EFMManager.getManager();
-		TypedQuery<RuleDeck> query = manager.createQuery("SELECT rd from RuleDeck rd where rd.id=:ruledeckid", RuleDeck.class);
-		query.setParameter("ruledeckid", id);
-		return query.getResultList();
+		TypedQuery<RuleDeck> query = manager.createQuery("SELECT rd from RuleDeck rd join gameTypes gt where gt.id=:gametype", RuleDeck.class);
+		query.setParameter("gametype", gametypeId);
+		return query.getSingleResult();
 	}
 
 

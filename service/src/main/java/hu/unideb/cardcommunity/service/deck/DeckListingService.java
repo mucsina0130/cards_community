@@ -26,6 +26,7 @@ public class DeckListingService implements IDeckListingService {
 			ds.setGame(d.getGameType().getName());
 			ds.setGameId(d.getGameType().getId());
 			ds.setId(d.getId());
+			ds.setIsPublic(d.getIsPublic());
 			result.add(ds);
 		}
 		return result;
@@ -39,6 +40,7 @@ public class DeckListingService implements IDeckListingService {
 			DeckData ds = new DeckData();
 			ds.setName(d.getName());
 			ds.setGame(d.getGameType().getName());
+			ds.setIsPublic(d.getIsPublic());
 			result.add(ds);
 		}
 		return result;
@@ -66,6 +68,29 @@ public class DeckListingService implements IDeckListingService {
 		newDeck.setCards(cards);
 		deckimpl.save(newDeck);
 		
+	}
+
+	@Override
+	public void updateDeck(DeckData deck) {
+		Deck updatedDeck = new Deck();
+		GameType game = new GameType();
+		UserAccount user = new UserAccount();
+		List<Card> cards = new ArrayList<>();
+		for(int i =0;i<deck.getCardId().size();i++)
+		{
+			Card card = new Card();
+			card.setId(deck.getCardId().get(i).getId());
+			cards.add(card);			
+		}
+		user.setId(deck.getUserId());
+		game.setId(deck.getId());
+		updatedDeck.setName(deck.getName());
+		updatedDeck.setGameType(game);
+		updatedDeck.setIsDeleted(0);
+		updatedDeck.setIsPublic(deck.getIsPublic());
+		updatedDeck.setUserAccount(user);
+		updatedDeck.setCards(cards);
+		deckimpl.updateDeck(updatedDeck);;
 	}
 	
 }

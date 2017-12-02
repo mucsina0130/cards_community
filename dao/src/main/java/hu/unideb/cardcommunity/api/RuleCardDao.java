@@ -7,6 +7,6 @@ import hu.unideb.cardcommunity.model.RuleCard;
 public interface RuleCardDao {
 	RuleCard save(RuleCard entity);
 	List<RuleCard> save(List<RuleCard> entities);
-	RuleCard findById(long id);
-	List<RuleCard> findAll();
+	RuleCard findById(Long id);
+	List<RuleCard> findByRuleDeckId(Long ruleDeckId);
 }

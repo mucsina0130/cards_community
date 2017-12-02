@@ -26,10 +26,15 @@ public class CardRulesService implements IcardRules {
 				result.add(cs);
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			CardRulesData cs = new CardRulesData();
+			cs.setCardRuleId(null);
+			cs.setDeckRuleId(null);
+			cs.setCardId(null);
+			cs.setMaxAmount(null);
+			result.add(cs);
 		}
 		
-		return null;
+		return result;
 	}
 
 }

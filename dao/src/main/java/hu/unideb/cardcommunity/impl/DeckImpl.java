@@ -54,7 +54,7 @@ public class DeckImpl implements DeckDao {
 		return  query.getResultList();
 	}
 	
-	public List<Deck> findByUserId(long userId) {
+	public List<Deck> findByUserId(long userId)throws NoResultException  {
 		EntityManager manager = EFMManager.getManager();
 		long nonDeleted =0;
 		TypedQuery<Deck> query = manager.createQuery("SELECT de from Deck de join de.userAccount u where u.id=:user and de.isDeleted=:nondeleted", Deck.class);

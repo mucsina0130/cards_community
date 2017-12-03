@@ -18,17 +18,31 @@ public class DeckListingService implements IDeckListingService {
 	
 	@Override
 	public List<DeckData> listByUserId(long userId) {
-		List<Deck> deck = deckimpl.findByUserId(userId);
 		List<DeckData> result = new ArrayList<>();
-		for (Deck d : deck) {
+		try {
+			List<Deck> deck = deckimpl.findByUserId(userId);
+			for (Deck d : deck) {
+				DeckData ds = new DeckData();
+				ds.setName(d.getName());
+				ds.setGame(d.getGameType().getName());
+				ds.setGameId(d.getGameType().getId());
+				ds.setId(d.getId());
+				ds.setIsPublic(d.getIsPublic());
+				result.add(ds);
+				
+			}
+		} catch (Exception e) {
 			DeckData ds = new DeckData();
-			ds.setName(d.getName());
-			ds.setGame(d.getGameType().getName());
-			ds.setGameId(d.getGameType().getId());
-			ds.setId(d.getId());
-			ds.setIsPublic(d.getIsPublic());
-			result.add(ds);
+			ds.setName(null);
+			ds.setGame(null);
+			ds.setGameId(null);
+			ds.setId(null);
+			ds.setIsPublic(null);
+			result.add(null);
+			
+			
 		}
+
 		return result;
 	}
 

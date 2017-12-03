@@ -11,4 +11,5 @@ public interface CardDao {
 	List<Card> findByGameId(long id);
 	Card findByName(String name);
 	List<Card> findAll();
+	List<Card> findByString(String keyword,long gameTypeId);
 }

@@ -3,6 +3,7 @@ package hu.unideb.cardcommunity.impl;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import hu.unideb.cardcommunity.api.CardDao;
@@ -57,6 +58,15 @@ public class CardImpl implements CardDao {
 		EntityManager manager = EFMManager.getManager();
 		TypedQuery<Card> query = manager.createQuery("SELECT ca from Card ca join ca.gameType gt where gt.id=:id", Card.class);
 		query.setParameter("id", id);
+		return query.getResultList();
+	}
+
+	@Override
+	public List<Card> findByString(String keyword,long gameTypeId) throws NoResultException{
+		EntityManager manager = EFMManager.getManager();
+		TypedQuery<Card> query = manager.createQuery("SELECT ca from Card ca where gt.id=:gameTypeId and (UPPER(gt.name) LIKE:UPPER(keyword) or UPPER(gt.description) LIKE:UPPER(keyword))", Card.class);
+		query.setParameter("gameTypeId", gameTypeId);
+		query.setParameter("keyword", "%" + keyword + "%");
 		return query.getResultList();
 	}
 

@@ -44,7 +44,7 @@ public class RuleDeckImpl implements RuleDeckDao{
 	@Override
 	public RuleDeck findByGameTypeId(Long gametypeId) {
 		EntityManager manager = EFMManager.getManager();
-		TypedQuery<RuleDeck> query = manager.createQuery("SELECT rd from RuleDeck rd join gameTypes gt where gt.id=:gametype", RuleDeck.class);
+		TypedQuery<RuleDeck> query = manager.createQuery("SELECT rd from GameType gt join gt.ruleDeck rd where gt.id=:gametype", RuleDeck.class);
 		query.setParameter("gametype", gametypeId);
 		return query.getSingleResult();
 	}

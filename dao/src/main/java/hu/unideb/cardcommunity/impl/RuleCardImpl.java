@@ -35,7 +35,7 @@ public class RuleCardImpl implements RuleCardDao {
 
 	public List<RuleCard> findByRuleDeckId(Long ruleDeckId)throws NoResultException {
 		EntityManager manager = EFMManager.getManager();
-		TypedQuery<RuleCard> query = manager.createQuery("SELECT rc from RuleCard rc join RuleDeck rd where rd.id=:ruleDeckId", RuleCard.class);
+		TypedQuery<RuleCard> query = manager.createQuery("SELECT rc from RuleCard rc join rc.ruleDeck rd where rd.id=:ruleDeckId", RuleCard.class);
 		query.setParameter("ruleDeckId", ruleDeckId);
 		return query.getResultList();
 	}

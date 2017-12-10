@@ -1,26 +1,39 @@
 package hu.unideb.cardcommunity.web.card.control;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.primefaces.event.DragDropEvent;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import hu.unideb.cardcommunity.service.deck.CardListingService;
 import hu.unideb.cardcommunity.service.deck.DeckCardListingService;
+import hu.unideb.cardcommunity.service.deck.DeckListingService;
 import hu.unideb.cardcommunity.service.deck.api.ICardListingService;
 import hu.unideb.cardcommunity.service.deck.api.IDeckCardListingService;
+import hu.unideb.cardcommunity.service.deck.api.IDeckListingService;
 import hu.unideb.cardcommunity.service.deck.model.CardData;
+import hu.unideb.cardcommunity.service.deck.model.DeckData;
 import hu.unideb.cardcommunity.service.game.GameListingService;
 import hu.unideb.cardcommunity.service.game.api.IGameListingService;
 import hu.unideb.cardcommunity.service.game.model.GameData;
+import hu.unideb.cardcommunity.service.gamerules.api.CardRulesService;
+import hu.unideb.cardcommunity.service.gamerules.api.DeckRulesService;
+import hu.unideb.cardcommunity.service.gamerules.interfaces.IcardRules;
+import hu.unideb.cardcommunity.service.gamerules.interfaces.IdeckRules;
+import hu.unideb.cardcommunity.service.gamerules.model.CardRulesData;
+import hu.unideb.cardcommunity.service.gamerules.model.DeckRulesData;
+import hu.unideb.cardcommunity.web.session.MySessionInfo;
 
 @Component
 @Scope("view")
@@ -28,11 +41,20 @@ public class CardController {
 	private ICardListingService cls = new CardListingService();
 	private IGameListingService gls = new GameListingService();
 	private IDeckCardListingService dcls = new DeckCardListingService();
+	private IDeckListingService dls = new DeckListingService();
+	private IdeckRules dr = new DeckRulesService();
+	private IcardRules cr = new CardRulesService();
 	private List<CardData> cards;
 	private List<CardData> selectedCards;
 	private List<SelectItem> games;
 	private Long selectGame;
 	private CardData selectedCard;
+	private String deckName;
+	private DeckRulesData deckRulesData;
+	private List<CardRulesData> cardRules;
+	private boolean publicDeck;
+	@Autowired
+	private MySessionInfo mySessionInfo;
 
 	@PostConstruct
 	public void init() {
@@ -51,13 +73,27 @@ public class CardController {
 	public void onGameChange() {
 		if (selectGame != null) {
 			cards = cls.cardListByGame(selectGame);
+			deckRulesData = dr.getDeckRulesData(selectGame);
+			cardRules = cr.getCardRules(deckRulesData.getDeckRuleId());
 		}
 	}
 
 	public void onCardDrop(DragDropEvent ddEvent) throws Exception {
 		CardData card = ((CardData) ddEvent.getData());
 		CardData newcard = (CardData) BeanUtils.cloneBean(card);
-
+		if (deckRulesData.maxQuantity.compareTo(new BigDecimal(getSelectedCards().size())) <= 0) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Hiba", "Túl sok kártya a pakliban"));
+			return;
+		}
+		CardRulesData defCardRule = new CardRulesData();
+		defCardRule.setMaxAmount(deckRulesData.getStandardCardQuantity());
+		CardRulesData rule = cardRules.stream().filter(r -> r.cardId == card.getId()).findFirst().orElse(defCardRule);
+		long cardCount = getSelectedCards().stream().filter(c -> c.getId() == card.getId()).mapToLong(c -> 1L).sum();
+		if (rule != null && rule.getMaxAmount().compareTo(new BigDecimal(cardCount)) <= 0) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage("Hiba", "Túl sok " + card.getName() + " kártya a pakliban"));
+			return;
+		}
 		getSelectedCards().add(newcard);
 	}
 
@@ -74,6 +110,14 @@ public class CardController {
 		return games;
 	}
 
+	public String getDeckName() {
+		return deckName;
+	}
+
+	public void setDeckName(String deckName) {
+		this.deckName = deckName;
+	}
+
 	public List<CardData> getCards() {
 		if (cards == null) {
 			cards = new ArrayList<>();
@@ -83,6 +127,14 @@ public class CardController {
 
 	public void setCards(List<CardData> cards) {
 		this.cards = cards;
+	}
+
+	public boolean isPublicDeck() {
+		return publicDeck;
+	}
+
+	public void setPublicDeck(boolean publicDeck) {
+		this.publicDeck = publicDeck;
 	}
 
 	public List<CardData> getSelectedCards() {
@@ -126,6 +178,33 @@ public class CardController {
 	public void onDeleteButton(CardData card) {
 		if (card != null) {
 			selectedCards.remove(card);
+		}
+	}
+
+	public void save() {
+		int cardCount = selectedCards.size();
+		if (cardCount < deckRulesData.getMinQuantity().intValue()) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage("Hiba", String.format("Túl kevés kártya a pakliban (%d/%d)", cardCount,
+							deckRulesData.getMinQuantity().intValue())));
+			return;
+		}
+		if(deckName==null || deckName.trim().length()==0) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Hiba", "Adjál meg egy nevet"));
+			return;
+		}
+		DeckData newDeck = new DeckData();
+		newDeck.setCardId(selectedCards);
+		newDeck.setGameId(selectGame);
+		newDeck.setName(deckName);
+		newDeck.setUserId(mySessionInfo.getCurrentUser().getId());
+		newDeck.setIsPublic(publicDeck ? BigDecimal.ONE : BigDecimal.ZERO);
+		try {
+			dls.saveDeck(newDeck);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Sikeres mentés", ""));
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Hiba", "Sikertelen mentés"));
+			e.printStackTrace();
 		}
 	}
 }

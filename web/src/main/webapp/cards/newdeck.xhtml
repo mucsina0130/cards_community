@@ -67,6 +67,9 @@
 								style="float:right;margin-left:5px" update="list"></p:commandLink>
 						</p:panel>
 					</p:dataList>
+					<p:commandButton value="Mentés" title="Save"
+						oncomplete="PF('savedialog').show();" update=":form:sdialog">
+					</p:commandButton>
 				</h:panelGroup>
 				<p:droppable for="listpanel" tolerance="touch" datasource="datagrid"
 					onDrop="handleDrop">
@@ -82,6 +85,19 @@
 					<h:outputText value="#{cardController.selectedCard.desc}" />
 				</p:panelGrid>
 			</p:dialog>
+			<p:dialog id="sdialog" header="Mentés" widgetVar="savedialog"
+				modal="true" height="100">
+				<p:panelGrid columns="2">
+					<h:outputText value="Név:" />
+					<p:inputText value="#{cardController.deckName}"/>
+					<h:outputText value="Publikus:" />
+					<p:selectBooleanCheckbox value="#{cardController.publicDeck}" />
+				</p:panelGrid>
+				<p:commandButton value="Mégse" id="cancel"
+					oncomplete="PF('dialog').hide();" />
+				<p:commandButton value="Mentés" id="save" actionListener="#{cardController.save()}"/>
+			</p:dialog>
+			<p:growl id="growl" showDetail="true" autoUpdate="true" />
 		</h:form>
 		<script type="text/javascript">
 			function handleDrop(event, ui) {

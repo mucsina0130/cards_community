@@ -108,5 +108,11 @@ public class DeckListingService implements IDeckListingService {
 		updatedDeck.setCards(cards);
 		deckimpl.updateDeck(updatedDeck);;
 	}
+
+	@Override
+	public void deleteDeck(DeckData deck) {
+		Deck deleteDeck = deckimpl.findAll(deck.id, deck.userId).get(0);
+		deckimpl.deleteDeck(deleteDeck);
+	}
 	
 }

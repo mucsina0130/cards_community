@@ -84,6 +84,14 @@ public class DeckImpl implements DeckDao {
 		return  query.getResultList();
 	}
 
+	@Override
+	public void deleteDeck(Deck entity) {
+		EntityManager manager = EFMManager.getManager();
+		manager.getTransaction().begin();
+		manager.remove(entity);
+		manager.getTransaction().commit();
+	}
+
 
 
 }

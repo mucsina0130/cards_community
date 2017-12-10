@@ -7,6 +7,7 @@ import hu.unideb.cardcommunity.model.Deck;
 public interface DeckDao {
 	void save(Deck entity);
 	void updateDeck(Deck entity);
+	void deleteDeck(Deck entity);
 	List<Deck> save(List<Deck> entities);
 	List<Deck> findByName(String name, long userId);
 	List<Deck> findAll(long gameTypeId,long userId);

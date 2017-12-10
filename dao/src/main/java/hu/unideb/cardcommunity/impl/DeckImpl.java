@@ -92,6 +92,16 @@ public class DeckImpl implements DeckDao {
 		manager.getTransaction().commit();
 	}
 
+	@Override
+	public Deck findById(long deckID) throws NoResultException{
+		EntityManager manager = EFMManager.getManager();
+		long nonDeleted =0;
+		TypedQuery<Deck> query = manager.createQuery("SELECT de from Deck de  where de.id=:deckId and de.isDeleted=:nondeleted", Deck.class);
+		query.setParameter("deckId", deckID);
+		query.setParameter("nondeleted", nonDeleted);
+		return  query.getSingleResult();
+	}
+
 
 
 }

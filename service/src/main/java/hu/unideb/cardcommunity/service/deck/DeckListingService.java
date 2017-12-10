@@ -111,7 +111,7 @@ public class DeckListingService implements IDeckListingService {
 
 	@Override
 	public void deleteDeck(DeckData deck) {
-		Deck deleteDeck = deckimpl.findAll(deck.id, deck.userId).get(0);
+		Deck deleteDeck = deckimpl.findById(deck.getId());
 		deckimpl.deleteDeck(deleteDeck);
 	}
 	

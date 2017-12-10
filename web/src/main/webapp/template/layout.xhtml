@@ -56,8 +56,9 @@ body, h1, h2, h3, h4, h5, h6, .w3-wide {
 		</sec:authorize>
 		<sec:authorize ifNotGranted="ROLE_USER">
 		<a href="/index.xhtml" class="#{view.viewId eq '/index.xhtml' ? 'w3-bar-item w3-button w3-light-grey' : 'w3-bar-item w3-button'}">Bejelentkezés</a>
+		<a href="/registration.xhtml" class="#{view.viewId eq '/registration.xhtml' ? 'w3-bar-item w3-button w3-light-grey' : 'w3-bar-item w3-button'}">Regisztráció</a>
 		</sec:authorize>
-		<a href="/menu3.xhtml" class="#{view.viewId eq '/menu3.xhtml' ? 'w3-bar-item w3-button w3-light-grey' : 'w3-bar-item w3-button'}">Publikus Paklik</a>
+		<a href="/publicdecks.xhtml" class="#{view.viewId eq '/publicdecks.xhtml' ? 'w3-bar-item w3-button w3-light-grey' : 'w3-bar-item w3-button'}">Publikus Paklik</a>
 		<sec:authorize ifAnyGranted="ROLE_USER">
 		<a href="/logout" class="w3-bar-item w3-button">Kijelentkezés</a>
 		</sec:authorize>

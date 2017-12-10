@@ -5,28 +5,33 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
-		xmlns:f="http://xmlns.jcp.org/jsf/core">
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
 <ui:composition template="template/layout.xhtml">
 	<ui:define name="content">
-		<form name="f" action="/login" method="post">
+		<h:form id="form">
 			<header class="w3-container w3-xlarge">
-			<p class="w3-left">Bejelentkezés</p>
+			<p class="w3-left">Regisztráció</p>
 			</header>
 			<table>
 				<tr>
-					<td>Felhaszáló:</td>
-					<td><input type="text" name="username" value="" /></td>
+					<td>Felhasználó:</td>
+					<td><p:inputText value="#{registrationController.userName}" /></td>
 				</tr>
 				<tr>
 					<td>Jelszó:</td>
-					<td><input type="password" name="password" /></td>
+					<td><p:inputText value="#{registrationController.password}" /></td>
 				</tr>
 				<tr>
-					<td><input name="submit" type="submit" value="bejelnetkezés" /></td>
+					<td>Email:</td>
+					<td><p:inputText value="#{registrationController.email}" /></td>
 				</tr>
-
+				<tr>
+					<td><p:commandButton value="Regisztráció"
+							action="#{registrationController.register()}" /></td>
+				</tr>
 			</table>
-		</form>
+			<p:growl id="growl" showDetail="true" autoUpdate="true" />
+		</h:form>
 	</ui:define>
 </ui:composition>
 </html>

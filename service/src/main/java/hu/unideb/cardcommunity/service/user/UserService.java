@@ -24,12 +24,12 @@ public class UserService implements IUserService {
 			return result;
 			
 		} catch (Exception e) {
-			result.setId(null);
-			result.setMailAddress(null);
-			result.setUserName(null);
-			result.setPassword(null);
-			
-			return result;
+//			result.setId(null);
+//			result.setMailAddress(null);
+//			result.setUserName(null);
+//			result.setPassword(null);
+			e.printStackTrace();
+			return null;
 		}		
 		
 	}

@@ -11,6 +11,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.DragDropEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -53,6 +54,7 @@ public class CardController {
 	private DeckRulesData deckRulesData;
 	private List<CardRulesData> cardRules;
 	private boolean publicDeck;
+	private Long modDeckId;
 	@Autowired
 	private MySessionInfo mySessionInfo;
 
@@ -67,6 +69,13 @@ public class CardController {
 		String parameterTwo = params.get("deck");
 		if (parameterTwo != null) {
 			selectedCards = dcls.cardListByDeck(Long.valueOf(parameterTwo));
+			DeckData dd = dls.listByUserId(mySessionInfo.getCurrentUser().getId()).stream()
+					.filter(d -> d.getId() == Long.valueOf(parameterTwo)).findFirst().orElse(null);
+			if (dd != null) {
+				modDeckId = dd.getId();
+				deckName = dd.getName();
+				publicDeck = BigDecimal.ONE.equals(dd.getIsPublic());
+			}
 		}
 	}
 
@@ -75,6 +84,7 @@ public class CardController {
 			cards = cls.cardListByGame(selectGame);
 			deckRulesData = dr.getDeckRulesData(selectGame);
 			cardRules = cr.getCardRules(deckRulesData.getDeckRuleId());
+			selectedCards = new ArrayList<>();
 		}
 	}
 
@@ -175,6 +185,14 @@ public class CardController {
 		return name;
 	}
 
+	public Long getModDeckId() {
+		return modDeckId;
+	}
+
+	public void setModDeckId(Long modDeckId) {
+		this.modDeckId = modDeckId;
+	}
+
 	public void onDeleteButton(CardData card) {
 		if (card != null) {
 			selectedCards.remove(card);
@@ -189,7 +207,7 @@ public class CardController {
 							deckRulesData.getMinQuantity().intValue())));
 			return;
 		}
-		if(deckName==null || deckName.trim().length()==0) {
+		if (deckName == null || deckName.trim().length() == 0) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Hiba", "Adjál meg egy nevet"));
 			return;
 		}
@@ -200,10 +218,17 @@ public class CardController {
 		newDeck.setUserId(mySessionInfo.getCurrentUser().getId());
 		newDeck.setIsPublic(publicDeck ? BigDecimal.ONE : BigDecimal.ZERO);
 		try {
-			dls.saveDeck(newDeck);
+			if (modDeckId == null) {
+				dls.saveDeck(newDeck);
+			} else {
+				newDeck.setId(modDeckId);
+				dls.updateDeck(newDeck);
+			}
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Sikeres mentés", ""));
+			RequestContext.getCurrentInstance().execute("PF('savedialog').hide();");
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Hiba", "Sikertelen mentés"));
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Hiba", "Sikertelen mentés"));
 			e.printStackTrace();
 		}
 	}

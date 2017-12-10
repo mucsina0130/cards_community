@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
@@ -15,7 +16,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import hu.unideb.cardcommunity.service.deck.DeckCardListingService;
+import hu.unideb.cardcommunity.service.deck.DeckListingService;
 import hu.unideb.cardcommunity.service.deck.api.IDeckCardListingService;
+import hu.unideb.cardcommunity.service.deck.api.IDeckListingService;
 import hu.unideb.cardcommunity.service.deck.model.CardData;
 import hu.unideb.cardcommunity.service.deck.model.DeckData;
 import hu.unideb.cardcommunity.service.game.GameListingService;
@@ -33,6 +36,7 @@ public class DecksController implements Serializable {
 	private Long selectGame;
 	private DeckData deck;
 	private IDeckCardListingService dcls = new DeckCardListingService();
+	private IDeckListingService dls = new DeckListingService();
 
 	@Autowired
 	private MySessionInfo mySessionInfo;
@@ -101,6 +105,15 @@ public class DecksController implements Serializable {
 
 	public String modify(DeckData deck) {
 		return "/cards/newdeck.xhtml?game=" + deck.getGameId() + "&deck=" + deck.getId() + "&faces-redirect=true";
+	}
+	public void delete(DeckData deck) {
+		try {
+			dls.deleteDeck(deck);
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(null,
+			new FacesMessage(FacesMessage.SEVERITY_ERROR, "Hiba", "Sikertelen törlés"));
+			e.printStackTrace();
+		}
 	}
 
 }

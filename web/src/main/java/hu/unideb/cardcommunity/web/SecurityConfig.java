@@ -40,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				.and()
 			.formLogin()
 				.loginPage("/index.xhtml").loginProcessingUrl("/login")
-				.defaultSuccessUrl("/cards/decks.xhtml")
+				.defaultSuccessUrl("/cards/games.xhtml")
 				.and()
 				.logout().logoutSuccessUrl("/index.xhtml").logoutUrl("/logout")
 				.and()

@@ -12,7 +12,7 @@
 			<header class="w3-container w3-xlarge">
 			<p class="w3-left">Új Pakli</p>
 			<p:selectOneMenu id="games" value="#{cardController.selectGame}"
-				style="width:150px">
+				style="width:150px" rendered="#{empty cardController.modDeckId}">
 				<p:ajax listener="#{cardController.onGameChange()}" update="panel"
 					event="change" />
 				<f:selectItems value="#{cardController.games}" />
@@ -25,6 +25,8 @@
 					<p:panel id="pnl" style="text-align:left">
 						<f:facet name="header">
 							<span style="vertical-align: middle; display: inline-block;">#{card.name}
+							</span>
+							<span style="vertical-align: middle; display: inline-block; ">
 								#{card.cost}</span>
 						</f:facet>
 						<f:facet name="footer"
@@ -80,7 +82,7 @@
 			<p:dialog id="cardDialog"
 				header="#{cardController.selectedCard.name}" widgetVar="dialog"
 				modal="true" resizable="false" minHeight="40">
-				<p:panelGrid column="2" columnClasses="">
+				<p:panelGrid columns="2" columnClasses="">
 					<h:outputText value="Leírás" />
 					<h:outputText value="#{cardController.selectedCard.desc}" />
 				</p:panelGrid>
@@ -89,13 +91,14 @@
 				modal="true" height="100">
 				<p:panelGrid columns="2">
 					<h:outputText value="Név:" />
-					<p:inputText value="#{cardController.deckName}"/>
+					<p:inputText value="#{cardController.deckName}" />
 					<h:outputText value="Publikus:" />
 					<p:selectBooleanCheckbox value="#{cardController.publicDeck}" />
 				</p:panelGrid>
 				<p:commandButton value="Mégse" id="cancel"
-					oncomplete="PF('dialog').hide();" />
-				<p:commandButton value="Mentés" id="save" actionListener="#{cardController.save()}"/>
+					onclick="PF('savedialog').hide();" />
+				<p:commandButton value="Mentés" id="save"
+					actionListener="#{cardController.save()}" />
 			</p:dialog>
 			<p:growl id="growl" showDetail="true" autoUpdate="true" />
 		</h:form>

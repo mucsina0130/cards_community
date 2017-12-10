@@ -41,15 +41,16 @@
 					</p:commandButton>
 				</p:column>
 				<p:column style="width:5%;text-align: center">
-					<p:commandButton icon="ui-icon-close" title="Delete">
+					<p:commandButton icon="ui-icon-close" title="Delete" actionListener="#{decksController.delete(deck)}" update=":form:table">
 						<p:confirm header="Törlés" message="Biztos vagy benne?"
 							icon="ui-icon-alert" />
 					</p:commandButton>
 				</p:column>
 			</p:dataTable>
+			<p:hotkey bind="esc" handler="PF('dialog').hide()" />
 			<p:dialog id="cardDialog" header="#{decksController.deck.name}" widgetVar="dialog"
 				modal="true" resizable="false" minHeight="40">
-				<p:dataList id="list" var="card"
+				<p:dataList id="list" var="card" styleClass="dialoglist"
 					value="#{decksController.cardlist()}" columns="1" type="unordered"
 					itemType="none">
 					<p:panel id="pnl2" style="text-align:left">
@@ -58,12 +59,13 @@
 					</p:panel>
 				</p:dataList>
 			</p:dialog>
-			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<p:confirmDialog global="true">
 				<p:commandButton value="Yes" type="button"
 					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
 				<p:commandButton value="No" type="button"
 					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			</p:confirmDialog>
+			<p:growl id="growl" showDetail="true" autoUpdate="true" />
 		</h:form>
 	</ui:define>
 </ui:composition>

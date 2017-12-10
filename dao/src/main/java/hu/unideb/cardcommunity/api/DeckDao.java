@@ -11,4 +11,5 @@ public interface DeckDao {
 	List<Deck> findByName(String name, long userId);
 	List<Deck> findAll(long gameTypeId,long userId);
 	List<Deck> findByUserId(long userId);
+	List<Deck> findAllPublicDeck();
 }

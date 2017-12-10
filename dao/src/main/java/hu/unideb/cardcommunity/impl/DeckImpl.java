@@ -73,6 +73,17 @@ public class DeckImpl implements DeckDao {
 		return  query.getResultList();
 	}
 
+	@Override
+	public List<Deck> findAllPublicDeck()throws NoResultException  {
+		EntityManager manager = EFMManager.getManager();
+		long nonDeleted =0;
+		long isPublic =1;
+		TypedQuery<Deck> query = manager.createQuery("SELECT de from Deck de join fetch de.userAccount de.isPublic=:isPublic and de.isDeleted=:nondeleted", Deck.class);
+		query.setParameter("isPublic", isPublic );
+		query.setParameter("nondeleted", nonDeleted);
+		return  query.getResultList();
+	}
+
 
 
 }

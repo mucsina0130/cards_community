@@ -73,7 +73,7 @@ public class DeckListingService implements IDeckListingService {
 			cards.add(card);			
 		}
 		user.setId(deck.getUserId());
-		game.setId(deck.getId());
+		game.setId(deck.getGameId());
 		newDeck.setName(deck.getName());
 		newDeck.setGameType(game);
 		newDeck.setIsDeleted(0);

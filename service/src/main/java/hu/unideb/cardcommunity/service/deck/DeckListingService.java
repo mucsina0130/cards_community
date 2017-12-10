@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hu.unideb.cardcommunity.api.DeckDao;
+import hu.unideb.cardcommunity.api.GameTypeDao;
+import hu.unideb.cardcommunity.api.UserAccountDao;
 import hu.unideb.cardcommunity.impl.DeckImpl;
+import hu.unideb.cardcommunity.impl.GameTypeImpl;
+import hu.unideb.cardcommunity.impl.UserAccountImpl;
 import hu.unideb.cardcommunity.model.Card;
 import hu.unideb.cardcommunity.model.Deck;
 import hu.unideb.cardcommunity.model.GameType;
@@ -15,6 +19,8 @@ import hu.unideb.cardcommunity.service.deck.model.DeckData;
 
 public class DeckListingService implements IDeckListingService {
 	private DeckDao deckimpl = new DeckImpl();
+	private GameTypeDao gameimpl = new GameTypeImpl();
+	private UserAccountDao userimpl = new UserAccountImpl();
 	
 	@Override
 	public List<DeckData> listByUserId(long userId) {
@@ -63,8 +69,8 @@ public class DeckListingService implements IDeckListingService {
 	@Override
 	public void saveDeck(DeckData deck) {
 		Deck newDeck = new Deck();
-		GameType game = new GameType();
-		UserAccount user = new UserAccount();
+		GameType game = gameimpl.findById(deck.getGameId()).get(0);
+		UserAccount user = userimpl.findById(deck.getUserId());
 		List<Card> cards = new ArrayList<>();
 		for(int i =0;i<deck.getCardId().size();i++)
 		{
@@ -72,8 +78,6 @@ public class DeckListingService implements IDeckListingService {
 			card.setId(deck.getCardId().get(i).getId());
 			cards.add(card);			
 		}
-		user.setId(deck.getUserId());
-		game.setId(deck.getGameId());
 		newDeck.setName(deck.getName());
 		newDeck.setGameType(game);
 		newDeck.setIsDeleted(0);
@@ -87,8 +91,8 @@ public class DeckListingService implements IDeckListingService {
 	@Override
 	public void updateDeck(DeckData deck) {
 		Deck updatedDeck = new Deck();
-		GameType game = new GameType();
-		UserAccount user = new UserAccount();
+		GameType game = gameimpl.findById(deck.getGameId()).get(0);
+		UserAccount user = userimpl.findById(deck.getUserId());
 		List<Card> cards = new ArrayList<>();
 		for(int i =0;i<deck.getCardId().size();i++)
 		{
@@ -96,8 +100,6 @@ public class DeckListingService implements IDeckListingService {
 			card.setId(deck.getCardId().get(i).getId());
 			cards.add(card);			
 		}
-		user.setId(deck.getUserId());
-		game.setId(deck.getId());
 		updatedDeck.setName(deck.getName());
 		updatedDeck.setGameType(game);
 		updatedDeck.setIsDeleted(0);

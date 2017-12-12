@@ -65,7 +65,37 @@ public class DeckListingService implements IDeckListingService {
 		}
 		return result;
 	}
+	
+	@Override
+	List<DeckData> listAllPublicDeck(){
+		List<DeckData> result = new ArrayList<>();
+		try {
+			List<Deck> deck = deckimpl.findAllPublicDeck();
+			for (Deck d : deck) {
+				DeckData ds = new DeckData();
+				ds.setName(d.getName());
+				ds.setGame(d.getGameType().getName());
+				ds.setGameId(d.getGameType().getId());
+				ds.setId(d.getId());
+				ds.setIsPublic(d.getIsPublic());
+				result.add(ds);
+				
+			}
+		} catch (Exception e) {
+			DeckData ds = new DeckData();
+			ds.setName(null);
+			ds.setGame(null);
+			ds.setGameId(null);
+			ds.setId(null);
+			ds.setIsPublic(null);
+			result.add(null);
+			
+			
+		}
 
+		return result;
+	}
+	
 	@Override
 	public void saveDeck(DeckData deck) {
 		Deck newDeck = new Deck();

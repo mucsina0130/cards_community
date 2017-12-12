@@ -8,6 +8,7 @@ public interface IDeckListingService {
 
 	List<DeckData> listByUserId(long userId);
 	List<DeckData> listByUserAndGame(long userId, long gameTypeId);
+	List<DeckData> listAllPublicDeck();
 	void saveDeck(DeckData deck);
 	void updateDeck(DeckData deck);
 	void deleteDeck(DeckData deck);

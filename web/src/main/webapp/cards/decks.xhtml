@@ -41,7 +41,7 @@
 					</p:commandButton>
 				</p:column>
 				<p:column style="width:5%;text-align: center">
-					<p:commandButton icon="ui-icon-close" title="Delete" actionListener="#{decksController.delete(deck)}" update=":form:table">
+					<p:commandButton icon="ui-icon-close" title="Delete" actionListener="#{decksController.delete(deck)}" update="table">
 						<p:confirm header="Törlés" message="Biztos vagy benne?"
 							icon="ui-icon-alert" />
 					</p:commandButton>
@@ -61,7 +61,7 @@
 			</p:dialog>
 			<p:confirmDialog global="true">
 				<p:commandButton value="Yes" type="button"
-					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" update="table"/>
 				<p:commandButton value="No" type="button"
 					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			</p:confirmDialog>

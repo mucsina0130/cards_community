@@ -13,24 +13,31 @@
 			<p class="w3-left">Új Pakli</p>
 			<p:selectOneMenu id="games" value="#{cardController.selectGame}"
 				style="width:150px" rendered="#{empty cardController.modDeckId}">
-				<p:ajax listener="#{cardController.onGameChange()}" update="panel"
+				<p:ajax listener="#{cardController.onGameChange()}" update="panel filter"
 					event="change" />
 				<f:selectItems value="#{cardController.games}" />
 			</p:selectOneMenu> </header>
 			<h:panelGroup id="panel" layout="block">
+			<p:inputText id="filter" value="#{cardController.filterText}" rendered="#{not empty cardController.selectGame}"></p:inputText>
+			<p:commandButton value="Keresés" actionListener="#{cardController.search()}" update="datagrid" rendered="#{not empty cardController.selectGame}"></p:commandButton>
 				<p:dataGrid id="datagrid" var="card" value="#{cardController.cards}"
 					rendered="#{not empty cardController.selectGame}" columns="3"
 					layout="grid" rows="9" paginator="true" paginatorPosition="bottom"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
 					<p:panel id="pnl" style="text-align:left">
 						<f:facet name="header">
-							<span style="vertical-align: middle; display: inline-block;">#{card.name}
+							<span class="titlespan" style="vertical-align: middle; display: inline-block; width: 129px">#{card.name}
 							</span>
-							<span style="vertical-align: middle; display: inline-block; ">
+							<span style="vertical-align: middle; display: inline-block; text-align: right; font-size: 0.8em">
 								#{card.cost}</span>
 						</f:facet>
 						<f:facet name="footer"
-							styleClass="ui-helper-clearfix ui-corner-all">#{card.battleAttribute} #{card.battleAttribute2}</f:facet>
+							styleClass="ui-helper-clearfix ui-corner-all">
+							<span style="vertical-align: middle; display: inline-block; width: 75px; color: red">#{card.battleAttribute}
+							</span>
+							<span style="vertical-align: middle; display: inline-block; text-align: right; width: 75px; color: blue">#{card.battleAttribute2}
+							</span>
+						</f:facet>
 						<h:panelGrid columns="1" style="width:100%">
 							<p:scrollPanel style="width:100%;height:165px; border:none">
 								<p style="margin: 1px">#{card.desc}</p>
@@ -40,11 +47,11 @@
 					<p:draggable for="pnl" revert="true" zindex="5"
 						containment="window" />
 					<p:ajax event="page"
-						onsuccess="$('.ui-panel-titlebar').quickfit();" />
+						onsuccess="$('.titlespan').quickfit();" />
 					<f:verbatim>
 						<script type="text/javascript">
 							$(function() {
-								$('.ui-panel-titlebar').quickfit();
+								$('.titlespan').quickfit();
 							});
 						</script>
 					</f:verbatim>
@@ -85,6 +92,27 @@
 				<p:panelGrid columns="2" columnClasses="">
 					<h:outputText value="Leírás" />
 					<h:outputText value="#{cardController.selectedCard.desc}" />
+					
+					<h:outputText value="#{cardController.cardMapper.battleAttribute1}" rendered="#{not empty cardController.selectedCard.battleAttribute}"/>
+					<h:outputText value="#{cardController.selectedCard.battleAttribute}" rendered="#{not empty cardController.selectedCard.battleAttribute}" style="color:red"/>
+					
+					<h:outputText value="#{cardController.cardMapper.battleAttribute2}" rendered="#{not empty cardController.selectedCard.battleAttribute2}"/>
+					<h:outputText value="#{cardController.selectedCard.battleAttribute2}" rendered="#{not empty cardController.selectedCard.battleAttribute2}" style="color:blue"/>
+					
+					<h:outputText value="#{cardController.cardMapper.field1}" rendered="#{not empty cardController.selectedCard.field1}"/>
+					<h:outputText value="#{cardController.selectedCard.field1}" rendered="#{not empty cardController.selectedCard.field1}"/>
+					
+					<h:outputText value="#{cardController.cardMapper.field2}" rendered="#{not empty cardController.selectedCard.field2}"/>
+					<h:outputText value="#{cardController.selectedCard.field2}" rendered="#{not empty cardController.selectedCard.field2}"/>
+					
+					<h:outputText value="#{cardController.cardMapper.field3}" rendered="#{not empty cardController.selectedCard.field3}"/>
+					<h:outputText value="#{cardController.selectedCard.field3}" rendered="#{not empty cardController.selectedCard.field3}"/>
+					
+					<h:outputText value="#{cardController.cardMapper.field4}" rendered="#{not empty cardController.selectedCard.field4}"/>
+					<h:outputText value="#{cardController.selectedCard.field4}" rendered="#{not empty cardController.selectedCard.field4}"/>
+					
+					<h:outputText value="#{cardController.cardMapper.field5}" rendered="#{not empty cardController.selectedCard.field5}"/>
+					<h:outputText value="#{cardController.selectedCard.field5}" rendered="#{not empty cardController.selectedCard.field5}"/>
 				</p:panelGrid>
 			</p:dialog>
 			<p:dialog id="sdialog" header="Mentés" widgetVar="savedialog"

@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
+import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -24,6 +26,7 @@ import hu.unideb.cardcommunity.service.deck.model.DeckData;
 import hu.unideb.cardcommunity.service.game.GameListingService;
 import hu.unideb.cardcommunity.service.game.api.IGameListingService;
 import hu.unideb.cardcommunity.service.game.model.GameData;
+import hu.unideb.cardcommunity.service.user.UserService;
 import hu.unideb.cardcommunity.web.deck.model.DeckTableModel;
 import hu.unideb.cardcommunity.web.session.MySessionInfo;
 
@@ -109,11 +112,15 @@ public class DecksController implements Serializable {
 	public void delete(DeckData deck) {
 		try {
 			dls.deleteDeck(deck);
+			tableModel = new DeckTableModel(mySessionInfo);
+			RequestContext.getCurrentInstance().update(":form:table");
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null,
 			new FacesMessage(FacesMessage.SEVERITY_ERROR, "Hiba", "Sikertelen törlés"));
 			e.printStackTrace();
 		}
 	}
-
+	public List<DeckData> getPublicDecks(){
+		return dls.listAllPublicDeck().stream().filter(d-> selectGame==null || selectGame == d.getGameId()).collect(Collectors.toList());
+	}
 }

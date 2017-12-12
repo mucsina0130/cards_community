@@ -10,20 +10,25 @@
 	<ui:define name="content">
 		<h:form id="form">
 			<header class="w3-container w3-xlarge" style="padding-right: 0px">
-			<p class="w3-left">Paklik</p></header>
+			<p class="w3-left">Paklik</p>
+			<p:selectOneMenu id="games" value="#{decksController.selectGame}"
+				style="width:150px">
+				<p:ajax update="table" event="change" />
+				<f:selectItems value="#{decksController.games}" />
+			</p:selectOneMenu> </header>
 			<p:dataTable id="table" var="deck"
-				value="#{decksController.tableModel}" paginator="true" rows="5"
+				value="#{decksController.publicDecks}" paginator="true" rows="5"
 				paginatorPosition="bottom" paginatorAlwaysVisible="false"
 				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
 				rowsPerPageTemplate="5,10,15" lazy="true">
-				<p:column headerText="Név" sortBy="#{deck.name}">
+				<p:column headerText="Név">
 					<h:outputText value="#{deck.name}" />
 				</p:column>
-				<p:column headerText="Játék" sortBy="#{deck.game}">
+				<p:column headerText="Játék">
 					<h:outputText value="#{deck.game}" />
 				</p:column>
-				<p:column headerText="Felhasználó" sortBy="#{deck.game}">
-					<h:outputText value="#{deck.game}" />
+				<p:column headerText="Felhasználó">
+					<h:outputText value="#{deck.username}" />
 				</p:column>
 				<p:column style="width:5%;text-align: center">
 					<p:commandButton icon="ui-icon-search" title="View"

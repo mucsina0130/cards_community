@@ -17,6 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import hu.unideb.cardcommunity.service.api.ICardMapperService;
+import hu.unideb.cardcommunity.service.cardmapper.CardMapperService;
+import hu.unideb.cardcommunity.service.cardmapper.model.CardMapperData;
 import hu.unideb.cardcommunity.service.deck.CardListingService;
 import hu.unideb.cardcommunity.service.deck.DeckCardListingService;
 import hu.unideb.cardcommunity.service.deck.DeckListingService;
@@ -43,6 +46,7 @@ public class CardController {
 	private IGameListingService gls = new GameListingService();
 	private IDeckCardListingService dcls = new DeckCardListingService();
 	private IDeckListingService dls = new DeckListingService();
+	private ICardMapperService cms = new CardMapperService();
 	private IdeckRules dr = new DeckRulesService();
 	private IcardRules cr = new CardRulesService();
 	private List<CardData> cards;
@@ -55,6 +59,10 @@ public class CardController {
 	private List<CardRulesData> cardRules;
 	private boolean publicDeck;
 	private Long modDeckId;
+	private String filterText;
+	private CardMapperData cardMapper;
+
+
 	@Autowired
 	private MySessionInfo mySessionInfo;
 
@@ -85,6 +93,8 @@ public class CardController {
 			deckRulesData = dr.getDeckRulesData(selectGame);
 			cardRules = cr.getCardRules(deckRulesData.getDeckRuleId());
 			selectedCards = new ArrayList<>();
+			cardMapper = cms.findByGame(selectGame);
+			filterText = "";
 		}
 	}
 
@@ -191,6 +201,30 @@ public class CardController {
 
 	public void setModDeckId(Long modDeckId) {
 		this.modDeckId = modDeckId;
+	}
+
+	public String getFilterText() {
+		return filterText;
+	}
+
+	public void setFilterText(String filterText) {
+		this.filterText = filterText;
+	}
+
+	public CardMapperData getCardMapper() {
+		return cardMapper;
+	}
+
+	public void setCardMapper(CardMapperData cardMapper) {
+		this.cardMapper = cardMapper;
+	}
+
+	public void search() {
+		if (filterText != null && filterText.trim().length() > 0) {
+			cards = cls.cardListByKeyWord(filterText, selectGame);
+		} else {
+			cards = cls.cardListByGame(selectGame);
+		}
 	}
 
 	public void onDeleteButton(CardData card) {

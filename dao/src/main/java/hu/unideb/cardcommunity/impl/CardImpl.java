@@ -64,9 +64,9 @@ public class CardImpl implements CardDao {
 	@Override
 	public List<Card> findByString(String keyword,long gameTypeId) throws NoResultException{
 		EntityManager manager = EFMManager.getManager();
-		TypedQuery<Card> query = manager.createQuery("SELECT ca from Card ca where gt.id=:gameTypeId and (UPPER(gt.name) LIKE:UPPER(keyword) or UPPER(gt.description) LIKE:UPPER(keyword))", Card.class);
+		TypedQuery<Card> query = manager.createQuery("SELECT ca from Card ca join ca.gameType gt where gt.id=:gameTypeId and (upper(ca.name) like :keyword or upper(ca.description) like :keyword)", Card.class);
 		query.setParameter("gameTypeId", gameTypeId);
-		query.setParameter("keyword", "%" + keyword + "%");
+		query.setParameter("keyword", "%" + keyword.toUpperCase() + "%");
 		return query.getResultList();
 	}
 

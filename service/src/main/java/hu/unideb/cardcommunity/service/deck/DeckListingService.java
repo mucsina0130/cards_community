@@ -67,7 +67,7 @@ public class DeckListingService implements IDeckListingService {
 	}
 	
 	@Override
-	List<DeckData> listAllPublicDeck(){
+	public List<DeckData> listAllPublicDeck() {
 		List<DeckData> result = new ArrayList<>();
 		try {
 			List<Deck> deck = deckimpl.findAllPublicDeck();
@@ -78,8 +78,9 @@ public class DeckListingService implements IDeckListingService {
 				ds.setGameId(d.getGameType().getId());
 				ds.setId(d.getId());
 				ds.setIsPublic(d.getIsPublic());
+				ds.setUsername(d.getUserAccount().getUserName());
 				result.add(ds);
-				
+
 			}
 		} catch (Exception e) {
 			DeckData ds = new DeckData();
@@ -89,8 +90,7 @@ public class DeckListingService implements IDeckListingService {
 			ds.setId(null);
 			ds.setIsPublic(null);
 			result.add(null);
-			
-			
+
 		}
 
 		return result;

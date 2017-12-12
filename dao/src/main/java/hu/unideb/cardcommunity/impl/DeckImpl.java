@@ -1,5 +1,6 @@
 package hu.unideb.cardcommunity.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -77,8 +78,8 @@ public class DeckImpl implements DeckDao {
 	public List<Deck> findAllPublicDeck()throws NoResultException  {
 		EntityManager manager = EFMManager.getManager();
 		long nonDeleted =0;
-		long isPublic =1;
-		TypedQuery<Deck> query = manager.createQuery("SELECT de from Deck de join fetch de.userAccount de.isPublic=:isPublic and de.isDeleted=:nondeleted", Deck.class);
+		BigDecimal isPublic =BigDecimal.ONE;
+		TypedQuery<Deck> query = manager.createQuery("SELECT de from Deck de where de.isPublic=:isPublic and de.isDeleted=:nondeleted", Deck.class);
 		query.setParameter("isPublic", isPublic );
 		query.setParameter("nondeleted", nonDeleted);
 		return  query.getResultList();

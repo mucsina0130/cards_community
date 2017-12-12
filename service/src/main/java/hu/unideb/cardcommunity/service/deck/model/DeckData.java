@@ -12,6 +12,7 @@ public class DeckData implements Serializable{
 	public List<CardData> cardId;
 	public BigDecimal isPublic;
 	public Long userId;
+	public String username;
 	
 	public Long getGameId() {
 		return gameId;
@@ -54,6 +55,12 @@ public class DeckData implements Serializable{
 	}
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
 	} 
 	
 	

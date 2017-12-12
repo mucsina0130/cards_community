@@ -1,0 +1,13 @@
+@charset "UTF-8";
+.ui-datatable .ui-widget-header {
+	background: white;
+}
+.ui-datatable .ui-paginator-bottom{
+	border: none;
+}
+.ui-paginator{
+	line-height: 1em;
+}
+.ui-datatable-tablewrapper{
+	overflow: hidden!important;
+}

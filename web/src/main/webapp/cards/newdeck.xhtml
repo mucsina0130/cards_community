@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/template/layout.xhtml">
+	<ui:define name="content">
+		<h:form id="form">
+			<header class="w3-container w3-xlarge">
+			<p class="w3-left">Új Pakli</p>
+			<p:selectOneMenu id="games" value="#{cardController.selectGame}"
+				style="width:150px" rendered="#{empty cardController.modDeckId}">
+				<p:ajax listener="#{cardController.onGameChange()}" update="panel filter"
+					event="change" />
+				<f:selectItems value="#{cardController.games}" />
+			</p:selectOneMenu> </header>
+			<h:panelGroup id="panel" layout="block">
+			<p:inputText id="filter" value="#{cardController.filterText}" rendered="#{not empty cardController.selectGame}"></p:inputText>
+			<p:commandButton value="Keresés" actionListener="#{cardController.search()}" update="datagrid" rendered="#{not empty cardController.selectGame}"></p:commandButton>
+				<p:dataGrid id="datagrid" var="card" value="#{cardController.cards}"
+					rendered="#{not empty cardController.selectGame}" columns="3"
+					layout="grid" rows="9" paginator="true" paginatorPosition="bottom"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+					<p:panel id="pnl" style="text-align:left">
+						<f:facet name="header">
+							<span class="titlespan" style="vertical-align: middle; display: inline-block; width: 129px">#{card.name}
+							</span>
+							<span style="vertical-align: middle; display: inline-block; text-align: right; font-size: 0.8em">
+								#{card.cost}</span>
+						</f:facet>
+						<f:facet name="footer"
+							styleClass="ui-helper-clearfix ui-corner-all">
+							<span style="vertical-align: middle; display: inline-block; width: 75px; color: red">#{card.battleAttribute}
+							</span>
+							<span style="vertical-align: middle; display: inline-block; text-align: right; width: 75px; color: blue">#{card.battleAttribute2}
+							</span>
+						</f:facet>
+						<h:panelGrid columns="1" style="width:100%">
+							<p:scrollPanel style="width:100%;height:165px; border:none">
+								<p style="margin: 1px">#{card.desc}</p>
+							</p:scrollPanel>
+						</h:panelGrid>
+					</p:panel>
+					<p:draggable for="pnl" revert="true" zindex="5"
+						containment="window" />
+					<p:ajax event="page"
+						onsuccess="$('.titlespan').quickfit();" />
+					<f:verbatim>
+						<script type="text/javascript">
+							$(function() {
+								$('.titlespan').quickfit();
+							});
+						</script>
+					</f:verbatim>
+				</p:dataGrid>
+				<h:panelGroup id="listpanel" layout="block"
+					rendered="#{not empty cardController.selectGame}">
+					<p:dataList id="list" var="card"
+						value="#{cardController.selectedCards}" columns="1"
+						type="unordered" itemType="none">
+						<p:panel id="pnl2" style="text-align:left">
+							<p:commandLink title="View Detail"
+								styleClass="ui-icon ui-icon-search"
+								style="float:left;margin-right:5px"
+								oncomplete="PF('dialog').show();" update=":form:cardDialog">
+								<f:setPropertyActionListener value="#{card}"
+									target="#{cardController.selectedCard}" />
+							</p:commandLink>
+							<p id="text" width="15px"
+								style="display: inline-block; white-space: nowrap">#{cardController.getCardShortName(card)}</p>
+							<p:commandLink title="Delete" styleClass="ui-icon ui-icon-close"
+								actionListener="#{cardController.onDeleteButton(card)}"
+								style="float:right;margin-left:5px" update="list"></p:commandLink>
+						</p:panel>
+					</p:dataList>
+					<p:commandButton value="Mentés" title="Save"
+						oncomplete="PF('savedialog').show();" update=":form:sdialog">
+					</p:commandButton>
+				</h:panelGroup>
+				<p:droppable for="listpanel" tolerance="touch" datasource="datagrid"
+					onDrop="handleDrop">
+					<p:ajax listener="#{cardController.onCardDrop}"
+						update="list datagrid" />
+				</p:droppable>
+			</h:panelGroup>
+			<p:dialog id="cardDialog"
+				header="#{cardController.selectedCard.name}" widgetVar="dialog"
+				modal="true" resizable="false" minHeight="40">
+				<p:panelGrid columns="2" columnClasses="">
+					<h:outputText value="Leírás" />
+					<h:outputText value="#{cardController.selectedCard.desc}" />
+					
+					<h:outputText value="#{cardController.cardMapper.battleAttribute1}" rendered="#{not empty cardController.selectedCard.battleAttribute}"/>
+					<h:outputText value="#{cardController.selectedCard.battleAttribute}" rendered="#{not empty cardController.selectedCard.battleAttribute}" style="color:red"/>
+					
+					<h:outputText value="#{cardController.cardMapper.battleAttribute2}" rendered="#{not empty cardController.selectedCard.battleAttribute2}"/>
+					<h:outputText value="#{cardController.selectedCard.battleAttribute2}" rendered="#{not empty cardController.selectedCard.battleAttribute2}" style="color:blue"/>
+					
+					<h:outputText value="#{cardController.cardMapper.field1}" rendered="#{not empty cardController.selectedCard.field1}"/>
+					<h:outputText value="#{cardController.selectedCard.field1}" rendered="#{not empty cardController.selectedCard.field1}"/>
+					
+					<h:outputText value="#{cardController.cardMapper.field2}" rendered="#{not empty cardController.selectedCard.field2}"/>
+					<h:outputText value="#{cardController.selectedCard.field2}" rendered="#{not empty cardController.selectedCard.field2}"/>
+					
+					<h:outputText value="#{cardController.cardMapper.field3}" rendered="#{not empty cardController.selectedCard.field3}"/>
+					<h:outputText value="#{cardController.selectedCard.field3}" rendered="#{not empty cardController.selectedCard.field3}"/>
+					
+					<h:outputText value="#{cardController.cardMapper.field4}" rendered="#{not empty cardController.selectedCard.field4}"/>
+					<h:outputText value="#{cardController.selectedCard.field4}" rendered="#{not empty cardController.selectedCard.field4}"/>
+					
+					<h:outputText value="#{cardController.cardMapper.field5}" rendered="#{not empty cardController.selectedCard.field5}"/>
+					<h:outputText value="#{cardController.selectedCard.field5}" rendered="#{not empty cardController.selectedCard.field5}"/>
+				</p:panelGrid>
+			</p:dialog>
+			<p:dialog id="sdialog" header="Mentés" widgetVar="savedialog"
+				modal="true" height="100">
+				<p:panelGrid columns="2">
+					<h:outputText value="Név:" />
+					<p:inputText value="#{cardController.deckName}" />
+					<h:outputText value="Publikus:" />
+					<p:selectBooleanCheckbox value="#{cardController.publicDeck}" />
+				</p:panelGrid>
+				<p:commandButton value="Mégse" id="cancel"
+					onclick="PF('savedialog').hide();" />
+				<p:commandButton value="Mentés" id="save"
+					actionListener="#{cardController.save()}" />
+			</p:dialog>
+			<p:growl id="growl" showDetail="true" autoUpdate="true" />
+		</h:form>
+		<script type="text/javascript">
+			function handleDrop(event, ui) {
+				var droppedCard = ui.draggable;
+
+				droppedCard.fadeOut("fast");
+			}
+		</script>
+	</ui:define>
+</ui:composition>
+</html>

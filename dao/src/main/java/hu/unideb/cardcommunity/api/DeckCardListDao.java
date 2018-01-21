@@ -1,5 +1,6 @@
 package hu.unideb.cardcommunity.api;
 
+import java.util.Collection;
 import java.util.List;
 
 import hu.unideb.cardcommunity.model.Card;
@@ -8,5 +9,5 @@ import hu.unideb.cardcommunity.model.Card;
 
 public interface DeckCardListDao {
 	
-	List<Card> cardListByDeck(Long deckid);
+	Collection<Card> cardListByDeck(Long deckid);
 }

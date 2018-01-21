@@ -2,6 +2,7 @@ package hu.unideb.cardcommunity.service.deck;
 
 import java.security.PublicKey;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import hu.unideb.cardcommunity.api.CardDao;
@@ -23,7 +24,7 @@ public class DeckCardListingService implements IDeckCardListingService{
 	private DeckDao deckimpl = new DeckImpl();
 	@Override
 	public List<CardData> cardListByDeck(Long deckid) {
-		List<Card> card = cardimpl.cardListByDeck(deckid);
+		Collection<Card> card = cardimpl.cardListByDeck(deckid);
 		List<CardData> result = new ArrayList<>();
 		for (Card c : card) {
 			CardData cd = new CardData();

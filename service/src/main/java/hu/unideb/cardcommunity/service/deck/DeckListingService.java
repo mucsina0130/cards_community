@@ -1,6 +1,7 @@
 package hu.unideb.cardcommunity.service.deck;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import hu.unideb.cardcommunity.api.DeckDao;
@@ -101,7 +102,7 @@ public class DeckListingService implements IDeckListingService {
 		Deck newDeck = new Deck();
 		GameType game = gameimpl.findById(deck.getGameId()).get(0);
 		UserAccount user = userimpl.findById(deck.getUserId());
-		List<Card> cards = new ArrayList<>();
+		Collection<Card> cards = new ArrayList<>();
 		for(int i =0;i<deck.getCardId().size();i++)
 		{
 			Card card = new Card();
@@ -123,7 +124,7 @@ public class DeckListingService implements IDeckListingService {
 		Deck updatedDeck = new Deck();
 		GameType game = gameimpl.findById(deck.getGameId()).get(0);
 		UserAccount user = userimpl.findById(deck.getUserId());
-		List<Card> cards = new ArrayList<>();
+		Collection<Card> cards = new ArrayList<>();
 		for(int i =0;i<deck.getCardId().size();i++)
 		{
 			Card card = new Card();

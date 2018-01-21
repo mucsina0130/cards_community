@@ -3,6 +3,7 @@ package hu.unideb.cardcommunity.model;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -48,7 +49,7 @@ public class Deck implements Serializable {
 			@JoinColumn(name="CARD_ID")
 			}
 		)
-	private List<Card> cards;
+	private Collection<Card> cards;
 
 	public Deck() {
 	}
@@ -93,11 +94,11 @@ public class Deck implements Serializable {
 		this.userAccount = userAccount;
 	}
 
-	public List<Card> getCards() {
+	public Collection<Card> getCards() {
 		return this.cards;
 	}
 
-	public void setCards(List<Card> cards) {
+	public void setCards(Collection<Card> cards) {
 		this.cards = cards;
 	}
 

@@ -3,6 +3,7 @@ package hu.unideb.cardcommunity.model;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -33,7 +34,7 @@ public class GameType implements Serializable {
 
 	//bi-directional many-to-one association to Card
 	@OneToMany(mappedBy="gameType")
-	private List<Card> cards;
+	private Collection<Card> cards;
 
 	//bi-directional many-to-one association to CardMapper
 	@OneToMany(mappedBy="gameType")
@@ -95,11 +96,11 @@ public class GameType implements Serializable {
 		this.shorDescription = shorDescription;
 	}
 
-	public List<Card> getCards() {
+	public Collection<Card> getCards() {
 		return this.cards;
 	}
 
-	public void setCards(List<Card> cards) {
+	public void setCards(Collection<Card> cards) {
 		this.cards = cards;
 	}
 

@@ -1,6 +1,7 @@
 package hu.unideb.cardcommunity.service.deck;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import hu.unideb.cardcommunity.api.CardDao;
@@ -13,7 +14,7 @@ public class CardListingService implements ICardListingService {
 	private CardDao cardimpl = new CardImpl();
 	@Override
 	public List<CardData> cardListByGame(Long id) {
-		List<Card> card = cardimpl.findByGameId(id);
+		Collection<Card> card = cardimpl.findByGameId(id);
 		List<CardData> result = new ArrayList<>();
 		for (Card c : card) {
 			CardData cd = new CardData();
@@ -34,7 +35,7 @@ public class CardListingService implements ICardListingService {
 	}
 	@Override
 	public List<CardData> cardListByKeyWord(String keyWord, Long gameTypeId) {
-			List<Card> card = cardimpl.findByString(keyWord, gameTypeId);
+			Collection<Card> card = cardimpl.findByString(keyWord, gameTypeId);
 			List<CardData> result = new ArrayList<>();
 			for (Card c : card) {
 				CardData cd = new CardData();

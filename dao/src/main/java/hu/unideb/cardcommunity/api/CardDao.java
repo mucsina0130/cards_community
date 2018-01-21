@@ -1,15 +1,16 @@
 package hu.unideb.cardcommunity.api;
 
+import java.util.Collection;
 import java.util.List;
 
 import hu.unideb.cardcommunity.model.Card;
 
 public interface CardDao {
 	Card save(Card entity);
-	List<Card> save(List<Card> entities);
+	Collection<Card> save(Collection<Card> entities);
 	Card findById(long id);
-	List<Card> findByGameId(long id);
+	Collection<Card> findByGameId(long id);
 	Card findByName(String name);
-	List<Card> findAll();
-	List<Card> findByString(String keyword,long gameTypeId);
+	Collection<Card> findAll();
+	Collection<Card> findByString(String keyword,long gameTypeId);
 }

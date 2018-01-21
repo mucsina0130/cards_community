@@ -1,5 +1,6 @@
 package hu.unideb.cardcommunity.impl;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -21,7 +22,7 @@ public class CardImpl implements CardDao {
 		return entity;
 	}
 
-	public List<Card> save(List<Card> entities) {
+	public Collection<Card> save(Collection<Card> entities) {
 		EntityManager manager = EFMManager.getManager();
 		manager.getTransaction().begin();
 		for (Card card : entities) {
@@ -47,14 +48,14 @@ public class CardImpl implements CardDao {
 
 	}
 
-	public List<Card> findAll() {
+	public Collection<Card> findAll() {
 		EntityManager manager = EFMManager.getManager();
 		TypedQuery<Card> query = manager.createQuery("SELECT ca from Card ca", Card.class);
 		return query.getResultList();
 	}
 
 	@Override
-	public List<Card> findByGameId(long id) {
+	public Collection<Card> findByGameId(long id) {
 		EntityManager manager = EFMManager.getManager();
 		TypedQuery<Card> query = manager.createQuery("SELECT ca from Card ca join ca.gameType gt where gt.id=:id", Card.class);
 		query.setParameter("id", id);
@@ -62,7 +63,7 @@ public class CardImpl implements CardDao {
 	}
 
 	@Override
-	public List<Card> findByString(String keyword,long gameTypeId) throws NoResultException{
+	public Collection<Card> findByString(String keyword,long gameTypeId) throws NoResultException{
 		EntityManager manager = EFMManager.getManager();
 		TypedQuery<Card> query = manager.createQuery("SELECT ca from Card ca join ca.gameType gt where gt.id=:gameTypeId and (upper(ca.name) like :keyword or upper(ca.description) like :keyword)", Card.class);
 		query.setParameter("gameTypeId", gameTypeId);

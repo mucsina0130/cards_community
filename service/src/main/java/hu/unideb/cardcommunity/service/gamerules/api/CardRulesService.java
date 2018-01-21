@@ -1,6 +1,7 @@
 package hu.unideb.cardcommunity.service.gamerules.api;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import hu.unideb.cardcommunity.api.RuleCardDao;
@@ -15,7 +16,7 @@ public class CardRulesService implements IcardRules {
 	public List<CardRulesData> getCardRules(Long ruleDeckId) {
 		List <CardRulesData> result = new ArrayList<>();
 		try {
-			List<RuleCard> ruleCard = ruleCardimpl.findByRuleDeckId(ruleDeckId);
+			Collection<RuleCard> ruleCard = ruleCardimpl.findByRuleDeckId(ruleDeckId);
 			for(RuleCard r : ruleCard)
 			{
 				CardRulesData cs = new CardRulesData();

@@ -1,5 +1,6 @@
 package hu.unideb.cardcommunity.impl;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -21,7 +22,7 @@ public class RuleCardImpl implements RuleCardDao {
 		return entity;
 	}
 
-	public List<RuleCard> save(List<RuleCard> entities) {
+	public Collection<RuleCard> save(Collection<RuleCard> entities) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -33,7 +34,7 @@ public class RuleCardImpl implements RuleCardDao {
 		return (RuleCard) query.getResultList();
 	}
 
-	public List<RuleCard> findByRuleDeckId(Long ruleDeckId)throws NoResultException {
+	public Collection<RuleCard> findByRuleDeckId(Long ruleDeckId)throws NoResultException {
 		EntityManager manager = EFMManager.getManager();
 		TypedQuery<RuleCard> query = manager.createQuery("SELECT rc from RuleCard rc join rc.ruleDeck rd where rd.id=:ruleDeckId", RuleCard.class);
 		query.setParameter("ruleDeckId", ruleDeckId);
